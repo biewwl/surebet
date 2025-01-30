@@ -1,0 +1,21 @@
+.footer {
+  /* background-color: #d4d4d4; */
+  /* min-height: 200px; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  font-size: 0.7em;
+  color: #666;
+  gap: 10px;
+}
+
+.footer__logout {
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: #d63030;
+  cursor: pointer;
+}

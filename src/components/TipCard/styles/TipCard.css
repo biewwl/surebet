@@ -1,0 +1,123 @@
+.tip-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  justify-content: space-between;
+  aspect-ratio: 1 / 1;
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  animation: toTop 0.5s;
+}
+
+.tip-card__tip {
+  display: grid;
+  gap: 10px;
+  grid-template-rows: 1fr 1fr;
+  align-items: flex-start;
+}
+
+.tip-card__tip__odd {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: default;
+  transition: 0.5s;
+}
+
+.tip-card__tip__odd.--lose {
+  filter: grayscale();
+  opacity: 0.2;
+}
+
+.tip-card__tip__odd:hover {
+  filter: none;
+  opacity: 1;
+}
+
+.tip-card__tip__odd__logo {
+  width: 30px;
+  border-radius: 50%;
+}
+
+.tip-card__tip__odd__info {
+  display: flex;
+  gap: 10px;
+  border: 1px solid #414141;
+  height: 30px;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: 25px;
+}
+
+.separator {
+  width: 1px;
+  height: 60%;
+  background-color: #c1c1c1;
+}
+
+.tip-card__tip__profit {
+  font-size: 11px;
+  /* background-color: red; */
+  width: 100%;
+  border-top: 1px solid #c1c1c1;
+  padding-top: 10px;
+}
+
+.tip-card__tip__profit__details {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.tip-card__tip__profit__details__item__value {
+  color: #bdbaba;
+}
+
+.tip-card__date {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tip-card__date__text {
+  font-size: 12px;
+  color: #636363;
+}
+
+.tip-card__tip__result {
+  width: 100%;
+  background: #17cc90;
+  background: linear-gradient(74deg, #17cc90 0%, #09f3a9 100%);
+  padding: 10px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  border-radius: 0.25em;
+}
+
+.tip-card.--pending .tip-card__tip__result {
+  background: #fc9e23;
+  background: linear-gradient(74deg, #fc9e23 0%, #eec925 100%);
+}
+
+.tip-card.--draw .tip-card__tip__result {
+  background-color: #d6d6d6;
+  background: linear-gradient(74deg, #d6d6d6 0%, #eeeeee 100%);
+  color: #c1c1c1;
+}
+
+.tip-card.--bingo .tip-card__tip__result {
+  background: #2d64fd;
+  background: linear-gradient(
+    74deg,
+    #2d64fd 0%,
+    #999947 52%,
+    #fd2d2d 100%
+  );
+  color: #fff;
+}

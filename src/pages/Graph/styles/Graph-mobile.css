@@ -1,0 +1,11 @@
+@media screen and (max-width: 600px){
+  
+  .graph__canvas {
+    display: none;
+  }
+
+  .graph__canvas.--mobile {
+    display: block;
+  }
+  
+}

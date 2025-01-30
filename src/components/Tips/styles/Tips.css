@@ -1,0 +1,31 @@
+.tips {
+  color: #666;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+}
+
+.tips__create {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c1c1c1;
+  animation: toTop 0.5s;
+  background: none !important;
+  aspect-ratio: 1 / 1;
+}
+
+.tips__create__icon {
+  width: 60px;
+  height: 60px;
+}
+
+.loading {
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4em;
+  color: #f7c456;
+}

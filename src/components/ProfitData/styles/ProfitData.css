@@ -1,0 +1,34 @@
+.profit-data {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.profit-data__title {
+  color: #c1c1c1;
+}
+
+.profit-data__total-value > span {
+  /* font-size: 1.5em; */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 100;
+}
+
+.profit-data__total-value .--positive {
+  color: #6232ff;
+}
+
+.profit-data__total-value .--negative {
+  color: #c12a2a;
+}
+
+.profit-data__total-value .--draw {
+  color: #c1c1c1;
+}
+
+.profit-data__total-value__icon {
+  font-size: 18px;
+}

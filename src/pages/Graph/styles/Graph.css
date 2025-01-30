@@ -1,0 +1,15 @@
+.graph {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.graph__canvas {
+  padding: 20px;
+  animation: toTop 0.5s;
+}
+
+.graph__canvas.--mobile {
+  display: none;
+}

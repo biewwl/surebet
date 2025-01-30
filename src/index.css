@@ -1,0 +1,23 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: google;
+}
+
+@font-face {
+  font-family: google;
+  src: url("./fonts/ProductSans/ProductSans-Regular.ttf");
+}
+
+@keyframes toTop {
+  
+  0% {
+    opacity: 0%;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 100%;
+    transform: translateY(0);
+  }
+}
