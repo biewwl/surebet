@@ -1,8 +1,8 @@
 function Logo() {
   return (
     <div className="home__profit-chart__logo">
-      Biewwl
-      <p className="home__profit-chart__logo__slogan">Surebets</p>
+      biewwl
+      <p className="home__profit-chart__logo__slogan">surebets</p>
     </div>
   );
 }

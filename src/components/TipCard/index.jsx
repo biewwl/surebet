@@ -26,7 +26,10 @@ function TipCard({ data }) {
 
   const pending = !win;
   const bingo = win === 12;
-  const result = win === 1 ? odd1 * price1 : odd2 * price2;
+
+  const result1 = odd1 * price1;
+  const result2 = odd2 * price2;
+  const result = bingo ? result1 + result2 : win === 1 ? result1 : result2;
 
   const draw =
     Number(result).toFixed(2) === (price1 + price2).toFixed(2) && !bingo;
