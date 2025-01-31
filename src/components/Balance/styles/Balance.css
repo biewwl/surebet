@@ -13,7 +13,8 @@
 }
 
 .balance__card:nth-child(1) {
-  background-color: #2097e6;
+  background: #2097e6;
+  background: linear-gradient(74deg, #2097e6 0%, #7abae6 100%);
   color: #fff;
 }
 
