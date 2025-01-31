@@ -1,0 +1,9 @@
+.loading {
+  flex-grow: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  color: #2097e6;
+}

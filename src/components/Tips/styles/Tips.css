@@ -19,13 +19,3 @@
   width: 60px;
   height: 60px;
 }
-
-.loading {
-  height: 100%;
-  aspect-ratio: 1 / 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 4em;
-  color: #f7c456;
-}
