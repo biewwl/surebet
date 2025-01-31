@@ -74,7 +74,7 @@ const ProfitChart = ({ aspectRatio }) => {
     if (i === a.length - 1) {
       return "#c1c1c1";
     } else if (v > 0) {
-      return "#6232ff70";
+      return "#2097e670";
     } else {
       return "#c12a2a70";
     }
