@@ -30,7 +30,7 @@ function Navigation() {
 
   const filteredLinks = navLinks.filter((l) => l.path !== pathname);
 
-  return (
+  const component = (
     <nav className="navigation">
       <button onClick={handleOpen} className="navigation__item content">
         {!open && <Icon icon="line-md:close-to-menu-alt-transition" />}
@@ -47,6 +47,8 @@ function Navigation() {
         })}
     </nav>
   );
+
+  return pathname !== "login" ? component : null;
 }
 
 export default Navigation;

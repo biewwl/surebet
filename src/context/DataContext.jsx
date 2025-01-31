@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import { getResults } from "../api/get";
+import { getBalance, getResults } from "../api/get";
 import lS from "manager-local-storage";
 // Crie o contexto
 export const DataContext = createContext();
@@ -14,12 +14,14 @@ export const DataProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [update, setUpdate] = useState(false);
   const [script, setScript] = useState(initialScript);
+  const [balance, setBalance] = useState([]);
 
   useEffect(() => {
     const fetchResults = async () => {
       if (script) {
         setLoading(true);
         const r = await getResults(script);
+        const b = await getBalance(script);
 
         const mappedResults = r.map((r1) => {
           const newR = r1.map((r2) => r2.value);
@@ -27,6 +29,7 @@ export const DataProvider = ({ children }) => {
         });
 
         setResults(mappedResults);
+        setBalance(b);
         setLoading(false);
       }
     };
@@ -40,12 +43,22 @@ export const DataProvider = ({ children }) => {
 
   const logout = () => {
     setScript("");
+    setResults([]);
     lS.remove(LS_KEY);
   };
 
   return (
     <DataContext.Provider
-      value={{ results, loading, update, setUpdate, script, login, logout }}
+      value={{
+        results,
+        loading,
+        update,
+        setUpdate,
+        script,
+        login,
+        logout,
+        balance,
+      }}
     >
       {children}
     </DataContext.Provider>

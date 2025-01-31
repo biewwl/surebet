@@ -9,6 +9,7 @@ import { useContext, useEffect } from "react";
 import { DataContext } from "./context/DataContext";
 import Login from "./pages/Login";
 import { getResults } from "./api/get";
+import Navigation from "./components/Navigation";
 
 function PrivateRoute({ element, script, ...rest }) {
   return script ? element : <Navigate to="/login" />;
@@ -25,14 +26,15 @@ function App() {
 
   useEffect(() => {
     const verify = async () => {
-      const { error } = await getResults(script);
-
-      if (error) {
-        logout();
+      if (script) {
+        const { error } = await getResults(script);
+        if (error) {
+          logout();
+        }
       }
     };
     verify();
-  }, [pathname, script, logout]);
+  }, [pathname]);
 
   return (
     <div className="App">
@@ -57,6 +59,7 @@ function App() {
       </Routes>
       <Footer />
       <div className="bottom-gradient"></div>
+      <Navigation />
     </div>
   );
 }

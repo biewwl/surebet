@@ -21,12 +21,12 @@ function Login() {
     e.preventDefault();
     setLoading(true);
     const { error } = await getResults(script);
-    setLoading(false);
     if (error) {
       setError(true);
     } else {
       login(script);
     }
+    setLoading(false);
   };
 
   return (

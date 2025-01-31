@@ -9,6 +9,11 @@
   width: 100%;
   max-width: 400px;
   animation: toTop 0.5s;
+  transition: 0.5s;
+}
+
+.tip-card:hover {
+  scale: 1.02;
 }
 
 .tip-card__tip {

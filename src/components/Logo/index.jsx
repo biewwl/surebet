@@ -1,8 +1,12 @@
+import "./styles/Logo.css";
+
 function Logo() {
   return (
-    <div className="home__profit-chart__logo">
+    <div className="logo">
       biewwl
-      <p className="home__profit-chart__logo__slogan">surebets</p>
+      <p className="logo__slogan">
+        <span className="logo__slogan__sure">sure</span>bet
+      </p>
     </div>
   );
 }

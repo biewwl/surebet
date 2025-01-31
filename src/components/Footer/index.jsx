@@ -7,7 +7,7 @@ function Footer() {
 
   return (
     <footer className="footer">
-      <p>© Copyright 2024 biewwl, All rights reserved.</p>
+      <p>© Copyright 2025 biewwl, All rights reserved.</p>
       {script && (
         <button className="footer__logout" onClick={logout}>
           Sair.

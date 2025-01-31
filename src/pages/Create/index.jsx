@@ -14,7 +14,7 @@ import { disabled, formatData } from "../../utils/manageData";
 import { postResult } from "../../api/post";
 import { useNavigate } from "react-router-dom";
 import { DataContext } from "../../context/DataContext";
-import Navigation from "../../components/Navigation";
+import SectionTitle from "../../components/SectionTitle";
 registerLocale("pt", pt);
 
 function Create() {
@@ -104,92 +104,91 @@ function Create() {
   return (
     <main className="create">
       <Logo />
-      {loading ? (
-        <div className="create__loading content">
-          <Icon
-            icon="line-md:uploading-loop"
-            className="create__loading__icon"
-          />
-        </div>
-      ) : (
-        <div className="create__view">
-          <TipCard data={{ ...transformToNumber(formData), win: "" }} />
-          <div className="create__view__inputs content">
-            {keys.map((k, i) => (
-              <>
-                <label
-                  htmlFor={k}
-                  key={i}
-                  className="create__view__inputs__label"
-                >
-                  <span className="create__view__inputs__label__text">
-                    <Icon
-                      icon={labels[i].icon}
-                      className="create__view__inputs__label__text__icon"
-                    />
-                    {labels[i].text}
-                  </span>
-                  {i !== 0 ? (
-                    <input
-                      type={i === 0 ? "datetime-local" : "text"}
-                      name={k}
-                      id={k}
-                      value={formData[k]}
-                      onChange={handleChange}
-                      className={`create__view__inputs__label__input${
-                        i === 0 ? " --date" : ""
-                      }`}
-                    />
-                  ) : (
-                    <DatePicker
-                      selected={formData.date}
-                      onChange={(date) => setFormData({ ...formData, date })}
-                      className="create__view__inputs__label__input"
-                      locale="pt"
-                      dateFormat="dd/MM/YYYY"
-                    />
-                  )}
-                </label>
-                {(i === 2 || i === 5) && (
-                  <div className="create__view__inputs__betting-options">
-                    {Object.entries(allLogos).map((l, index) => {
-                      const [name, logo] = l;
-
-                      const selected =
-                        (i === 2 && option1BettingHouse === name) ||
-                        (i === 5 && option2BettingHouse === name);
-
-                      const selectedC = selected ? "" : " --not-selected";
-
-                      return (
-                        <div
-                          className={`create__view__inputs__betting-options__option${selectedC}`}
-                          key={index}
-                          onClick={() => handleSelectBetting(name, i)}
-                        >
-                          <img
-                            src={logo}
-                            alt={`name ${index}`}
-                            className="create__view__inputs__betting-options__option__logo"
-                          />
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </>
-            ))}
-            <button
-              className="create__view__inputs__save"
-              disabled={disabled(formData)}
-              onClick={handleSubmit}
-            >
-              Salvar
-            </button>
+      <div className="create__section">
+        <SectionTitle icon="line-md:plus-circle-twotone" title="Criar" />
+        {loading ? (
+          <div className="create__loading content">
+            <Icon
+              icon="line-md:uploading-loop"
+              className="create__loading__icon"
+            />
           </div>
-        </div>
-      )}
-      <Navigation />
+        ) : (
+          <div className="create__view">
+            <TipCard data={{ ...transformToNumber(formData), win: "" }} />
+            <div className="create__view__inputs content">
+              {keys.map((k, i) => (
+                <>
+                  <label
+                    htmlFor={k}
+                    key={i}
+                    className="create__view__inputs__label"
+                  >
+                    <span className="create__view__inputs__label__text">
+                      <Icon
+                        icon={labels[i].icon}
+                        className="create__view__inputs__label__text__icon"
+                      />
+                      {labels[i].text}
+                    </span>
+                    {i !== 0 ? (
+                      <input
+                        type={i === 0 ? "datetime-local" : "text"}
+                        name={k}
+                        id={k}
+                        value={formData[k]}
+                        onChange={handleChange}
+                        className={`create__view__inputs__label__input${
+                          i === 0 ? " --date" : ""
+                        }`}
+                      />
+                    ) : (
+                      <DatePicker
+                        selected={formData.date}
+                        onChange={(date) => setFormData({ ...formData, date })}
+                        className="create__view__inputs__label__input"
+                        locale="pt"
+                        dateFormat="dd/MM/YYYY"
+                      />
+                    )}
+                  </label>
+                  {(i === 2 || i === 5) && (
+                    <div className="create__view__inputs__betting-options">
+                      {Object.entries(allLogos).map((l, index) => {
+                        const [name, logo] = l;
+                        const selected =
+                          (i === 2 && option1BettingHouse === name) ||
+                          (i === 5 && option2BettingHouse === name);
+                        const selectedC = selected ? "" : " --not-selected";
+                        return (
+                          <div
+                            className={`create__view__inputs__betting-options__option${selectedC}`}
+                            key={index}
+                            onClick={() => handleSelectBetting(name, i)}
+                          >
+                            <img
+                              src={logo}
+                              alt={`name ${index}`}
+                              className="create__view__inputs__betting-options__option__logo"
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </>
+              ))}
+              <button
+                className="create__view__inputs__save"
+                disabled={disabled(formData)}
+                onClick={handleSubmit}
+              >
+                Salvar
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </main>
   );
 }

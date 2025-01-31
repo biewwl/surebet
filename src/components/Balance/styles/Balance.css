@@ -1,0 +1,35 @@
+.balance {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.balance__card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  color: #818181;
+}
+
+.balance__card:nth-child(1) {
+  background-color: #2097e6;
+  color: #fff;
+}
+
+.balance__card__title {
+  display: flex;
+  font-size: 12px;
+  /* align-items: center; */
+  gap: 10px;
+  color: #444;
+}
+
+.balance__card:nth-child(1) .balance__card__title {
+  color: #fff;
+
+}
+
+.balance__card__title__icon {
+  font-size: 15px;
+}

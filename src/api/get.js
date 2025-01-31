@@ -12,6 +12,22 @@ export const getResults = async (script) => {
 
     return responseJSON;
   } catch (error) {
+    console.log(script, error);
     return { error: "Falha ao buscar resultados" };
+  }
+};
+
+export const getBalance = async (script) => {
+  try {
+    const range = "B1:B5";
+
+    const response = await fetch(`${script}?range=${range}`);
+
+    const responseJSON = await response.json();
+
+    return responseJSON;
+  } catch (error) {
+    console.log(error);
+    ;
   }
 };

@@ -4,6 +4,13 @@
   flex-direction: column;
   flex-grow: 1;
   /* align-items: center; */
+  gap: 30px;
+}
+
+.create__section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .create__loading {
