@@ -32,7 +32,7 @@ export const formatData = ({
   odd2,
 }) => {
   const values = [
-    parseDate(formatDate(date)),
+    formatDate(date),
     description,
     option1,
     price1,

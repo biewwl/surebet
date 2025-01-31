@@ -13,7 +13,7 @@ export const postResult = async (script, data) => {
           [
             ...data,
             "",
-            "=IFS(O{line}=1; (J{line}*K{line}) - SUM(J{line};M{line}); O{line}=2; (M{line}*N{line}) - SUM(J{line};M{line}); ISBLANK(O{line}); 0-J{line}-M{line}; O{line}=12; ((J{line}*K{line}) - J{line} + ((M{line}*N{line}) - M{line})))",
+            "=IFS(N{line}=1; (I{line}*J{line}) - SUM(I{line};L{line}); N{line}=2; (L{line}*M{line}) - SUM(I{line};L{line}); ISBLANK(N{line}); 0-I{line}-L{line}; N{line}=12; ((I{line}*J{line}) - I{line} + ((L{line}*M{line}) - L{line})))",
           ],
         ],
         end: true,
