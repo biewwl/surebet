@@ -58,7 +58,7 @@ function App() {
         />
       </Routes>
       <Footer />
-      <div className="bottom-gradient"></div>
+      {pathname !== "/login" && <div className="bottom-gradient"></div>}
       <Navigation />
     </div>
   );
