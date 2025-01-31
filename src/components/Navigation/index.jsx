@@ -58,7 +58,8 @@ function Navigation() {
     </nav>
   );
 
-  return pathname !== "login" ? component : null;
+
+  return pathname !== "/login" ? component : null;
 }
 
 export default Navigation;

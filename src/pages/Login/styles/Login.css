@@ -13,7 +13,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 }
 
 .login__form__label {
@@ -42,7 +42,7 @@
 
 .login__form__button {
   padding: 10px 20px;
-  background-color: #17cc90;
+  background-color: #2097e6;
   border: none;
   color: #fff;
   border-radius: 0.5em;
