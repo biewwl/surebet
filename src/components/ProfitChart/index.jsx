@@ -30,7 +30,13 @@ const ProfitChart = ({ aspectRatio }) => {
 
   useEffect(() => {
     const getData = () => {
-      const mappedResults = results.map((r) => {
+
+      const newResults = results.map((r1) => {
+          const newR = r1.map((r2) => r2.value);
+          return [...newR];
+        });
+
+      const mappedResults = newResults.map((r) => {
         const [date] = r;
         const value = r[9];
 

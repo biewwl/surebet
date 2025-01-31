@@ -23,12 +23,12 @@ export const DataProvider = ({ children }) => {
         const r = await getResults(script);
         const b = await getBalance(script);
 
-        const mappedResults = r.map((r1) => {
-          const newR = r1.map((r2) => r2.value);
-          return newR;
-        });
+        // const mappedResults = r.map((r1) => {
+        //   const newR = r1.map((r2) => r2.value);
+        //   return [...newR];
+        // });
 
-        setResults(mappedResults);
+        setResults(r);
         setBalance(b);
         setLoading(false);
       }

@@ -10,6 +10,11 @@
   gap: 10px;
   padding: 20px;
   color: #818181;
+  transition: 0.5s;
+}
+
+.balance__card:hover {
+  scale: 1.02;
 }
 
 .balance__card:nth-child(1) {
@@ -28,7 +33,6 @@
 
 .balance__card:nth-child(1) .balance__card__title {
   color: #fff;
-
 }
 
 .balance__card__title__icon {

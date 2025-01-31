@@ -27,14 +27,3 @@ export const postResult = async (script, data) => {
     return error.message;
   }
 };
-
-// postResult([
-//   "28/01",
-//   "Barcelona x Real - Messi gol",
-//   "Betano | 3+",
-//   140,
-//   2.3,
-//   "Betfair | 2-",
-//   170,
-//   2,
-// ]);

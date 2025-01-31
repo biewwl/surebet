@@ -10,6 +10,8 @@
   max-width: 400px;
   animation: toTop 0.5s;
   transition: 0.5s;
+  position: relative;
+  overflow: hidden;
 }
 
 .tip-card:hover {
@@ -85,11 +87,24 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  width: 100%;
 }
 
 .tip-card__date__text {
   font-size: 12px;
   color: #636363;
+  flex-grow: 1;
+}
+
+.tip-card__date__options {
+  border: none;
+  padding: 5px;
+  display: flex;
+  border-radius: 0.5em;
+  cursor: pointer;
+  color: #999;
+  background-color: #fff;
+  font-size: 18px;
 }
 
 .tip-card__tip__result {
@@ -125,4 +140,52 @@
     #fd2d2d 100%
   );
   color: #fff;
+}
+
+.tip-card__options {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  backdrop-filter: blur(2px); /* Ajuste o valor do blur conforme necessário */
+}
+
+.tip-card__options__title {
+  margin-block-end: 40px;
+}
+
+.tip-card__options__option {
+  padding: 10px;
+  border-radius: 0.5em;
+  cursor: pointer;
+  border: none;
+  background-color: #f1f1f1;
+  color: #666;
+  box-shadow: 0 0 5px #eee;
+  width: 100%;
+}
+
+.tip-card__options__option.--delete {
+  background-color: #fd2d2d;
+  color: #fff;
+}
+
+.tip-card__options__option.--cancel {
+  /* color: #fd2d2d; */
+  width: auto;
+  padding: 10px 20px;
+  font-size: 15px;
+  display: flex;
+}
+
+.tip-card__options__option:last-child {
+  margin-block-start: 40px;
 }
