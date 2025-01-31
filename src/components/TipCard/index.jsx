@@ -11,7 +11,7 @@ import Loading from "../Loading";
 function TipCard({ data, view }) {
   const dataView = {};
 
-  const { update, setUpdate, script } = useContext(DataContext);
+  const { updateData, script } = useContext(DataContext);
 
   const [options, setOptions] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
@@ -69,7 +69,7 @@ function TipCard({ data, view }) {
     setLoading(true);
     await deleteResult(script, line);
     setLoading(false);
-    setUpdate(!update);
+    updateData();
   };
 
   return (

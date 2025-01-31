@@ -47,13 +47,14 @@ export const DataProvider = ({ children }) => {
     lS.remove(LS_KEY);
   };
 
+  const updateData = () => setUpdate(!update);
+
   return (
     <DataContext.Provider
       value={{
         results,
         loading,
-        update,
-        setUpdate,
+        updateData,
         script,
         login,
         logout,

@@ -31,8 +31,7 @@ function Create() {
   });
 
   const {
-    update,
-    setUpdate,
+    updateData,
     script,
     loading: loadingD,
   } = useContext(DataContext);
@@ -105,7 +104,7 @@ function Create() {
     console.log(data);
 
     await postResult(script, data);
-    setUpdate(!update);
+    updateData();
     navigate("/");
   };
 
