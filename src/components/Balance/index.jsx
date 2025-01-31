@@ -61,7 +61,8 @@ function Balance() {
               />
               Saídas
             </span>
-            - {formatValue(outflows[0].value)}
+            {outflows[0].value > 0 && "- "}
+            {formatValue(outflows[0].value)}
           </div>
         </>
       )}
