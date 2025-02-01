@@ -13,10 +13,7 @@ export const disabled = ({
     !description ||
     !option1 ||
     !price1 ||
-    !odd1 ||
-    !option2 ||
-    !price2 ||
-    !odd2
+    !odd1
   )
     return true;
 };

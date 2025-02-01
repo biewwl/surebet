@@ -16,16 +16,6 @@ function Balance() {
           <div className="balance__card content">
             <span className="balance__card__title">
               <Icon
-                icon="ph:piggy-bank-duotone"
-                className="balance__card__title__icon"
-              />
-              Saldo Atual
-            </span>
-            {formatValue(current[0].value)}
-          </div>
-          <div className="balance__card content">
-            <span className="balance__card__title">
-              <Icon
                 icon="icon-park-twotone:up-one"
                 className="balance__card__title__icon"
               />
@@ -42,6 +32,16 @@ function Balance() {
               Saldo Inicial
             </span>
             {formatValue(initial[0].value)}
+          </div>
+          <div className="balance__card content">
+            <span className="balance__card__title">
+              <Icon
+                icon="ph:piggy-bank-duotone"
+                className="balance__card__title__icon"
+              />
+              Saldo Atual
+            </span>
+            {formatValue(current[0].value)}
           </div>
           <div className="balance__card content">
             <span className="balance__card__title">

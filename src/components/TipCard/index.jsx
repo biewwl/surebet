@@ -1,16 +1,19 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { formatValue } from "../../utils/formatNumber";
 import { getLogo } from "../../utils/getLogo";
-import "./styles/TipCard.css";
 import { formatDate } from "../../utils/formatDate";
 import { useContext, useState } from "react";
 import { DataContext } from "../../context/DataContext";
 import { deleteResult } from "../../api/delete";
 import Loading from "../Loading";
 import { postWin } from "../../api/post";
+import "./styles/TipCard.css";
+import { useLocation } from "react-router-dom";
 
 function TipCard({ data, view }) {
   const dataView = {};
+
+  const { pathname } = useLocation();
 
   const { updateData, script } = useContext(DataContext);
 
@@ -113,11 +116,16 @@ function TipCard({ data, view }) {
       <span className="tip-card__date">
         <Icon icon="lets-icons:date-today-duotone" />
         <span className="tip-card__date__text">{formatDate(date)}</span>
-        <button className="tip-card__date__options" onClick={handleOpenOptions}>
-          <Icon icon="mi:options-horizontal" />
-        </button>
+        {pathname !== "/create" && (
+          <button
+            className="tip-card__date__options"
+            onClick={handleOpenOptions}
+          >
+            <Icon icon="mi:options-horizontal" />
+          </button>
+        )}
       </span>
-      <div>{description}</div>
+      <span className="tip-card__description">{description}</span>
       <section className="tip-card__tip">
         <div className={`tip-card__tip__odd${winner(1)}`}>
           <img src={image1} alt="" className="tip-card__tip__odd__logo" />
@@ -128,7 +136,7 @@ function TipCard({ data, view }) {
           </div>
           {formatValue(price1)}
         </div>
-        {odd2 && (
+        {(opt2 && opt2 !== "0") && (
           <div className={`tip-card__tip__odd${winner(2)}`}>
             <img src={image2} alt="" className="tip-card__tip__odd__logo" />
             <div className="tip-card__tip__odd__info">

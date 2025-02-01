@@ -11,6 +11,7 @@
   padding: 20px;
   color: #818181;
   transition: 0.5s;
+  animation: toTop 0.5s;
 }
 
 .balance__card:hover {

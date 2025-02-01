@@ -81,9 +81,10 @@
 .create__view__inputs__betting-options {
   align-items: flex-end;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(45px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
   height: 100%;
   padding-top: 20px;
+  gap: 10px;
 }
 
 .create__view__inputs__betting-options__option {
@@ -103,7 +104,7 @@
 }
 
 .create__view__inputs__betting-options__option__logo {
-  width: 40px;
+  width: 100%;
   cursor: pointer;
   border-radius: 0.25em;
 }

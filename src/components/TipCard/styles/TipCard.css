@@ -18,6 +18,13 @@
   scale: 1.02;
 }
 
+.tip-card__description {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+}
+
 .tip-card__tip {
   display: grid;
   gap: 10px;

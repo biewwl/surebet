@@ -40,8 +40,8 @@ function Create() {
 
   const navigate = useNavigate();
 
-  const [option1BettingHouse, setOption1BettingHouse] = useState("Betano");
-  const [option2BettingHouse, setOption2BettingHouse] = useState("Betfair");
+  const [option1BettingHouse, setOption1BettingHouse] = useState("");
+  const [option2BettingHouse, setOption2BettingHouse] = useState("");
 
   const keys = Object.keys(formData);
 
@@ -101,7 +101,6 @@ function Create() {
   const handleSubmit = async () => {
     setLoading(true);
     const data = formatData(transformToNumber(formData));
-    console.log(data);
 
     await postResult(script, data);
     updateData();
@@ -169,7 +168,7 @@ function Create() {
                         return (
                           <div
                             className={`create__view__inputs__betting-options__option${selectedC}`}
-                            key={index}
+                            key={`${name}${i}`}
                             onClick={() => handleSelectBetting(name, i)}
                           >
                             <img

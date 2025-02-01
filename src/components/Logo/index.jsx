@@ -1,13 +1,14 @@
+import { Link } from "react-router-dom";
 import "./styles/Logo.css";
 
 function Logo() {
   return (
-    <div className="logo">
+    <Link to="/" className="logo">
       biewwl
       <p className="logo__slogan">
         <span className="logo__slogan__sure">sure</span>bet
       </p>
-    </div>
+    </Link>
   );
 }
 

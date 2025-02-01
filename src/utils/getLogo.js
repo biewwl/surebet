@@ -4,6 +4,8 @@ import Bet365 from "../assets/bet365.png";
 import Superbet from "../assets/superbet.png";
 import Kto from "../assets/kto.png";
 import Pinnacle from "../assets/pinnacle.png";
+import EstrelaBet from "../assets/estrelabet.png";
+import SportingBet from "../assets/sportingbet.png";
 
 export const getLogo = (name) => {
   const [fixedName] = name.split(" |");
@@ -23,6 +25,10 @@ export const getLogo = (name) => {
       return Kto;
     case "pinnacle":
       return Pinnacle;
+    case "estrelabet":
+      return EstrelaBet;
+    case "sportingbet":
+      return SportingBet;
     default:
       break;
   }
@@ -34,4 +40,6 @@ export const allLogos = {
   Bet365,
   Superbet,
   Pinnacle,
+  EstrelaBet,
+  SportingBet,
 };
