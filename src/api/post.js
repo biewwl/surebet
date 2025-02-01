@@ -27,3 +27,25 @@ export const postResult = async (script, data) => {
     return error.message;
   }
 };
+
+export const postWin = async (script, win, line) => {
+  try {
+    const response = await fetch(script, {
+      method: "POST",
+      body: JSON.stringify({
+        method: "POST",
+        range: `N${line}:N${line}`,
+        values: [[win]],
+      }),
+    });
+
+    const responseJSON = await response.json();
+
+    console.log(responseJSON);
+    
+
+    return responseJSON;
+  } catch (error) {
+    return error.message;
+  }
+};

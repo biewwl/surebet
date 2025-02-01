@@ -133,12 +133,7 @@
 
 .tip-card.--bingo .tip-card__tip__result {
   background: #2d64fd;
-  background: linear-gradient(
-    74deg,
-    #2d64fd 0%,
-    #999947 52%,
-    #fd2d2d 100%
-  );
+  background: linear-gradient(74deg, #2d64fd 0%, #999947 52%, #fd2d2d 100%);
   color: #fff;
 }
 
@@ -171,6 +166,7 @@
   color: #666;
   box-shadow: 0 0 5px #eee;
   width: 100%;
+  transition: 0.5s;
 }
 
 .tip-card__options__option.--delete {
@@ -188,4 +184,39 @@
 
 .tip-card__options__option:last-child {
   margin-block-start: 40px;
+}
+
+.tip-card__options__option-2 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  gap: 10px;
+}
+
+.tip-card__options__option-2__item {
+  padding: 10px;
+  border-radius: 0.5em;
+  cursor: pointer;
+  border: none;
+  background-color: #f1f1f1;
+  color: #666;
+  box-shadow: 0 0 5px #eee;
+  transition: 0.5s;
+}
+
+.tip-card__options__option-2__item.--selected {
+  background: #17cc90;
+  background: linear-gradient(74deg, #17cc90 0%, #09f3a9 100%);
+  color: #fff;
+}
+
+.tip-card__options__option-2__item.--selected.--bingo {
+  background: #2d64fd;
+  background: linear-gradient(74deg, #2d64fd 0%, #999947 52%, #fd2d2d 100%);
+  color: #fff;
+}
+
+.tip-card__options__option:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
 }

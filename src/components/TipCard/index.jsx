@@ -7,6 +7,7 @@ import { useContext, useState } from "react";
 import { DataContext } from "../../context/DataContext";
 import { deleteResult } from "../../api/delete";
 import Loading from "../Loading";
+import { postWin } from "../../api/post";
 
 function TipCard({ data, view }) {
   const dataView = {};
@@ -15,7 +16,9 @@ function TipCard({ data, view }) {
 
   const [options, setOptions] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+  const [openWin, setOpenWin] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [optWin, setOptWin] = useState("");
 
   Object.entries(data).forEach(([name, value]) => {
     dataView[name] = { value };
@@ -68,6 +71,36 @@ function TipCard({ data, view }) {
     const [, line] = cel.match(/([a-zA-Z]+)([0-9]+)/).slice(1, 3);
     setLoading(true);
     await deleteResult(script, line);
+    setLoading(false);
+    updateData();
+  };
+
+  const handleOpenWin = async () => {
+    setOpenWin(!openWin);
+  };
+
+  const titleMenu = () => {
+    if (openDelete) return "Confirmar exclusão";
+    if (openWin) return "Qual odd vencedora?";
+    return "O que deseja fazer?";
+  };
+
+  const handleBack = () => {
+    setOpenDelete(false);
+    setOpenWin(false);
+    setOptWin("");
+  };
+
+  const selectedWin = (w) => {
+    if (optWin === w && w === 12) return " --selected --bingo";
+    if (optWin === w) return " --selected";
+    return "";
+  };
+
+  const handleEdit = async () => {
+    const [, line] = cel.match(/([a-zA-Z]+)([0-9]+)/).slice(1, 3);
+    setLoading(true);
+    await postWin(script, optWin, line);
     setLoading(false);
     updateData();
   };
@@ -143,25 +176,60 @@ function TipCard({ data, view }) {
             <Loading />
           ) : (
             <>
-              <p className="tip-card__options__title">
-                {openDelete
-                  ? "Deseja excluir realmente?"
-                  : "O que deseja fazer?"}
-              </p>
+              <p className="tip-card__options__title">{titleMenu()}</p>
               {/* {!openDelete && (
               <button className="tip-card__options__option --edit">Editar</button>
             )} */}
-              <button
-                className="tip-card__options__option --delete"
-                onClick={openDelete ? handleConfirmDelete : handleOpenDelete}
-              >
-                {openDelete ? "Confirmar exclusão" : "Excluir"}
-              </button>
+              {!openDelete && openWin && (
+                <div className="tip-card__options__option-2">
+                  <button
+                    className={`tip-card__options__option-2__item${selectedWin(
+                      1
+                    )}`}
+                    onClick={() => setOptWin(1)}
+                  >
+                    1
+                  </button>
+                  <button
+                    className={`tip-card__options__option-2__item${selectedWin(
+                      12
+                    )}`}
+                    onClick={() => setOptWin(12)}
+                  >
+                    x
+                  </button>
+                  <button
+                    className={`tip-card__options__option-2__item${selectedWin(
+                      2
+                    )}`}
+                    onClick={() => setOptWin(2)}
+                  >
+                    2
+                  </button>
+                </div>
+              )}
+              {!openDelete && !win && (
+                <button
+                  className="tip-card__options__option --win"
+                  onClick={openWin ? handleEdit : handleOpenWin}
+                  disabled={openWin ? !optWin : false}
+                >
+                  {openWin ? "Confirmar" : "Definir Ganhador"}
+                </button>
+              )}
+              {!openWin && (
+                <button
+                  className="tip-card__options__option --delete"
+                  onClick={openDelete ? handleConfirmDelete : handleOpenDelete}
+                >
+                  {openDelete ? "Confirmar exclusão" : "Excluir"}
+                </button>
+              )}
               <button
                 className="tip-card__options__option --cancel"
-                onClick={openDelete ? handleOpenDelete : handleOpenOptions}
+                onClick={openDelete || openWin ? handleBack : handleOpenOptions}
               >
-                {openDelete ? (
+                {openDelete || openWin ? (
                   <Icon icon="iconamoon:arrow-up-2-duotone" rotate={3} />
                 ) : (
                   <Icon icon="line-md:close" />
