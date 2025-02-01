@@ -31,8 +31,8 @@
   color: #2097e6;
 }
 
-.navigation__item__icon__title {
-  font-size: 0.8em;
+.navigation__item__title {
+  font-size: 12px;
 }
 
 .navigation__item:nth-child(1) {
@@ -44,6 +44,10 @@
 }
 
 .navigation__item__icon.--close {
+  color: #fd2d2d;
+}
+
+.navigation__item.--logout, .navigation__item.--logout .navigation__item__icon {
   color: #fd2d2d;
 }
 

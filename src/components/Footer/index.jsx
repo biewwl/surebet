@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import "./styles/Footer.css";
 import { DataContext } from "../../context/DataContext";
+import "./styles/Footer.css";
 
 function Footer() {
   const { script, logout } = useContext(DataContext);
