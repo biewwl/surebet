@@ -37,6 +37,7 @@ export const allLogos = {
   Betfair,
   Bet365,
   Superbet,
+  Kto,
   Pinnacle,
   EstrelaBet,
   SportingBet,
