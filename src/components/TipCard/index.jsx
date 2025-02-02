@@ -40,11 +40,11 @@ function TipCard({ data, view }) {
     date: { value: date },
   } = view ? dataView : data;
 
-  const image1 = getLogo(option1);
-  const image2 = getLogo(option2);
+  const [bet1, opt1] = option1.split(" | ");
+  const [bet2, opt2] = option2.split(" | ");
 
-  const [, opt1] = option1.split("| ");
-  const [, opt2] = option2.split("| ");
+  const image1 = getLogo(bet1);
+  const image2 = getLogo(bet2);
 
   const pending = !win;
   const bingo = win === 12;
@@ -136,7 +136,7 @@ function TipCard({ data, view }) {
           </div>
           {formatValue(price1)}
         </div>
-        {(opt2 && opt2 !== "0") && (
+        {bet2 && (
           <div className={`tip-card__tip__odd${winner(2)}`}>
             <img src={image2} alt="" className="tip-card__tip__odd__logo" />
             <div className="tip-card__tip__odd__info">

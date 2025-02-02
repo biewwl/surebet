@@ -8,9 +8,7 @@ import EstrelaBet from "../assets/estrelabet.png";
 import SportingBet from "../assets/sportingbet.png";
 
 export const getLogo = (name) => {
-  const [fixedName] = name.split(" |");
-
-  const betName = fixedName.toLowerCase();
+  const betName = name.toLowerCase();
 
   switch (betName) {
     case "betano":
