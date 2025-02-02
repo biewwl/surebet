@@ -8,12 +8,12 @@ export const postResult = async (script, data) => {
       method: "POST",
       body: JSON.stringify({
         method: "POST",
-        range: "F3:O3",
+        range: "F3:N3",
         values: [
           [
             ...data,
             "",
-            "=IFS(N{line}=1; (I{line}*J{line}) - SUM(I{line};L{line}); N{line}=2; (L{line}*M{line}) - SUM(I{line};L{line}); ISBLANK(N{line}); 0-I{line}-L{line}; N{line}=12; ((I{line}*J{line}) - I{line} + ((L{line}*M{line}) - L{line})))",
+            // "=IFS(N{line}=1; (I{line}*J{line}) - SUM(I{line};L{line}); N{line}=2; (L{line}*M{line}) - SUM(I{line};L{line}); ISBLANK(N{line}); 0-I{line}-L{line}; N{line}=12; ((I{line}*J{line}) - I{line} + ((L{line}*M{line}) - L{line})))",
           ],
         ],
         end: true,
@@ -42,7 +42,6 @@ export const postWin = async (script, win, line) => {
     const responseJSON = await response.json();
 
     console.log(responseJSON);
-    
 
     return responseJSON;
   } catch (error) {

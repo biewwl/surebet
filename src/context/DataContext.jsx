@@ -23,12 +23,26 @@ export const DataProvider = ({ children }) => {
         const r = await getResults(script);
         const b = await getBalance(script);
 
-        // const mappedResults = r.map((r1) => {
-        //   const newR = r1.map((r2) => r2.value);
-        //   return [...newR];
-        // });
+        const mappedResults = r.map((r1) => {
+          const newR = [...r1];
 
-        setResults(r);
+          const { value } = newR[newR.length - 1];
+          const price1 = r1[3].value;
+          const odd1 = r1[4].value;
+          const price2 = r1[6].value;
+          const odd2 = r1[7].value;
+
+          let profit = 0;
+
+          if (value === 1) profit = price1 * odd1 - (price1 + price2);
+          if (value === 2) profit = price2 * odd2 - (price1 + price2);
+          if (value === 12)
+            profit = price1 * odd1 + price2 * odd2 - (price1 + price2);
+
+          return [...newR, { value: profit }];
+        });
+
+        setResults(mappedResults);
         setBalance(b);
         setLoading(false);
       }

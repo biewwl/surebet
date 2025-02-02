@@ -8,7 +8,7 @@ export const deleteResult = async (script, line) => {
       method: "POST",
       body: JSON.stringify({
         method: "DELETE",
-        range: `F${line}:O${line}`,
+        range: `F${line}:N${line}`,
       }),
     });
 
