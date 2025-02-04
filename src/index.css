@@ -21,3 +21,51 @@
     transform: translateY(0);
   }
 }
+
+:root {
+  --light: #fff;
+  --light-2: #eee;
+  --dark: #000;
+  --dark-2: #222;
+  --accent: #2097e6;
+}
+
+.bg-light {
+  background-color: var(--light-2);
+}
+
+.bg-light-2 {
+  background-color: var(--light);
+}
+
+.bg-dark {
+  background-color: var(--dark);
+}
+
+.bg-dark-2 {
+  background-color: var(--dark-2);
+}
+
+.c-dark {
+  color: #c1c1c1;
+}
+
+.c-light {
+  color: #333;
+}
+
+.c-dark-1 {
+  color: #707070;
+}
+
+.c-light-1 {
+  color: #999;
+}
+
+.c-dark-2 {
+  color: var(--dark-2);
+}
+
+.c-light-2 {
+  color: var(--light);
+}

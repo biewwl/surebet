@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { DataContext } from "../../context/DataContext";
 import SectionTitle from "../../components/SectionTitle";
 import Loading from "../../components/Loading";
+import { ThemeContext } from "../../context/ThemeContext";
 registerLocale("pt", pt);
 
 function Create() {
@@ -30,11 +31,8 @@ function Create() {
     odd2: "",
   });
 
-  const {
-    updateData,
-    script,
-    loading: loadingD,
-  } = useContext(DataContext);
+  const { updateData, script, loading: loadingD } = useContext(DataContext);
+  const { theme } = useContext(ThemeContext);
 
   const [loading, setLoading] = useState(false);
 
@@ -113,7 +111,7 @@ function Create() {
       {loadingD || loading ? (
         <Loading />
       ) : (
-        <div className="create__section">
+        <div className={`create__section c-${theme}`}>
           <SectionTitle icon="line-md:plus-circle-twotone" title="Criar" />
 
           <div className="create__view">
@@ -143,15 +141,13 @@ function Create() {
                         id={k}
                         value={formData[k]}
                         onChange={handleChange}
-                        className={`create__view__inputs__label__input${
-                          i === 0 ? " --date" : ""
-                        }`}
+                        className={`create__view__inputs__label__input bg-${theme} c-${theme}`}
                       />
                     ) : (
                       <DatePicker
                         selected={formData.date}
                         onChange={(date) => setFormData({ ...formData, date })}
-                        className="create__view__inputs__label__input"
+                        className={`create__view__inputs__label__input  bg-${theme} c-${theme}`}
                         locale="pt"
                         dateFormat="dd/MM/YYYY"
                       />
@@ -184,8 +180,8 @@ function Create() {
                 </>
               ))}
               <button
-                className="create__view__inputs__save"
-                disabled={disabled(formData)}
+                className={`create__view__inputs__save c-${theme}-2`}
+                disabled={disabled({...formData, option1BettingHouse})}
                 onClick={handleSubmit}
               >
                 Salvar

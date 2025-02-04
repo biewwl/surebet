@@ -14,7 +14,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #444;
+  /* color: #444; */
   animation: toTop 0.5s;
   border: none;
   cursor: pointer;
@@ -26,6 +26,11 @@
   border-radius: 25px !important;
 }
 
+.navigation__theme {
+  display: flex;
+  gap: 10px;
+}
+
 .navigation__item__icon {
   font-size: 18px;
   color: #2097e6;
@@ -35,7 +40,7 @@
   font-size: 12px;
 }
 
-.navigation__item:nth-child(1) {
+.navigation > .navigation__item:nth-child(1) {
   /* height: 50px; */
   aspect-ratio: 1 / 1;
   font-size: 18px;

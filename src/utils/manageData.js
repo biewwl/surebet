@@ -5,16 +5,12 @@ export const disabled = ({
   option1,
   price1,
   odd1,
+  option1BettingHouse,
   option2,
   price2,
   odd2,
 }) => {
-  if (
-    !description ||
-    !option1 ||
-    !price1 ||
-    !odd1
-  )
+  if (!description || !option1 || !price1 || !odd1 || !option1BettingHouse)
     return true;
 };
 

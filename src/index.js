@@ -4,12 +4,15 @@ import App from "./App";
 import "./index.css";
 import { DataProvider } from "./context/DataContext";
 import { HashRouter } from "react-router-dom";
+import { ThemeProvider } from "./context/ThemeContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <HashRouter>
     <DataProvider>
-      <App />
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
     </DataProvider>
   </HashRouter>
 );

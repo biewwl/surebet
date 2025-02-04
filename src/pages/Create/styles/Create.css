@@ -44,6 +44,7 @@
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   padding: 20px;
   min-width: 40%;
+  transition: 0.5s;
 
 }
 
@@ -57,7 +58,6 @@
 
 .create__view__inputs__label__text {
   align-items: center;
-  color: #666;
   display: flex;
   font-size: 0.7em;
   gap: 5px;
@@ -68,13 +68,14 @@
 }
 
 .create__view__inputs__label__input {
-  background-color: #f1f1f1;
+  /* background-color: #f1f1f1; */
   border: none;
   border-radius: 0.5em;
   /* flex-grow: 1; */
   outline: none;
   padding: 10px;
   width: 100%;
+  transition: 0.5s;
   
 }
 
@@ -113,7 +114,6 @@
   background-color: #17cc90;
   border: none;
   border-radius: 0.5em;
-  color: #fff;
   cursor: pointer;
   font-size: 16px;
   /* grid-column-end: 3;

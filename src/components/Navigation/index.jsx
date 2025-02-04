@@ -3,12 +3,14 @@ import { useContext, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./styles/Navigation.css";
 import { DataContext } from "../../context/DataContext";
+import { ThemeContext } from "../../context/ThemeContext";
 
 function Navigation() {
   const [open, setOpen] = useState(false);
 
   const { pathname } = useLocation();
   const { logout } = useContext(DataContext);
+  const { theme, setDark, setLight, setAuto } = useContext(ThemeContext);
 
   const navLinks = [
     {
@@ -37,9 +39,12 @@ function Navigation() {
     setOpen(false);
   };
 
-  const component = (
+  return (
     <nav className="navigation">
-      <button onClick={handleOpen} className="navigation__item content">
+      <button
+        onClick={handleOpen}
+        className={`navigation__item content c-${theme}`}
+      >
         {!open && <Icon icon="line-md:close-to-menu-alt-transition" />}
         {open && (
           <Icon
@@ -50,35 +55,71 @@ function Navigation() {
       </button>
       {open && (
         <>
-          <button
-            className="navigation__item content --logout"
-            onClick={handleLogout}
-          >
-            <Icon
-              icon="solar:logout-line-duotone"
-              className="navigation__item__icon"
-            />
-            <span className="navigation__item__title">Sair</span>
-          </button>
-          {filteredLinks.map(({ icon, path, title }, i) => {
-            return (
-              <Link
-                to={path}
-                className="navigation__item content"
-                onClick={() => setOpen(false)}
-                key={i}
+          {pathname !== "/login" && (
+            <button
+              className="navigation__item content --logout"
+              onClick={handleLogout}
+            >
+              <Icon
+                icon="solar:logout-line-duotone"
+                className="navigation__item__icon"
+              />
+              <span className="navigation__item__title">Sair</span>
+            </button>
+          )}
+          <div className={`navigation__theme`}>
+            {theme !== "light" && (
+              <button
+                className={`navigation__item content c-${theme}`}
+                onClick={setLight}
               >
-                <Icon icon={icon} className="navigation__item__icon" />
-                <span className="navigation__item__title">{title}</span>
-              </Link>
-            );
-          })}
+                <Icon
+                  icon="line-md:sun-rising-loop"
+                  className="navigation__item__icon"
+                />
+                <span className="navigation__item__title">Light</span>
+              </button>
+            )}
+            {theme !== "dark" && (
+              <button
+                className={`navigation__item content c-${theme}`}
+                onClick={setDark}
+              >
+                <Icon
+                  icon="line-md:moon-rising-loop"
+                  className="navigation__item__icon"
+                />
+                <span className="navigation__item__title">Dark</span>
+              </button>
+            )}
+            <button
+              className={`navigation__item content c-${theme}`}
+              onClick={setAuto}
+            >
+              <Icon
+                icon="ic:twotone-hdr-auto"
+                className="navigation__item__icon"
+              />
+            </button>
+          </div>
+          {pathname !== "/login" &&
+            filteredLinks.map(({ icon, path, title }, i) => {
+              return (
+                <Link
+                  to={path}
+                  className={`navigation__item content c-${theme}`}
+                  onClick={() => setOpen(false)}
+                  key={i}
+                >
+                  <Icon icon={icon} className="navigation__item__icon" />
+                  <span className="navigation__item__title">{title}</span>
+                </Link>
+              );
+            })}
         </>
       )}
     </nav>
   );
-
-  return pathname !== "/login" ? component : null;
 }
 
 export default Navigation;

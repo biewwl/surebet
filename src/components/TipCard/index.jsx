@@ -9,6 +9,7 @@ import Loading from "../Loading";
 import { postWin } from "../../api/post";
 import "./styles/TipCard.css";
 import { useLocation } from "react-router-dom";
+import { ThemeContext } from "../../context/ThemeContext";
 
 function TipCard({ data, view }) {
   const dataView = {};
@@ -16,6 +17,7 @@ function TipCard({ data, view }) {
   const { pathname } = useLocation();
 
   const { updateData, script } = useContext(DataContext);
+  const { theme } = useContext(ThemeContext);
 
   const [options, setOptions] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
@@ -110,7 +112,7 @@ function TipCard({ data, view }) {
 
   return (
     <div
-      className={`tip-card content${pendingC}${drawC}${bingoC}`}
+      className={`tip-card content${pendingC}${drawC}${bingoC} c-${theme}`}
       // style={{width}}
     >
       <span className="tip-card__date">
@@ -118,7 +120,7 @@ function TipCard({ data, view }) {
         <span className="tip-card__date__text">{formatDate(date)}</span>
         {pathname !== "/create" && (
           <button
-            className="tip-card__date__options"
+            className={`tip-card__date__options c-${theme}`}
             onClick={handleOpenOptions}
           >
             <Icon icon="mi:options-horizontal" />
@@ -152,20 +154,24 @@ function TipCard({ data, view }) {
         <ul className="tip-card__tip__profit__details">
           <li className="tip-card__tip__profit__details__item">
             Valor Total Apostado:{" "}
-            <span className="tip-card__tip__profit__details__item__value">
+            <span
+              className={`tip-card__tip__profit__details__item__value c-${theme}-1`}
+            >
               {formatValue(price1 + price2)}
             </span>
           </li>
           <li className="tip-card__tip__profit__details__item">
             Retorno:{" "}
-            <span className="tip-card__tip__profit__details__item__value">
+            <span
+              className={`tip-card__tip__profit__details__item__value c-${theme}-1`}
+            >
               {!pending && formatValue(result)}
               {pending && "R$ 0,00"}
             </span>
           </li>
         </ul>
       </div>
-      <span className="tip-card__tip__result">
+      <span className={`tip-card__tip__result c-${theme}-2`}>
         {!pending && draw && (
           <>
             <Icon icon="oui:token-null" /> Anulado!
@@ -179,7 +185,7 @@ function TipCard({ data, view }) {
         {pending && <Icon icon="eos-icons:loading" />}
       </span>
       {(options || loading) && (
-        <div className="tip-card__options">
+        <div className={`tip-card__options bg-${theme}-2`}>
           {loading ? (
             <Loading />
           ) : (
@@ -234,7 +240,7 @@ function TipCard({ data, view }) {
                 </button>
               )}
               <button
-                className="tip-card__options__option --cancel"
+                className={`tip-card__options__option bg-${theme} c-${theme} --cancel`}
                 onClick={openDelete || openWin ? handleBack : handleOpenOptions}
               >
                 {openDelete || openWin ? (

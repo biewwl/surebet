@@ -4,12 +4,14 @@ import Graph from "./pages/Graph";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import Create from "./pages/Create";
-import "./App.css";
 import { useContext, useEffect } from "react";
 import { DataContext } from "./context/DataContext";
 import Login from "./pages/Login";
 import { getResults } from "./api/get";
 import Navigation from "./components/Navigation";
+import { ThemeContext } from "./context/ThemeContext";
+import { Helmet } from "react-helmet";
+import "./App.css";
 
 function PrivateRoute({ element, script, ...rest }) {
   return script ? element : <Navigate to="/login" />;
@@ -23,6 +25,9 @@ function App() {
   const { pathname } = useLocation();
 
   const { script, logout } = useContext(DataContext);
+  const { theme } = useContext(ThemeContext);
+
+  const themeColor = theme === "light" ? "#eee" : "#000";
 
   useEffect(() => {
     const verify = async () => {
@@ -37,8 +42,11 @@ function App() {
   }, [pathname]);
 
   return (
-    <div className="App">
+    <div className={`App bg-${theme}`}>
       <ScrollToTop />
+      <Helmet>
+        <meta name="theme-color" content={themeColor} />
+      </Helmet>
       <Routes>
         <Route
           path="/login"

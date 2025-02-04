@@ -4,6 +4,7 @@ import { DataContext } from "../../context/DataContext";
 import { getResults } from "../../api/get";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import "./styles/Login.css";
+import { ThemeContext } from "../../context/ThemeContext";
 
 function Login() {
   const [script, setScript] = useState("");
@@ -11,6 +12,7 @@ function Login() {
   const [loading, setLoading] = useState(false);
 
   const { login } = useContext(DataContext);
+  const { theme } = useContext(ThemeContext);
 
   const handleChange = ({ target }) => {
     setError(false);
@@ -30,7 +32,7 @@ function Login() {
   };
 
   return (
-    <main className="login">
+    <main className={`login c-${theme}`}>
       <Logo />
       <form className="login__form content" onSubmit={handleSubmit}>
         <label htmlFor="script" className="login__form__label">
@@ -41,7 +43,7 @@ function Login() {
             id="script"
             value={script}
             onChange={handleChange}
-            className="login__form__label__input"
+            className={`login__form__label__input bg-${theme} c-${theme}`}
           />
         </label>
         {error && (
