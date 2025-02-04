@@ -11,6 +11,11 @@
   text-decoration: none;
 }
 
+.logo__slogan {
+  font-size: 0.6em;
+  font-style: italic;
+}
+
 .logo__slogan__sure {
   color: #2097e6;
 }

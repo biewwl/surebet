@@ -18,7 +18,7 @@
 
 .bg-dark .content {
   background-color: var(--dark-2);
-  box-shadow: 0 0 5px #444;
+  box-shadow: 0 0 5px #000;
 }
 
 .bottom-gradient {

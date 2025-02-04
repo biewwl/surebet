@@ -14,6 +14,7 @@
   align-items: center;
   flex-direction: column;
   gap: 20px;
+  transition: 0.5s;
 }
 
 .login__form__label {
@@ -32,6 +33,7 @@
   border-radius: 0.5em;
   outline: none;
   min-width: 250px;
+  transition: 0.5s;
 }
 
 .login__form__error {

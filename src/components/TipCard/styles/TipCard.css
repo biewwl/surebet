@@ -122,6 +122,7 @@
   align-items: center;
   gap: 5px;
   border-radius: 0.25em;
+  transition: 0.5s;
 }
 
 .tip-card.--pending .tip-card__tip__result {
@@ -133,6 +134,11 @@
   background-color: #d6d6d650;
   background: linear-gradient(74deg, #d6d6d650 0%, #eeeeeee3 100%);
   color: #c1c1c1e3;
+}
+
+.tip-card.--lose .tip-card__tip__result {
+  background-color: #fd2d2d;
+  background: linear-gradient(74deg, #fd2d2d 0%, #fd2d2de3 100%);
 }
 
 .tip-card.--bingo .tip-card__tip__result {

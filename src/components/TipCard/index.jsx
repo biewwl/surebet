@@ -7,9 +7,9 @@ import { DataContext } from "../../context/DataContext";
 import { deleteResult } from "../../api/delete";
 import Loading from "../Loading";
 import { postWin } from "../../api/post";
-import "./styles/TipCard.css";
 import { useLocation } from "react-router-dom";
 import { ThemeContext } from "../../context/ThemeContext";
+import "./styles/TipCard.css";
 
 function TipCard({ data, view }) {
   const dataView = {};
@@ -60,9 +60,12 @@ function TipCard({ data, view }) {
 
   const winner = (w) => (win === w || pending || bingo ? "" : " --lose");
 
+  const lose = !pending && profit < 0;
+
   const pendingC = pending ? " --pending" : "";
   const drawC = draw && !pending ? " --draw" : "";
   const bingoC = bingo && !pending ? " --bingo" : "";
+  const loseC = lose ? " --lose" : "";
 
   const handleOpenOptions = () => {
     setOptions(!options);
@@ -110,9 +113,11 @@ function TipCard({ data, view }) {
     updateData();
   };
 
+  const profitText = lose ? String(profit).split("-")[1] : profit;
+
   return (
     <div
-      className={`tip-card content${pendingC}${drawC}${bingoC} c-${theme}`}
+      className={`tip-card content${pendingC}${drawC}${bingoC}${loseC} c-${theme}`}
       // style={{width}}
     >
       <span className="tip-card__date">
@@ -179,7 +184,9 @@ function TipCard({ data, view }) {
         )}
         {!pending && !draw && (
           <>
-            <Icon icon="heroicons-outline:plus-sm" /> {formatValue(profit)}
+            {!lose && <Icon icon="heroicons-outline:plus-sm" />}
+            {lose && <Icon icon="heroicons-outline:minus-sm" />}
+            {formatValue(profitText)}
           </>
         )}
         {pending && <Icon icon="eos-icons:loading" />}
