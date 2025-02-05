@@ -30,6 +30,7 @@
   gap: 10px;
   grid-template-rows: 1fr 1fr;
   align-items: flex-start;
+  justify-items: flex-start;
 }
 
 .tip-card__tip__odd {
@@ -38,11 +39,32 @@
   gap: 10px;
   cursor: default;
   transition: 0.5s;
+  position: relative;
 }
 
 .tip-card__tip__odd.--lose {
   filter: grayscale();
   opacity: 0.2;
+}
+
+.tip-card__tip__odd__line {
+  display: none;
+}
+
+.tip-card__tip__odd.--lose .tip-card__tip__odd__line {
+  display: block;
+  position: absolute;
+  /* background-color: #f1f1f1; */
+  width: calc(100% + 10px);
+  height: 1.5px;
+  bottom: 50%;
+  transition: 0.3s;
+  left: -5px;
+  border-radius: 25px;
+}
+
+.tip-card__tip__odd.--lose:hover .tip-card__tip__odd__line {
+  opacity: 0;
 }
 
 .tip-card__tip__odd:hover {
@@ -84,10 +106,6 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
-}
-
-.tip-card__tip__profit__details__item__value {
-  /* color: #bdbaba; */
 }
 
 .tip-card__date {
@@ -157,7 +175,7 @@
   padding: 20px;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 
 .tip-card__options__title {
@@ -195,7 +213,7 @@
 
 .tip-card__options__option-2 {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  /* grid-template-columns: repeat(3, 1fr); */
   width: 100%;
   gap: 10px;
 }
@@ -205,22 +223,26 @@
   border-radius: 0.5em;
   cursor: pointer;
   border: none;
-  background-color: #f1f1f1;
-  color: #666;
-  box-shadow: 0 0 5px #eee;
   transition: 0.5s;
 }
 
 .tip-card__options__option-2__item.--selected {
   background: #17cc90;
   background: linear-gradient(74deg, #17cc90 0%, #09f3a9 100%);
-  color: #fff;
+  /* color: #fff; */
+}
+
+.tip-card__options__option-2.--super
+  .tip-card__options__option-2__item.--selected:last-child {
+  background-color: #fd2d2d;
+  background: linear-gradient(74deg, #fd2d2d 0%, #fd2d2de3 100%);
+  /* color: #fff; */
 }
 
 .tip-card__options__option-2__item.--selected.--bingo {
   background: #2d64fd;
   background: linear-gradient(74deg, #2d64fd 0%, #999947 52%, #fd2d2d 100%);
-  color: #fff;
+  /* color: #fff; */
 }
 
 .tip-card__options__option:disabled {

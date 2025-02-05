@@ -24,6 +24,7 @@
   padding: 20px;
   text-decoration: none;
   border-radius: 25px !important;
+  transition: 0.5s;
 }
 
 .navigation__theme {
@@ -34,6 +35,14 @@
 .navigation__item__icon {
   font-size: 18px;
   color: #2097e6;
+}
+
+.navigation__item__icon.--light {
+  color: #ffff00;
+}
+
+.navigation__item__icon.--dark {
+  color: #7700ff;
 }
 
 .navigation__item__title {

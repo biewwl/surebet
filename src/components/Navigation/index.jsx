@@ -75,9 +75,9 @@ function Navigation() {
               >
                 <Icon
                   icon="line-md:sun-rising-loop"
-                  className="navigation__item__icon"
+                  className="navigation__item__icon --light"
                 />
-                <span className="navigation__item__title">Light</span>
+                <span className="navigation__item__title">Claro</span>
               </button>
             )}
             {theme !== "dark" && (
@@ -87,9 +87,9 @@ function Navigation() {
               >
                 <Icon
                   icon="line-md:moon-rising-loop"
-                  className="navigation__item__icon"
+                  className="navigation__item__icon --dark"
                 />
-                <span className="navigation__item__title">Dark</span>
+                <span className="navigation__item__title">Escuro</span>
               </button>
             )}
             <button

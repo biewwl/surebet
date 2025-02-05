@@ -89,7 +89,8 @@ function TipCard({ data, view }) {
 
   const titleMenu = () => {
     if (openDelete) return "Confirmar exclusão";
-    if (openWin) return "Qual odd vencedora?";
+    if (openWin && odd2) return "Qual odd vencedora?";
+    if (openWin) return "Qual o resultado?";
     return "O que deseja fazer?";
   };
 
@@ -100,9 +101,9 @@ function TipCard({ data, view }) {
   };
 
   const selectedWin = (w) => {
-    if (optWin === w && w === 12) return " --selected --bingo";
-    if (optWin === w) return " --selected";
-    return "";
+    if (optWin === w && w === 12) return ` --selected --bingo c-${theme}-2`;
+    if (optWin === w) return ` --selected c-${theme}-2`;
+    return `c-${theme}`;
   };
 
   const handleEdit = async () => {
@@ -142,6 +143,7 @@ function TipCard({ data, view }) {
             <span>{odd1}</span>
           </div>
           {formatValue(price1)}
+          <div className={`tip-card__tip__odd__line bg-${theme}`}></div>
         </div>
         {bet2 && (
           <div className={`tip-card__tip__odd${winner(2)}`}>
@@ -152,6 +154,7 @@ function TipCard({ data, view }) {
               <span>{odd2}</span>
             </div>
             {formatValue(price2)}
+            <div className={`tip-card__tip__odd__line bg-${theme}`}></div>
           </div>
         )}
       </section>
@@ -202,36 +205,45 @@ function TipCard({ data, view }) {
               <button className="tip-card__options__option --edit">Editar</button>
             )} */}
               {!openDelete && openWin && (
-                <div className="tip-card__options__option-2">
+                <div
+                  className={`tip-card__options__option-2${
+                    bet2 ? "" : " --super"
+                  }`}
+                  style={{
+                    gridTemplateColumns: bet2 ? "repeat(3, 1fr)" : "1fr 1fr",
+                  }}
+                >
                   <button
-                    className={`tip-card__options__option-2__item${selectedWin(
+                    className={`tip-card__options__option-2__item bg-${theme} ${selectedWin(
                       1
                     )}`}
                     onClick={() => setOptWin(1)}
                   >
-                    1
+                    {bet2 ? "1" : "Ganha"}
                   </button>
+                  {bet2 && (
+                    <button
+                      className={`tip-card__options__option-2__item bg-${theme} ${selectedWin(
+                        12
+                      )}`}
+                      onClick={() => setOptWin(12)}
+                    >
+                      x
+                    </button>
+                  )}
                   <button
-                    className={`tip-card__options__option-2__item${selectedWin(
-                      12
-                    )}`}
-                    onClick={() => setOptWin(12)}
-                  >
-                    x
-                  </button>
-                  <button
-                    className={`tip-card__options__option-2__item${selectedWin(
+                    className={`tip-card__options__option-2__item bg-${theme} ${selectedWin(
                       2
                     )}`}
                     onClick={() => setOptWin(2)}
                   >
-                    2
+                    {bet2 ? "2" : "Perda"}
                   </button>
                 </div>
               )}
               {!openDelete && !win && (
                 <button
-                  className="tip-card__options__option --win"
+                  className={`tip-card__options__option --win bg-${theme} c-${theme}`}
                   onClick={openWin ? handleEdit : handleOpenWin}
                   disabled={openWin ? !optWin : false}
                 >

@@ -38,12 +38,20 @@
   background-color: var(--light);
 }
 
+.bg-light-invert {
+  background-color: #333;
+}
+
 .bg-dark {
   background-color: var(--dark);
 }
 
 .bg-dark-2 {
   background-color: var(--dark-2);
+}
+
+.bg-dark-invert {
+  background-color: #c1c1c1;
 }
 
 .c-dark {
