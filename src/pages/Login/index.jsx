@@ -1,15 +1,20 @@
 import { useContext, useState } from "react";
 import Logo from "../../components/Logo";
 import { DataContext } from "../../context/DataContext";
-import { getResults } from "../../api/get";
+// import { getResults } from "../../api/get";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import "./styles/Login.css";
 import { ThemeContext } from "../../context/ThemeContext";
+import lS from "manager-local-storage";
+import { formatDate, parseDate } from "../../utils/formatDate";
 
 function Login() {
   const [script, setScript] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [savedScripts, setSavedScripts] = useState(
+    lS.get("*biewwl-app-scripts*") ?? []
+  );
 
   const { login } = useContext(DataContext);
   const { theme } = useContext(ThemeContext);
@@ -22,38 +27,60 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const { error } = await getResults(script);
-    if (error) {
-      setError(true);
-    } else {
+    try {
+      await fetch(`${script}?range=A1`);
       login(script);
+    } catch (error) {
+      setError(true);
     }
     setLoading(false);
+  };
+
+  const handleSubmitSaved = async (s) => {
+    setLoading(true);
+    try {
+      await fetch(`${s}?range=A1`);
+      login(s);
+    } catch (error) {
+      setError(true);
+    }
+    setLoading(false);
+  };
+
+  const handleDeleteSaved = (s) => {
+    const current = lS.get("*biewwl-app-scripts*");
+    const newSaved = current.filter((c) => c.script !== s);
+    if (newSaved.length === 0) {
+      lS.remove("*biewwl-app-scripts*");
+    } else {
+      lS.set("*biewwl-app-scripts*", newSaved);
+    }
+    setSavedScripts(newSaved);
   };
 
   return (
     <main className={`login c-${theme}`}>
       <Logo />
+
       <form className="login__form content" onSubmit={handleSubmit}>
-        <label htmlFor="script" className="login__form__label">
-          <span className="login__form__label__text">AppScript</span>
-          <input
-            type="text"
-            name="script"
-            id="script"
-            value={script}
-            onChange={handleChange}
-            className={`login__form__label__input bg-${theme} c-${theme}`}
-          />
-        </label>
+        {!loading && (
+          <label htmlFor="script" className="login__form__label">
+            <span className="login__form__label__text">AppScript</span>
+            <input
+              type="text"
+              name="script"
+              id="script"
+              value={script}
+              onChange={handleChange}
+              className={`login__form__label__input bg-${theme} c-${theme}`}
+            />
+          </label>
+        )}
         {error && (
           <span className="login__form__error">Esta não é a url correta</span>
         )}
         {loading ? (
-          <Icon
-            icon="eos-icons:loading"
-            className="login__form__loading"
-          />
+          <Icon icon="eos-icons:loading" className="login__form__loading" />
         ) : (
           <button
             type="submit"
@@ -64,6 +91,27 @@ function Login() {
           </button>
         )}
       </form>
+      <div className="login__saved">
+        {savedScripts.map((s) => (
+          <div className={`login__saved__item content`}>
+            <button
+              className={`login__saved__item__button  c-${theme}`}
+              onClick={() => handleSubmitSaved(s.script)}
+            >
+              Login criado em:
+              <span className="login__saved__item__date">
+                {parseDate(formatDate(s.date), true)}
+              </span>
+            </button>
+            <button
+              className="login__saved__item__delete"
+              onClick={() => handleDeleteSaved(s.script)}
+            >
+              <Icon icon="line-md:close" />
+            </button>
+          </div>
+        ))}
+      </div>
     </main>
   );
 }

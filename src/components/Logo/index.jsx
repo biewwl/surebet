@@ -7,9 +7,9 @@ function Logo() {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <Link to="/" className={`logo c-${theme}-1`}>
+    <Link to="/" className={`logo c-${theme}${theme === "light" ? "-1" : ""}`}>
       biewwl
-      <p className={`logo__slogan c-${theme}-1`}>
+      <p className={`logo__slogan c-${theme}${theme === "light" ? "-1" : ""}`}>
         <span className="logo__slogan__sure">sure</span>bet
         {" + "}
         <span className="logo__slogan__sure">super</span>odds

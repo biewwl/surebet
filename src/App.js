@@ -32,7 +32,7 @@ function App() {
   useEffect(() => {
     const verify = async () => {
       if (script) {
-        const { error } = await getResults(script);
+        const { error } = await fetch(`${script}?range=A1`);
         if (error) {
           logout();
         }

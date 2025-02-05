@@ -4,6 +4,7 @@
   flex-direction: column;
   flex-grow: 1;
   padding: 0 10px;
+  gap: 10px;
 }
 
 .login__form {
@@ -60,4 +61,41 @@
 .login__form__loading {
   height: 36px;
   color: #999;
+}
+
+.login__saved {
+  display: flex;
+  /* padding: 20px; */
+}
+
+.login__saved__item {
+  border: none;
+  cursor: pointer;
+  display: flex;
+}
+
+.login__saved__item__button {
+  align-items: center;
+  flex-grow: 1;
+  display: flex;
+  gap: 5px;
+  padding: 0 10px;
+  background: none;
+  border: none;
+}
+
+.login__saved__item__date {
+  color: var(--accent);
+}
+
+.login__saved__item__delete {
+  /* margin-inline-start: 15px; */
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  color: #fd2d2d;
+  cursor: pointer;
+  border: none;
 }
