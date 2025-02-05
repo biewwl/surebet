@@ -143,7 +143,7 @@ function TipCard({ data, view }) {
             <span>{odd1}</span>
           </div>
           {formatValue(price1)}
-          <div className={`tip-card__tip__odd__line bg-${theme}`}></div>
+          <div className={`tip-card__tip__odd__line bg-${theme}-invert`}></div>
         </div>
         {bet2 && (
           <div className={`tip-card__tip__odd${winner(2)}`}>
@@ -154,7 +154,7 @@ function TipCard({ data, view }) {
               <span>{odd2}</span>
             </div>
             {formatValue(price2)}
-            <div className={`tip-card__tip__odd__line bg-${theme}`}></div>
+            <div className={`tip-card__tip__odd__line bg-${theme}-invert`}></div>
           </div>
         )}
       </section>

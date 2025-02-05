@@ -51,7 +51,7 @@
 }
 
 .bg-dark-invert {
-  background-color: #c1c1c1;
+  background-color: var(--light);
 }
 
 .c-dark {
