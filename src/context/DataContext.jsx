@@ -27,15 +27,20 @@ export const DataProvider = ({ children }) => {
           const newR = [...r1];
 
           const { value } = newR[newR.length - 1];
-          const price1 = r1[3].value;
-          const odd1 = r1[4].value;
-          const price2 = r1[6].value;
-          const odd2 = r1[7].value;
+          const price1 = Number(r1[3].value);
+          const odd1 = Number(r1[4].value);
+          const price2 = Number(r1[6].value);
+          const odd2 = Number(r1[7].value);
+          const price3 = Number(r1[9].value);
+          const odd3 = Number(r1[10].value);
 
-          let profit = 0;
+          let profit = 0 - (price1 + price2 + price3);
 
-          if (value === 1) profit = price1 * odd1 - (price1 + price2);
-          if (value === 2) profit = price2 * odd2 - (price1 + price2);
+          // console.log(price1, price2, price3);
+
+          if (value === 1) profit = price1 * odd1 - (price1 + price2 + price3);
+          if (value === 2) profit = price2 * odd2 - (price1 + price2 + price3);
+          if (value === 3) profit = price3 * odd3 - (price1 + price2 + price3);
           if (value === 12)
             profit = price1 * odd1 + price2 * odd2 - (price1 + price2);
 

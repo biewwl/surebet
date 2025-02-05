@@ -4,7 +4,7 @@
 
 export const getResults = async (script) => {
   try {
-    const range = "F3:N500";
+    const range = "F3:Q500";
 
     const response = await fetch(`${script}?range=${range}`);
 

@@ -32,11 +32,14 @@ function TipCard({ data, view }) {
   const {
     option1: { value: option1, cel },
     option2: { value: option2 },
+    option3: { value: option3 },
     odd1: { value: odd1 },
     odd2: { value: odd2 },
+    odd3: { value: odd3 },
     description: { value: description },
     price1: { value: price1 },
     price2: { value: price2 },
+    price3: { value: price3 },
     win: { value: win },
     profit: { value: profit },
     date: { value: date },
@@ -44,9 +47,11 @@ function TipCard({ data, view }) {
 
   const [bet1, opt1] = option1.split(" | ");
   const [bet2, opt2] = option2.split(" | ");
+  const [bet3, opt3] = option3.split(" | ");
 
   const image1 = getLogo(bet1);
   const image2 = getLogo(bet2);
+  const image3 = getLogo(bet3);
 
   const pending = !win;
   const bingo = win === 12;
@@ -134,7 +139,10 @@ function TipCard({ data, view }) {
         )}
       </span>
       <span className="tip-card__description">{description}</span>
-      <section className="tip-card__tip">
+      <section
+        className="tip-card__tip"
+        style={{ gridTemplateAreas: "'area1''area2''area3'" }}
+      >
         <div className={`tip-card__tip__odd${winner(1)}`}>
           <img src={image1} alt="" className="tip-card__tip__odd__logo" />
           <div className="tip-card__tip__odd__info">
@@ -154,7 +162,23 @@ function TipCard({ data, view }) {
               <span>{odd2}</span>
             </div>
             {formatValue(price2)}
-            <div className={`tip-card__tip__odd__line bg-${theme}-invert`}></div>
+            <div
+              className={`tip-card__tip__odd__line bg-${theme}-invert`}
+            ></div>
+          </div>
+        )}
+        {bet3 && (
+          <div className={`tip-card__tip__odd${winner(3)}`}>
+            <img src={image3} alt="" className="tip-card__tip__odd__logo" />
+            <div className="tip-card__tip__odd__info">
+              <span>{opt3}</span>
+              <div className="separator"></div>
+              <span>{odd3}</span>
+            </div>
+            {formatValue(price3)}
+            <div
+              className={`tip-card__tip__odd__line bg-${theme}-invert`}
+            ></div>
           </div>
         )}
       </section>
@@ -165,7 +189,7 @@ function TipCard({ data, view }) {
             <span
               className={`tip-card__tip__profit__details__item__value c-${theme}-1`}
             >
-              {formatValue(price1 + price2)}
+              {formatValue(price1 + price2 + price3)}
             </span>
           </li>
           <li className="tip-card__tip__profit__details__item">
@@ -221,7 +245,7 @@ function TipCard({ data, view }) {
                   >
                     {bet2 ? "1" : "Ganha"}
                   </button>
-                  {bet2 && (
+                  {bet2 && !bet3 && (
                     <button
                       className={`tip-card__options__option-2__item bg-${theme} ${selectedWin(
                         12
@@ -239,6 +263,16 @@ function TipCard({ data, view }) {
                   >
                     {bet2 ? "2" : "Perda"}
                   </button>
+                  {bet3 && (
+                    <button
+                      className={`tip-card__options__option-2__item bg-${theme} ${selectedWin(
+                        3
+                      )}`}
+                      onClick={() => setOptWin(3)}
+                    >
+                      3
+                    </button>
+                  )}
                 </div>
               )}
               {!openDelete && !win && (

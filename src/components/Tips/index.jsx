@@ -16,6 +16,9 @@ function Tips() {
       option2,
       price2,
       odd2,
+      option3,
+      price3,
+      odd3,
       win,
       profit,
     ] = d;
@@ -29,6 +32,9 @@ function Tips() {
       option2,
       price2,
       odd2,
+      option3,
+      price3,
+      odd3,
       win,
       profit,
     };
@@ -36,9 +42,9 @@ function Tips() {
 
   return (
     <section className="tips">
-      {
-        formattedData.reverse().map((d, i) => <TipCard data={d} key={i} />)
-      }
+      {formattedData.reverse().map((d, i) => (
+        <TipCard data={d} key={i} />
+      ))}
     </section>
   );
 }

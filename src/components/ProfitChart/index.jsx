@@ -30,15 +30,14 @@ const ProfitChart = ({ aspectRatio }) => {
 
   useEffect(() => {
     const getData = () => {
-
       const newResults = results.map((r1) => {
-          const newR = r1.map((r2) => r2.value);
-          return [...newR];
-        });
+        const newR = r1.map((r2) => r2.value);
+        return [...newR];
+      });
 
       const mappedResults = newResults.map((r) => {
         const [date] = r;
-        const value = r[9];
+        const value = r[12];
 
         const extDate = formatDate(date);
 
@@ -52,6 +51,8 @@ const ProfitChart = ({ aspectRatio }) => {
 
       const d = [];
       const v = [];
+
+      console.log(v);
 
       groupData.forEach((g) => {
         const { value, date } = g;

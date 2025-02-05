@@ -34,7 +34,7 @@ export const postWin = async (script, win, line) => {
       method: "POST",
       body: JSON.stringify({
         method: "POST",
-        range: `N${line}:N${line}`,
+        range: `Q${line}:Q${line}`,
         values: [[win]],
       }),
     });

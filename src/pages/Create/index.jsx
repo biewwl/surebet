@@ -29,6 +29,9 @@ function Create() {
     option2: "",
     price2: "",
     odd2: "",
+    option3: "",
+    price3: "",
+    odd3: "",
   });
 
   const { updateData, script, loading: loadingD } = useContext(DataContext);
@@ -40,6 +43,7 @@ function Create() {
 
   const [option1BettingHouse, setOption1BettingHouse] = useState("");
   const [option2BettingHouse, setOption2BettingHouse] = useState("");
+  const [option3BettingHouse, setOption3BettingHouse] = useState("");
 
   const keys = Object.keys(formData);
 
@@ -63,6 +67,7 @@ function Create() {
 
   const opt1Complete = (v) => `${option1BettingHouse} | ${v}`;
   const opt2Complete = (v) => `${option2BettingHouse} | ${v}`;
+  const opt3Complete = (v) => `${option3BettingHouse} | ${v}`;
 
   const transformToNumber = (data) => {
     return {
@@ -70,10 +75,13 @@ function Create() {
       description: data.description ? data.description : "Jogador A - gols",
       option1: data.option1 ? opt1Complete(data.option1) : opt1Complete("0"),
       option2: data.option2 ? opt2Complete(data.option2) : opt2Complete("0"),
+      option3: data.option3 ? opt3Complete(data.option3) : opt3Complete("0"),
       price1: data.price1 ? parseFloat(data.price1) : 0,
       price2: data.price2 ? parseFloat(data.price2) : 0,
+      price3: data.price3 ? parseFloat(data.price3) : 0,
       odd1: data.odd1 ? parseFloat(data.odd1) : 1,
       odd2: data.odd2 ? parseFloat(data.odd2) : 1,
+      odd3: data.odd3 ? parseFloat(data.odd3) : 1,
     };
   };
 
@@ -86,6 +94,9 @@ function Create() {
     { text: "Opção 2", icon: "ic:round-fork-left" },
     { text: "Valor Aposta 2", icon: "solar:dollar-line-duotone" },
     { text: "Odd 2", icon: "mynaui:math-solid" },
+    { text: "Opção 3", icon: "ic:round-fork-left" },
+    { text: "Valor Aposta 3", icon: "solar:dollar-line-duotone" },
+    { text: "Odd 3", icon: "mynaui:math-solid" },
   ];
 
   const handleSelectBetting = (name, i) => {
@@ -93,6 +104,8 @@ function Create() {
       setOption1BettingHouse(name);
     } else if (i === 5) {
       setOption2BettingHouse(name);
+    } else if (i === 8) {
+      setOption3BettingHouse(name);
     }
   };
 
@@ -153,7 +166,7 @@ function Create() {
                       />
                     )}
                   </label>
-                  {(i === 2 || i === 5) && (
+                  {(i === 2 || i === 5 || i === 8) && (
                     <div className="create__view__inputs__betting-options">
                       {Object.entries(allLogos).map((l, index) => {
                         const [name, logo] = l;
@@ -181,7 +194,7 @@ function Create() {
               ))}
               <button
                 className={`create__view__inputs__save c-${theme}-2`}
-                disabled={disabled({...formData, option1BettingHouse})}
+                disabled={disabled({ ...formData, option1BettingHouse })}
                 onClick={handleSubmit}
               >
                 Salvar
