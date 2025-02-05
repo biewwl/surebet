@@ -8,7 +8,7 @@ export const postResult = async (script, data) => {
       method: "POST",
       body: JSON.stringify({
         method: "POST",
-        range: "F3:N3",
+        range: "F3:Q3",
         values: [
           [
             ...data,
