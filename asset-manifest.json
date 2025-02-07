@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/surebet/static/css/main.351f5eba.css",
-    "main.js": "/surebet/static/js/main.6e043322.js",
+    "main.js": "/surebet/static/js/main.78dee413.js",
     "static/media/ProductSans-Regular.ttf": "/surebet/static/media/ProductSans-Regular.2765c69613690b1b9c03.ttf",
     "static/media/betfair.png": "/surebet/static/media/betfair.8df1094ea8308de54ffd.png",
     "static/media/sportingbet.png": "/surebet/static/media/sportingbet.2442352d85a29cd9b600.png",
     "index.html": "/surebet/index.html",
     "main.351f5eba.css.map": "/surebet/static/css/main.351f5eba.css.map",
-    "main.6e043322.js.map": "/surebet/static/js/main.6e043322.js.map"
+    "main.78dee413.js.map": "/surebet/static/js/main.78dee413.js.map"
   },
   "entrypoints": [
     "static/css/main.351f5eba.css",
-    "static/js/main.6e043322.js"
+    "static/js/main.78dee413.js"
   ]
 }
