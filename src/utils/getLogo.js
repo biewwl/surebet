@@ -2,10 +2,11 @@ import Betano from "../assets/betano.png";
 import Betfair from "../assets/betfair.png";
 import Bet365 from "../assets/bet365.png";
 import Superbet from "../assets/superbet.png";
-import Kto from "../assets/kto.png";
+import KTO from "../assets/kto.png";
 import Pinnacle from "../assets/pinnacle.png";
 import EstrelaBet from "../assets/estrelabet.png";
 import SportingBet from "../assets/sportingbet.png";
+import Novibet from "../assets/novibet.png";
 
 export const getLogo = (name) => {
   const betName = name.toLowerCase();
@@ -20,13 +21,15 @@ export const getLogo = (name) => {
     case "superbet":
       return Superbet;
     case "kto":
-      return Kto;
+      return KTO;
     case "pinnacle":
       return Pinnacle;
     case "estrelabet":
       return EstrelaBet;
     case "sportingbet":
       return SportingBet;
+    case "novibet":
+      return Novibet;
     default:
       break;
   }
@@ -37,8 +40,9 @@ export const allLogos = {
   Betfair,
   Bet365,
   Superbet,
-  Kto,
+  KTO,
   Pinnacle,
   EstrelaBet,
   SportingBet,
+  Novibet,
 };

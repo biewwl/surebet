@@ -19,7 +19,7 @@ export const getResults = async (script) => {
 
 export const getBalance = async (script) => {
   try {
-    const range = "B1:B5";
+    const range = "B1:B6";
 
     const response = await fetch(`${script}?range=${range}`);
 

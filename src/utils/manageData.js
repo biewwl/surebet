@@ -23,16 +23,33 @@ export const formatData = ({
   option2,
   price2,
   odd2,
+  option3,
+  price3,
+  odd3,
 }) => {
+
+  const OPTION2 = option2 === " | 0" ? "" : option2;
+  const PRICE2 = price2 === 0 ? "" : price2;
+  const ODD2 = odd2 === 1 ? "" : odd2;
+
+
+  const OPTION3 = option3 === " | 0" ? "" : option3;
+  const PRICE3 = price3 === 0 ? "" : price3;
+  const ODD3 = odd3 === 1 ? "" : odd3;
+
+
   const values = [
     parseDate(formatDate(date), true),
     description,
     option1,
     price1,
     odd1,
-    option2,
-    price2,
-    odd2,
+    OPTION2,
+    PRICE2,
+    ODD2,
+    OPTION3,
+    PRICE3,
+    ODD3,
   ];
 
   return values;

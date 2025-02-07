@@ -112,9 +112,9 @@ function Create() {
   const handleSubmit = async () => {
     setLoading(true);
     const data = formatData(transformToNumber(formData));
-
     await postResult(script, data);
     updateData();
+    setLoading(false);
     navigate("/");
   };
 

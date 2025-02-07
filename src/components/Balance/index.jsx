@@ -2,14 +2,14 @@ import { useContext } from "react";
 import { DataContext } from "../../context/DataContext";
 import { formatValue } from "../../utils/formatNumber";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import "./styles/Balance.css";
 import { ThemeContext } from "../../context/ThemeContext";
+import "./styles/Balance.css";
 
 function Balance() {
   const { balance } = useContext(DataContext);
-  const { theme, changeTheme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
-  const [initial, normals, current, profit, outflows] = balance;
+  const [initial, normals, current, profit, outflows, operations] = balance;
 
   return (
     <section className={`balance c-${theme}`}>
@@ -65,6 +65,16 @@ function Balance() {
             </span>
             {outflows[0].value > 0 && "- "}
             {formatValue(outflows[0].value)}
+          </div>
+          <div className="balance__card content">
+            <span className={`balance__card__title c-${theme}-1`}>
+              <Icon
+                icon="material-symbols:counter-0-outline"
+                className="balance__card__title__icon"
+              />
+              Operações
+            </span>
+            {operations[0].value}
           </div>
         </>
       )}

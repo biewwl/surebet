@@ -84,8 +84,9 @@ function TipCard({ data, view }) {
     const [, line] = cel.match(/([a-zA-Z]+)([0-9]+)/).slice(1, 3);
     setLoading(true);
     await deleteResult(script, line);
-    updateData();
+    
     setLoading(false);
+    updateData();
   };
 
   const handleOpenWin = async () => {

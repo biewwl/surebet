@@ -12,9 +12,7 @@ export const deleteResult = async (script, line) => {
       }),
     });
 
-    const responseJSON = await response.json();
-
-    return responseJSON;
+    return response;
   } catch (error) {
     return error.message;
   }

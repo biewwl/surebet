@@ -92,15 +92,16 @@ function Login() {
         )}
       </form>
       <div className="login__saved">
-        {savedScripts.map((s) => (
-          <div className={`login__saved__item content`}>
+        {savedScripts.map((s, i) => (
+          <div className={`login__saved__item content`} key={i}>
             <button
               className={`login__saved__item__button  c-${theme}`}
               onClick={() => handleSubmitSaved(s.script)}
             >
-              Login criado em:
+            <Icon icon="lets-icons:key-alt-duotone" className="login__saved__item__button__icon" />
+              
               <span className="login__saved__item__date">
-                {parseDate(formatDate(s.date), true)}
+                {formatDate(s.date)}
               </span>
             </button>
             <button
