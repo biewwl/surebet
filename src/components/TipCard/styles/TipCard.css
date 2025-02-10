@@ -152,8 +152,8 @@
 }
 
 .tip-card.--draw .tip-card__tip__result {
-  background-color: #d6d6d650;
-  background: linear-gradient(74deg, #d6d6d650 0%, #eeeeeee3 100%);
+  /* background-color: #616161; */
+  background: linear-gradient(74deg, #a8a8a825 0%, #4b4a4a25 100%);
   color: #c1c1c1e3;
 }
 
