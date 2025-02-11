@@ -149,7 +149,7 @@ function TipCard({ data, view }) {
           <div className="tip-card__tip__odd__info">
             <span>{opt1}</span>
             <div className="separator"></div>
-            <span>{odd1}</span>
+            <span>{odd1.toFixed(2)}</span>
           </div>
           {formatValue(price1)}
           <div className={`tip-card__tip__odd__line bg-${theme}-invert`}></div>
@@ -160,7 +160,7 @@ function TipCard({ data, view }) {
             <div className="tip-card__tip__odd__info">
               <span>{opt2}</span>
               <div className="separator"></div>
-              <span>{odd2}</span>
+              <span>{odd2.toFixed(2)}</span>
             </div>
             {formatValue(price2)}
             <div
@@ -174,7 +174,7 @@ function TipCard({ data, view }) {
             <div className="tip-card__tip__odd__info">
               <span>{opt3}</span>
               <div className="separator"></div>
-              <span>{odd3}</span>
+              <span>{odd3.toFixed(2)}</span>
             </div>
             {formatValue(price3)}
             <div
