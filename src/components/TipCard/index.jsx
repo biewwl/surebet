@@ -163,9 +163,9 @@ function TipCard({ data, view }) {
               <span>{odd2.toFixed(2)}</span>
             </div>
             {formatValue(price2)}
-            <div
+            {/* <div
               className={`tip-card__tip__odd__line bg-${theme}-invert`}
-            ></div>
+            ></div> */}
           </div>
         )}
         {bet3 && (
@@ -177,9 +177,9 @@ function TipCard({ data, view }) {
               <span>{odd3.toFixed(2)}</span>
             </div>
             {formatValue(price3)}
-            <div
+            {/* <div
               className={`tip-card__tip__odd__line bg-${theme}-invert`}
-            ></div>
+            ></div> */}
           </div>
         )}
       </section>
@@ -234,9 +234,6 @@ function TipCard({ data, view }) {
                   className={`tip-card__options__option-2${
                     bet2 ? "" : " --super"
                   }`}
-                  style={{
-                    gridTemplateColumns: bet2 ? "repeat(3, 1fr)" : "1fr 1fr",
-                  }}
                 >
                   <button
                     className={`tip-card__options__option-2__item bg-${theme} ${selectedWin(
