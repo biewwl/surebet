@@ -1,0 +1,132 @@
+.calculate {
+  display: grid;
+}
+
+.calculate__inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  /* padding: 20px; */
+  gap: 10px;
+}
+
+.calculate__inputs__group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 0.5em;aspect-ratio: 1/1;
+}
+
+.calculate__inputs__group__label {
+  display: flex;
+  flex-direction: column;
+  /* aspect-ratio: 1 / 1; */
+  /* padding: 10px; */
+  /* width: 100%; */
+}
+
+.calculate__inputs__group__label:first-child {
+  gap: 3px;
+
+}
+
+.calculate__inputs__group__label__title {
+  font-size: 0.6em;
+}
+
+.calculate__inputs__group__label__input {
+  padding: 10px;
+  border-radius: 0.5em;
+  border: none;
+  max-width: 100%;
+  flex-grow: 1;
+  /* text-align: center; */
+  font-size: 1em;
+  outline: none;
+}
+
+.calculate__inputs__group__label__input.--place {
+  padding: 0;
+  background: none;
+  color: var(--accent);
+}
+
+.calculate__inputs__group__result {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* padding: 10px; */
+}
+
+.calculate__inputs__group__result__place,
+.calculate__inputs__group__result__return {
+  display: flex;
+  flex-direction: column;
+}
+
+.calculate__inputs__group__result__place__title,
+.calculate__inputs__group__result__return__title {
+  font-size: 0.6em;
+}
+
+.calculate__inputs__group__result__place__value {
+  color: var(--accent);
+}
+
+.calculate__inputs__details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  /* background-color: var(--accent); */
+  border-radius: 0.5em;
+  justify-content: space-between;
+}
+
+.calculate__inputs__details__place {
+  display: flex;
+  gap: 3px;
+  flex-direction: column;
+  /* align-items: center; */
+}
+
+.calculate__inputs__details__place__title,
+.calculate__inputs__details__return__title,
+.calculate__inputs__details__profit__title {
+  display: flex;
+  align-items: center;
+  font-size: 0.6em;
+  gap: 3px;
+}
+
+.calculate__inputs__details__place__title__icon,
+.calculate__inputs__details__return__title__icon,
+.calculate__inputs__details__place__title__icon {
+  font-size: 14px;
+}
+
+.calculate__inputs__details__place__value,
+.calculate__inputs__details__return__value {
+  font-size: 0.8em;
+}
+
+.calculate__inputs__details__profit {
+  border-radius: 0.25em;
+}
+
+.calculate__inputs__details__profit__value {
+  font-size: 15px;
+  padding: 5px 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.calculate.--loss .calculate__inputs__details__profit__value {
+  background-color: #fd2d2d;
+  background: linear-gradient(74deg, #fd2d2d 0%, #fd2d2de3 100%);
+}
+
+.calculate.--win .calculate__inputs__details__profit__value {
+  background: #17cc90;
+  background: linear-gradient(74deg, #17cc90 0%, #17cc90e3 100%);
+}

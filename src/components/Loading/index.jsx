@@ -5,7 +5,7 @@ function Loading() {
   return (
     <div className="loading">
       {/* <Icon icon="line-md:loading-twotone-loop" /> */}
-      <div class="spinner">
+      <div className="spinner">
         <div></div>
         <div></div>
         <div></div>

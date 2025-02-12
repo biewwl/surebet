@@ -8,6 +8,7 @@ import Balance from "../../components/Balance";
 import { useContext } from "react";
 import { DataContext } from "../../context/DataContext";
 import Loading from "../../components/Loading";
+import Calculate from "../../components/Calculate";
 
 function Home() {
   const { loading } = useContext(DataContext);
@@ -15,23 +16,23 @@ function Home() {
   return (
     <main className="home">
       <Logo />
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
-          <div className="home__section">
-            <SectionTitle icon="line-md:confirm-circle-twotone" title="Saldo" />
-            <Balance />
-          </div>
-          <div className="home__section">
-            <SectionTitle
-              icon="line-md:compass-twotone-loop"
-              title="Histórico"
-            />
-            <Tips />
-          </div>
-        </>
+      {!loading && (
+        <div className="home__section">
+          <SectionTitle icon="line-md:confirm-circle-twotone" title="Saldo" />
+          <Balance />
+        </div>
       )}
+      <div className="home__section">
+        <SectionTitle icon="fluent:math-symbols-20-filled" title="Calculate" />
+        <Calculate />
+      </div>
+      {!loading && (
+        <div className="home__section">
+          <SectionTitle icon="line-md:compass-twotone-loop" title="Histórico" />
+          <Tips />
+        </div>
+      )}
+      {loading && <Loading />}
       {/* <Link to="/graph">
         <Icon
           icon="material-symbols:waterfall-chart"
