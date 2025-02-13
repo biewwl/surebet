@@ -28,11 +28,13 @@ function Calculate() {
 
   const handleChange = ({ target }) => {
     const { name } = target;
-    let value = target.value.replace(",", "."); // Substitui vírgulas por pontos
+    let value; // Substitui vírgulas por pontos
 
     if (target.name === "Valor a ser colocado") {
       value = target.value.replace("R$ ", "");
     }
+
+    value = value.replace(",", ".");
 
     if (!isNaN(value) || value === ".") {
       setData({ ...data, [name]: value });
