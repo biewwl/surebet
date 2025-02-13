@@ -9,9 +9,13 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import zoomPlugin from "chartjs-plugin-zoom";
 import { DataContext } from "../../context/DataContext";
 import { formatDate, parseDate } from "../../utils/formatDate.js";
 import { groupAndSumByDate } from "../../utils/groupAndSumByDate.js";
+import "./styles/ProfitChart.css";
+import { Icon } from "@iconify/react/dist/iconify.js";
+import { ThemeContext } from "../../context/ThemeContext.jsx";
 
 ChartJS.register(
   CategoryScale,
@@ -19,14 +23,18 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  zoomPlugin
 );
 
-const ProfitChart = ({ aspectRatio }) => {
+const ProfitChart = ({ aspectRatio, n }) => {
   const { results } = useContext(DataContext);
+  const { theme } = useContext(ThemeContext);
 
   const [values, setValues] = useState([]);
   const [dates, setDates] = useState([]);
+  const [zoom, setZoom] = useState(7);
+  const [pan, setPan] = useState(false);
 
   useEffect(() => {
     const getData = () => {
@@ -51,8 +59,6 @@ const ProfitChart = ({ aspectRatio }) => {
 
       const d = [];
       const v = [];
-
-      console.log(v);
 
       groupData.forEach((g) => {
         const { value, date } = g;
@@ -102,6 +108,8 @@ const ProfitChart = ({ aspectRatio }) => {
             return [prevSum, prevSum + value];
           }
         }),
+        barThickness: "flex",
+        minBarLength: 20,
         backgroundColor: [...bg],
       },
     ],
@@ -128,8 +136,45 @@ const ProfitChart = ({ aspectRatio }) => {
           },
         },
       },
+      zoom: {
+        zoom: {
+          wheel: {
+            enabled: false,
+            speed: 0.001, // Reduzindo ainda mais a velocidade do zoom
+          },
+          pinch: {
+            enabled: false,
+            speed: 0.001, // Reduzindo ainda mais a velocidade do zoom por pinça
+          },
+          mode: "x",
+          rangeMin: {
+            x: 0,
+          },
+          rangeMax: {
+            x: dates.length - 1,
+          },
+        },
+        pan: {
+          enabled: pan,
+          mode: "x",
+          speed: 0.05, // Reduzindo a velocidade do arrasto
+        },
+        limits: {
+          x: { min: 0, max: dates.length - 1 },
+        },
+      },
     },
     scales: {
+      x: {
+        min: dates.length - (dates.length - zoom),
+        max: dates.length - 1,
+        grid: {
+          display: false, // Adicione esta linha para remover as linhas de grade no eixo x
+        },
+        ticks: {
+          display: false, // Remover as legendas no eixo x
+        },
+      },
       y: {
         beginAtZero: true,
         ticks: {
@@ -142,7 +187,48 @@ const ProfitChart = ({ aspectRatio }) => {
     aspectRatio,
   };
 
-  return <Bar data={data} options={options} />;
+  const addOneColumn = () => {
+    if (zoom === values.length - 1) {
+      return;
+    }
+    setZoom(zoom + 1);
+  };
+
+  const removeOneColumn = () => {
+    if (zoom === 0) {
+      return;
+    }
+    setZoom(zoom - 1);
+  };
+
+  const handleZoom = ({ target }) => {
+    setZoom(parseInt(target.value, 10));
+  };
+
+  return (
+    <div className="profit-chart">
+      <Bar data={data} options={options} />
+      <input
+        type="range"
+        value={zoom}
+        min={0}
+        max={values.length - 1}
+        onChange={handleZoom}
+        className="profit-chart__zoom"
+      />
+      <div className="profit-chart__controls">
+        <button onClick={removeOneColumn} className={`profit-chart__controls__item bg-${theme} c-${theme}`}>
+          <Icon icon="si:zoom-out-duotone" />
+        </button>
+        <button onClick={addOneColumn} className={`profit-chart__controls__item bg-${theme} c-${theme}`}>
+          <Icon icon="si:zoom-in-duotone" />
+        </button>
+        <button onClick={() => setPan(!pan)} className={`profit-chart__controls__item bg-${theme} c-${theme}${pan ? " --selected" : ""}`}>
+          <Icon icon="hugeicons:hold-02" />
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default ProfitChart;

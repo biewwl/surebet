@@ -1,0 +1,32 @@
+.profit-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.profit-chart__zoom {
+  
+}
+
+
+.profit-chart__controls {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.profit-chart__controls__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 0.5em;
+  font-size: 1.3em;
+  padding: 10px;
+}
+
+.profit-chart__controls__item.--selected {
+  background-color: #2097e657;
+  /* color: var(--color-white); */
+}

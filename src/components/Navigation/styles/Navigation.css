@@ -34,7 +34,7 @@
 
 .navigation__item__icon {
   font-size: 18px;
-  color: #2097e6;
+  color: var(--accent);
 }
 
 .navigation__item__icon.--light {
@@ -54,7 +54,7 @@
   aspect-ratio: 1 / 1;
   font-size: 18px;
   border-radius: 50% !important;
-  color: #2097e6;
+  color: var(--accent);
 }
 
 .navigation__item__icon.--close {
@@ -63,6 +63,10 @@
 
 .navigation__item.--logout, .navigation__item.--logout .navigation__item__icon {
   color: #fd2d2d;
+}
+
+.navigation__item.--login{
+  color: var(--accent);
 }
 
 /* .navigation__item:nth-child(2) .navigation__item__icon {

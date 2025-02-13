@@ -9,7 +9,7 @@ function Navigation() {
   const [open, setOpen] = useState(false);
 
   const { pathname } = useLocation();
-  const { logout } = useContext(DataContext);
+  const { logout, script } = useContext(DataContext);
   const { theme, setDark, setLight, setAuto } = useContext(ThemeContext);
 
   const navLinks = [
@@ -55,7 +55,7 @@ function Navigation() {
       </button>
       {open && (
         <>
-          {pathname !== "/login" && (
+          {script && (
             <button
               className="navigation__item content --logout"
               onClick={handleLogout}
@@ -66,6 +66,19 @@ function Navigation() {
               />
               <span className="navigation__item__title">Sair</span>
             </button>
+          )}
+          {!script && (
+            <Link
+              className="navigation__item content --login"
+              to={"/login"}
+              onClick={handleOpen}
+            >
+              <Icon
+                icon="solar:login-line-duotone"
+                className="navigation__item__icon"
+              />
+              <span className="navigation__item__title">Login</span>
+            </Link>
           )}
           <div className={`navigation__theme`}>
             {theme !== "light" && (
@@ -102,7 +115,7 @@ function Navigation() {
               />
             </button>
           </div>
-          {pathname !== "/login" &&
+          {script &&
             filteredLinks.map(({ icon, path, title }, i) => {
               return (
                 <Link
@@ -116,6 +129,21 @@ function Navigation() {
                 </Link>
               );
             })}
+          {pathname !== "/calculate" && (
+            <Link
+              className="navigation__item content --calculate"
+              to="/calculate"
+              onClick={handleOpen}
+            >
+              <Icon
+                icon="fluent:math-symbols-20-filled"
+                className="navigation__item__icon"
+              />
+              <span className={`navigation__item__title c-${theme}`}>
+                Calcular
+              </span>
+            </Link>
+          )}
         </>
       )}
     </nav>

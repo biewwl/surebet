@@ -22,10 +22,10 @@ function Graph() {
             title="Lucro"
           />
           <section className="graph__canvas content">
-            <ProfitChart aspectRatio={3 / 1} />
+            <ProfitChart aspectRatio={3 / 1} n={10}/>
           </section>
           <section className="graph__canvas content --mobile">
-            <ProfitChart aspectRatio={1 / 1} />
+            <ProfitChart aspectRatio={1 / 1} n={8} />
           </section>
         </div>
       )}
