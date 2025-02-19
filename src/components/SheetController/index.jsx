@@ -22,7 +22,7 @@ function SheetController() {
             s
           )} content c-${theme}`}
         >
-          <Icon icon="lucide:sheet"/>
+          <Icon icon="lets-icons:date-today-duotone"/>
           Ciclo {s}
         </button>
       ))}
