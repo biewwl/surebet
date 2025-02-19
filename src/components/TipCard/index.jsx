@@ -7,7 +7,7 @@ import { DataContext } from "../../context/DataContext";
 import { deleteResult } from "../../api/delete";
 import Loading from "../Loading";
 import { postWin } from "../../api/post";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ThemeContext } from "../../context/ThemeContext";
 import "./styles/TipCard.css";
 
@@ -16,7 +16,7 @@ function TipCard({ data, view }) {
 
   const { pathname } = useLocation();
 
-  const { updateData, script } = useContext(DataContext);
+  const { updateData, script, sheet } = useContext(DataContext);
   const { theme } = useContext(ThemeContext);
 
   const [options, setOptions] = useState(false);
@@ -49,9 +49,17 @@ function TipCard({ data, view }) {
   const [bet2, opt2] = option2.split(" | ");
   const [bet3, opt3] = option3.split(" | ");
 
-  const image1 = getLogo(bet1);
-  const image2 = getLogo(bet2);
-  const image3 = getLogo(bet3);
+  const logo1 = getLogo(bet1);
+  const logo2 = getLogo(bet2);
+  const logo3 = getLogo(bet3);
+
+  const image1 = logo1 ? logo1.logo : "";
+  const image2 = logo2 ? logo2.logo : "";
+  const image3 = logo3 ? logo3.logo : "";
+
+  const site1 = logo1 ? logo1.site : "";
+  const site2 = logo2 ? logo2.site : "";
+  const site3 = logo3 ? logo3.site : "";
 
   const pending = !win;
   const bingo = win === 12;
@@ -115,7 +123,7 @@ function TipCard({ data, view }) {
   const handleEdit = async () => {
     const [, line] = cel.match(/([a-zA-Z]+)([0-9]+)/).slice(1, 3);
     setLoading(true);
-    await postWin(script, optWin, line);
+    await postWin(script, optWin, line, sheet);
     setLoading(false);
     updateData();
   };
@@ -145,7 +153,9 @@ function TipCard({ data, view }) {
         style={{ gridTemplateAreas: "'area1''area2''area3'" }}
       >
         <div className={`tip-card__tip__odd${winner(1)}`}>
-          <img src={image1} alt="" className="tip-card__tip__odd__logo" />
+          <Link to={site1} target="_blank" className="tip-card__tip__odd__link">
+            <img src={image1} alt="" className="tip-card__tip__odd__logo" />
+          </Link>
           <div className="tip-card__tip__odd__info">
             <span>{opt1}</span>
             <div className="separator"></div>
@@ -156,7 +166,9 @@ function TipCard({ data, view }) {
         </div>
         {bet2 && (
           <div className={`tip-card__tip__odd${winner(2)}`}>
-            <img src={image2} alt="" className="tip-card__tip__odd__logo" />
+            <Link to={site2} target="_blank" className="tip-card__tip__odd__link">
+              <img src={image2} alt="" className="tip-card__tip__odd__logo" />
+            </Link>
             <div className="tip-card__tip__odd__info">
               <span>{opt2}</span>
               <div className="separator"></div>
@@ -170,7 +182,9 @@ function TipCard({ data, view }) {
         )}
         {bet3 && (
           <div className={`tip-card__tip__odd${winner(3)}`}>
-            <img src={image3} alt="" className="tip-card__tip__odd__logo" />
+            <Link to={site3} target="_blank" className="tip-card__tip__odd__link">
+              <img src={image3} alt="" className="tip-card__tip__odd__logo" />
+            </Link>
             <div className="tip-card__tip__odd__info">
               <span>{opt3}</span>
               <div className="separator"></div>

@@ -27,7 +27,7 @@
   --light-2: #eee;
   --dark: #000;
   --dark-2: #222;
-  --accent: #2097e6;
+  --accent: #495aff;
 }
 
 .bg-light {
@@ -76,4 +76,25 @@
 
 .c-light-2 {
   color: var(--light);
+}
+
+/*********** Baseline, reset styles ***********/
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 3px;
+  cursor: pointer;
+  /* width: 25rem; */
+  background-color: var(--accent);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  margin-top: -1px; /* Centers thumb on the track */
+  background-color: var(--accent);
+  border-radius: 50px;
+  height: 1.2rem;
+  width: 1.2rem;
 }

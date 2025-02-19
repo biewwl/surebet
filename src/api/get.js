@@ -2,11 +2,11 @@
 
 // const { url } = config;
 
-export const getResults = async (script) => {
+export const getResults = async (script, sheet) => {
   try {
     const range = "F3:Q500";
 
-    const response = await fetch(`${script}?range=${range}`);
+    const response = await fetch(`${script}?range=${range}&sheetName=${sheet}`);
 
     const responseJSON = await response.json();
 
@@ -17,11 +17,11 @@ export const getResults = async (script) => {
   }
 };
 
-export const getBalance = async (script) => {
+export const getBalance = async (script, sheet) => {
   try {
     const range = "B1:B6";
 
-    const response = await fetch(`${script}?range=${range}`);
+    const response = await fetch(`${script}?range=${range}&sheetName=${sheet}`);
 
     const responseJSON = await response.json();
 
@@ -31,3 +31,7 @@ export const getBalance = async (script) => {
     ;
   }
 };
+
+export const get = async (script) => {
+  await fetch(`${script}?range=A1&sheetName=1`);
+}

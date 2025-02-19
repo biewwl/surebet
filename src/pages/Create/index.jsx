@@ -34,7 +34,7 @@ function Create() {
     odd3: "",
   });
 
-  const { updateData, script, loading: loadingD } = useContext(DataContext);
+  const { updateData, script, loading: loadingD, sheet } = useContext(DataContext);
   const { theme } = useContext(ThemeContext);
 
   const [loading, setLoading] = useState(false);
@@ -54,7 +54,9 @@ function Create() {
       nameEqual("price1") ||
       nameEqual("price2") ||
       nameEqual("odd1") ||
-      nameEqual("odd2")
+      nameEqual("odd2") ||
+      nameEqual("price3") ||
+      nameEqual("odd3")
     ) {
       let value = target.value.replace(",", "."); // Substitui vírgulas por pontos
       if (!isNaN(value) || value === ".") {
@@ -112,7 +114,7 @@ function Create() {
   const handleSubmit = async () => {
     setLoading(true);
     const data = formatData(transformToNumber(formData));
-    await postResult(script, data);
+    await postResult(script, data, sheet);
     updateData();
     setLoading(false);
     navigate("/");

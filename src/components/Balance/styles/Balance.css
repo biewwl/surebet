@@ -19,7 +19,7 @@
 
 .balance__card:nth-child(1) {
   background: var(--accent);
-  background: linear-gradient(74deg, #2097e6 0%, #2097e6c3 100%);
+  background: linear-gradient(74deg, var(--accent) 0%, #495affad 100%);
   color: #fff;
 }
 

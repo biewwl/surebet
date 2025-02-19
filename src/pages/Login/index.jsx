@@ -7,6 +7,7 @@ import "./styles/Login.css";
 import { ThemeContext } from "../../context/ThemeContext";
 import lS from "manager-local-storage";
 import { formatDate, parseDate } from "../../utils/formatDate";
+import { get } from "../../api/get";
 
 function Login() {
   const [script, setScript] = useState("");
@@ -24,22 +25,14 @@ function Login() {
     setScript(target.value);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, saved) => {
     e.preventDefault();
     setLoading(true);
-    try {
-      await fetch(`${script}?range=A1`);
-      login(script);
-    } catch (error) {
-      setError(true);
-    }
-    setLoading(false);
-  };
 
-  const handleSubmitSaved = async (s) => {
-    setLoading(true);
+    const s = saved ?? script;
+
     try {
-      await fetch(`${s}?range=A1`);
+      await get(script);
       login(s);
     } catch (error) {
       setError(true);
@@ -62,7 +55,7 @@ function Login() {
     <main className={`login c-${theme}`}>
       <Logo />
 
-      <form className="login__form content" onSubmit={handleSubmit}>
+      <form className="login__form content" onSubmit={(e) => handleSubmit(e)}>
         {!loading && (
           <label htmlFor="script" className="login__form__label">
             <span className="login__form__label__text">AppScript</span>
@@ -96,10 +89,13 @@ function Login() {
           <div className={`login__saved__item content`} key={i}>
             <button
               className={`login__saved__item__button  c-${theme}`}
-              onClick={() => handleSubmitSaved(s.script)}
+              onClick={(e) => handleSubmit(e, s.script)}
             >
-            <Icon icon="lets-icons:key-alt-duotone" className="login__saved__item__button__icon" />
-              
+              <Icon
+                icon="lets-icons:key-alt-duotone"
+                className="login__saved__item__button__icon"
+              />
+
               <span className="login__saved__item__date">
                 {formatDate(s.date)}
               </span>

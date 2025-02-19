@@ -9,6 +9,7 @@ import { useContext } from "react";
 import { DataContext } from "../../context/DataContext";
 import Loading from "../../components/Loading";
 import Calculate from "../Calculate";
+import SheetController from "../../components/SheetController";
 
 function Home() {
   const { loading } = useContext(DataContext);
@@ -16,6 +17,7 @@ function Home() {
   return (
     <main className="home">
       <Logo />
+      <SheetController />
       {!loading && (
         <div className="home__section">
           <SectionTitle icon="line-md:confirm-circle-twotone" title="Saldo" />

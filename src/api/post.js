@@ -2,13 +2,14 @@
 
 // const { url } = config;
 
-export const postResult = async (script, data) => {
+export const postResult = async (script, data, sheet) => {
   try {
     const response = await fetch(script, {
       method: "POST",
       body: JSON.stringify({
         method: "POST",
         range: "F3:Q3",
+        sheetName: sheet,
         values: [
           [
             ...data,
@@ -28,7 +29,7 @@ export const postResult = async (script, data) => {
   }
 };
 
-export const postWin = async (script, win, line) => {
+export const postWin = async (script, win, line, sheet) => {
   try {
     const response = await fetch(script, {
       method: "POST",
@@ -36,12 +37,11 @@ export const postWin = async (script, win, line) => {
         method: "POST",
         range: `Q${line}:Q${line}`,
         values: [[win]],
+        sheetName: sheet,
       }),
     });
 
     const responseJSON = await response.json();
-
-    console.log(responseJSON);
 
     return responseJSON;
   } catch (error) {

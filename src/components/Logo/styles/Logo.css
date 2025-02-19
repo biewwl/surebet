@@ -17,5 +17,5 @@
 }
 
 .logo__slogan__sure {
-  color: #2097e6;
+  color: var(--accent);
 }

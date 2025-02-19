@@ -7,7 +7,7 @@ import Create from "./pages/Create";
 import { useContext, useEffect } from "react";
 import { DataContext } from "./context/DataContext";
 import Login from "./pages/Login";
-import { getResults } from "./api/get";
+import { get, getResults } from "./api/get";
 import Navigation from "./components/Navigation";
 import { ThemeContext } from "./context/ThemeContext";
 import { Helmet } from "react-helmet";
@@ -33,8 +33,9 @@ function App() {
   useEffect(() => {
     const verify = async () => {
       if (script) {
-        const { error } = await fetch(`${script}?range=A1`);
-        if (error) {
+        try {
+          await get(script);
+        } catch (error) {
           logout();
         }
       }
@@ -53,10 +54,7 @@ function App() {
           path="/login"
           element={<PublicRoute element={<Login />} script={script} />}
         />
-        <Route
-          path="/calculate"
-          element={<Calculate />}
-        />
+        <Route path="/calculate" element={<Calculate />} />
         <Route
           path="/"
           element={<PrivateRoute element={<Home />} script={script} />}

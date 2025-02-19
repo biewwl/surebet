@@ -1,35 +1,50 @@
-import Betano from "../assets/betano.png";
+import Betano from "../assets/betano.webp";
 import Betfair from "../assets/betfair.png";
 import Bet365 from "../assets/bet365.png";
 import Superbet from "../assets/superbet.png";
 import KTO from "../assets/kto.png";
 import Pinnacle from "../assets/pinnacle.png";
-import EstrelaBet from "../assets/estrelabet.png";
+import EstrelaBet from "../assets/estrelabet.webp";
 import SportingBet from "../assets/sportingbet.png";
 import Novibet from "../assets/novibet.png";
+import CassinoBet from "../assets/cassinobet.png";
+import ApostaGanha from "../assets/apostaganha.png";
 
 export const getLogo = (name) => {
   const betName = name.toLowerCase();
 
   switch (betName) {
     case "betano":
-      return Betano;
+      return { logo: Betano, site: "https://www.betano.bet.br" };
     case "betfair":
-      return Betfair;
+      return { logo: Betfair, site: "https://www.betfair.bet.br/apostas/" };
     case "bet365":
-      return Bet365;
+      return { logo: Bet365, site: "https://www.bet365.bet.br/#/HO/" };
     case "superbet":
-      return Superbet;
+      return { logo: Superbet, site: "https://superbet.bet.br/" };
     case "kto":
-      return KTO;
+      return { logo: KTO, site: "https://www.kto.bet.br/esportes/" };
     case "pinnacle":
-      return Pinnacle;
+      return { logo: Pinnacle, site: "https://pinnacle.bet.br/sportsbook" };
     case "estrelabet":
-      return EstrelaBet;
+      return {
+        logo: EstrelaBet,
+        site: "https://www.estrelabet.bet.br/pb/esportes#/overview",
+      };
     case "sportingbet":
-      return SportingBet;
+      return {
+        logo: SportingBet,
+        site: "https://sports.sportingbet.bet.br/pt-br/sports",
+      };
     case "novibet":
-      return Novibet;
+      return {
+        logo: Novibet,
+        site: "https://www.novibet.bet.br/apostas-esportivas",
+      };
+    case "cassinobet":
+      return { logo: CassinoBet, site: "https://cassino.bet.br/sports" };
+    case "apostaganha":
+      return { logo: ApostaGanha, site: "https://apostaganha.bet.br/esportes" };
     default:
       break;
   }
@@ -45,4 +60,6 @@ export const allLogos = {
   EstrelaBet,
   SportingBet,
   Novibet,
+  CassinoBet,
+  ApostaGanha
 };

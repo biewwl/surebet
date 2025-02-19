@@ -17,11 +17,11 @@
 }
 
 .spinner > div {
-  background-color: #2097e633;
+  background-color: #495aff33;
   height: 100%;
   position: absolute;
   width: 100%;
-  border: 2.2px solid #2097e6;
+  border: 2.2px solid var(--accent);
 }
 
 .spinner div:nth-of-type(1) {

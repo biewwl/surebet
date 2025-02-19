@@ -1,0 +1,21 @@
+.sheet-controller {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  gap: 10px;
+}
+
+.sheet-controller__option {
+  padding: 10px;
+  border: none;
+  transition: 0.5s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  opacity: 0.3;
+}
+
+.sheet-controller__option.--selected {
+  opacity: 1;
+}

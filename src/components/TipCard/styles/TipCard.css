@@ -76,8 +76,13 @@
   opacity: 1;
 }
 
+.tip-card__tip__odd__link {
+  display: flex;
+  cursor: pointer;
+}
+
 .tip-card__tip__odd__logo {
-  width: 30px;
+  width: 25px;
   border-radius: 50%;
 }
 
@@ -137,7 +142,7 @@
 .tip-card__tip__result {
   width: 100%;
   background: #17cc90;
-  background: linear-gradient(74deg, #17cc90 0%, #17cc90e3 100%);
+  background: linear-gradient(74deg, #17cc90 0%, #17cc90ad 100%);
   padding: 10px;
   display: flex;
   justify-content: center;
@@ -149,7 +154,7 @@
 
 .tip-card.--pending .tip-card__tip__result {
   background: #fc9e23;
-  background: linear-gradient(74deg, #fc9e23 0%, #fc9e23e3 100%);
+  background: linear-gradient(74deg, #fc9e23 0%, #fc9e23ad 100%);
 }
 
 .tip-card.--draw .tip-card__tip__result {
@@ -160,12 +165,12 @@
 
 .tip-card.--lose .tip-card__tip__result {
   background-color: #fd2d2d;
-  background: linear-gradient(74deg, #fd2d2d 0%, #fd2d2de3 100%);
+  background: linear-gradient(74deg, #fd2d2d 0%, #fd2d2dad 100%);
 }
 
 .tip-card.--bingo .tip-card__tip__result {
   background: #2d64fd;
-  background: linear-gradient(74deg, #2d64fd 0%, #999947 52%, #fd2d2d 100%);
+  background-image: linear-gradient(to right, #495aff 0%, #0acffead 100%);
 }
 
 .tip-card__options {
@@ -232,20 +237,26 @@
 
 .tip-card__options__option-2__item.--selected {
   background: #17cc90;
-  background: linear-gradient(74deg, #17cc90 0%, #09f3a9 100%);
+  background: linear-gradient(74deg, #17cc90 0%, #17cc90ad 100%);
   /* color: #fff; */
 }
 
 .tip-card__options__option-2.--super
   .tip-card__options__option-2__item.--selected:last-child {
   background-color: #fd2d2d;
-  background: linear-gradient(74deg, #fd2d2d 0%, #fd2d2de3 100%);
+  background: linear-gradient(74deg, #fd2d2d 0%, #fd2d2dad 100%);
   /* color: #fff; */
 }
 
 .tip-card__options__option-2__item.--selected.--bingo {
   background: #2d64fd;
-  background: linear-gradient(74deg, #2d64fd 0%, #999947 52%, #fd2d2d 100%);
+  background: linear-gradient(
+    74deg,
+    #86469c 0%,
+    #bc7fcd 22%,
+    #fb9ad1 72%,
+    #ffcdeaad 100%
+  );
   /* color: #fff; */
 }
 

@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { getBalance, getResults } from "../api/get";
-import lS from "manager-local-storage";
+import lS, { set } from "manager-local-storage";
 import { formatResults } from "../utils/manageData";
 
 // Crie o contexto
@@ -18,13 +18,14 @@ export const DataProvider = ({ children }) => {
   const [update, setUpdate] = useState(false);
   const [script, setScript] = useState(initialScript);
   const [balance, setBalance] = useState([]);
+  const [sheet, setSheet] = useState("2");
 
   useEffect(() => {
     const fetchResults = async () => {
       if (script) {
         setLoading(true);
-        const r = await getResults(script);
-        const b = await getBalance(script);
+        const r = await getResults(script, sheet);
+        const b = await getBalance(script, sheet);
 
         const mappedResults = formatResults(r);
 
@@ -34,7 +35,7 @@ export const DataProvider = ({ children }) => {
       }
     };
     fetchResults();
-  }, [update, script]);
+  }, [update, script, sheet]);
 
   const login = (s) => {
     setScript(s);
@@ -65,6 +66,8 @@ export const DataProvider = ({ children }) => {
         login,
         logout,
         balance,
+        sheet,
+        setSheet
       }}
     >
       {children}

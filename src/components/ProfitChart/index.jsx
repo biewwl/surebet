@@ -85,32 +85,48 @@ const ProfitChart = ({ aspectRatio, n }) => {
 
   const bg = [...values].map((v, i, a) => {
     if (i === a.length - 1) {
-      return "#c1c1c1";
+      return "#c1c1c170";
     } else if (v > 0) {
-      return "#2097e670";
+      return "#495aff70";
     } else {
       return "#c12a2a70";
     }
   });
 
-  const data = {
+  const bd = [...values].map((v, i, a) => {
+    if (i === a.length - 1) {
+      return "#c1c1c1";
+    } else if (v > 0) {
+      return "#495aff";
+    } else {
+      return "#c12a2a";
+    }
+  });
+
+  const data = values.map((value, index, array) => {
+    if (index === 0 || index === array.length - 1) {
+      return [0, value];
+    } else {
+      const prevSum = array
+        .slice(0, index)
+        .reduce((acc, curr) => acc + curr, 0);
+      return [prevSum, prevSum + value];
+    }
+  });
+
+  const DATA = {
     labels: dates,
     datasets: [
       {
         label: "Valor em R$",
-        data: values.map((value, index, array) => {
-          if (index === 0 || index === array.length - 1) {
-            return [0, value];
-          } else {
-            const prevSum = array
-              .slice(0, index)
-              .reduce((acc, curr) => acc + curr, 0);
-            return [prevSum, prevSum + value];
-          }
-        }),
+        data,
         barThickness: "flex",
-        minBarLength: 20,
+        // minBarLength: 20,
         backgroundColor: [...bg],
+        borderColor: [...bd],
+        borderWidth: 1,
+        borderRadius: 5,
+        borderSkipped: false,
       },
     ],
   };
@@ -207,7 +223,7 @@ const ProfitChart = ({ aspectRatio, n }) => {
 
   return (
     <div className="profit-chart">
-      <Bar data={data} options={options} />
+      <Bar data={DATA} options={options} />
       <input
         type="range"
         value={zoom}
@@ -217,13 +233,24 @@ const ProfitChart = ({ aspectRatio, n }) => {
         className="profit-chart__zoom"
       />
       <div className="profit-chart__controls">
-        <button onClick={removeOneColumn} className={`profit-chart__controls__item bg-${theme} c-${theme}`}>
+        <button
+          onClick={removeOneColumn}
+          className={`profit-chart__controls__item bg-${theme} c-${theme}`}
+        >
           <Icon icon="si:zoom-out-duotone" />
         </button>
-        <button onClick={addOneColumn} className={`profit-chart__controls__item bg-${theme} c-${theme}`}>
+        <button
+          onClick={addOneColumn}
+          className={`profit-chart__controls__item bg-${theme} c-${theme}`}
+        >
           <Icon icon="si:zoom-in-duotone" />
         </button>
-        <button onClick={() => setPan(!pan)} className={`profit-chart__controls__item bg-${theme} c-${theme}${pan ? " --selected" : ""}`}>
+        <button
+          onClick={() => setPan(!pan)}
+          className={`profit-chart__controls__item bg-${theme} c-${theme}${
+            pan ? " --selected" : ""
+          }`}
+        >
           <Icon icon="hugeicons:hold-02" />
         </button>
       </div>
