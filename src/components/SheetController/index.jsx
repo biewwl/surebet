@@ -5,10 +5,12 @@ import { ThemeContext } from "../../context/ThemeContext";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 function SheetController() {
-  const sheets = ["1", "2"];
 
-  const { sheet, setSheet } = useContext(DataContext);
+  const { sheet, setSheet, sheets } = useContext(DataContext);
   const { theme } = useContext(ThemeContext);
+
+  console.log(sheets);
+  
 
   const selectedClass = (s) => (sheet === s ? " --selected" : "");
 
@@ -23,7 +25,7 @@ function SheetController() {
           )} content c-${theme}`}
         >
           <Icon icon="lets-icons:date-today-duotone"/>
-          Ciclo {s}
+          {s}
         </button>
       ))}
     </section>

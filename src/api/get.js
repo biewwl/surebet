@@ -4,7 +4,7 @@
 
 export const getResults = async (script, sheet) => {
   try {
-    const range = "F3:Q500";
+    const range = "A10:L500";
 
     const response = await fetch(`${script}?range=${range}&sheetName=${sheet}`);
 
@@ -13,6 +13,19 @@ export const getResults = async (script, sheet) => {
     return responseJSON;
   } catch (error) {
     console.log(script, error);
+    return { error: "Falha ao buscar resultados" };
+  }
+};
+
+export const getNames = async (script) => {
+  try {
+    const response = await fetch(`${script}?names=true`);
+
+    const responseJSON = await response.json();
+
+    return responseJSON;
+  } catch (error) {
+    // console.log(script, error);
     return { error: "Falha ao buscar resultados" };
   }
 };
@@ -28,10 +41,5 @@ export const getBalance = async (script, sheet) => {
     return responseJSON;
   } catch (error) {
     console.log(error);
-    ;
   }
 };
-
-export const get = async (script) => {
-  await fetch(`${script}?range=A1&sheetName=1`);
-}

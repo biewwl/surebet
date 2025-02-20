@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import { getBalance, getResults } from "../api/get";
+import { getBalance, getNames, getResults } from "../api/get";
 import lS, { set } from "manager-local-storage";
 import { formatResults } from "../utils/manageData";
 
@@ -18,12 +18,14 @@ export const DataProvider = ({ children }) => {
   const [update, setUpdate] = useState(false);
   const [script, setScript] = useState(initialScript);
   const [balance, setBalance] = useState([]);
-  const [sheet, setSheet] = useState("2");
+  const [sheets, setSheets] = useState([]);
+  const [sheet, setSheet] = useState("");
 
   useEffect(() => {
     const fetchResults = async () => {
-      if (script) {
+      if (script && sheet) {
         setLoading(true);
+
         const r = await getResults(script, sheet);
         const b = await getBalance(script, sheet);
 
@@ -36,6 +38,19 @@ export const DataProvider = ({ children }) => {
     };
     fetchResults();
   }, [update, script, sheet]);
+
+  useEffect(() => {
+    const fetchSheets = async () => {
+      if (script) {
+        const sheetsList = await getNames(script);
+
+        const currentSheet = sheetsList[sheetsList.length - 1];
+        setSheets(sheetsList);
+        setSheet(currentSheet);
+      }
+    };
+    fetchSheets();
+  }, [script]);
 
   const login = (s) => {
     setScript(s);
@@ -67,7 +82,8 @@ export const DataProvider = ({ children }) => {
         logout,
         balance,
         sheet,
-        setSheet
+        setSheet,
+        sheets,
       }}
     >
       {children}

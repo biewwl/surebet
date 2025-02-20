@@ -7,7 +7,7 @@ import "./styles/Login.css";
 import { ThemeContext } from "../../context/ThemeContext";
 import lS from "manager-local-storage";
 import { formatDate, parseDate } from "../../utils/formatDate";
-import { get } from "../../api/get";
+import { get, getNames } from "../../api/get";
 
 function Login() {
   const [script, setScript] = useState("");
@@ -32,7 +32,7 @@ function Login() {
     const s = saved ?? script;
 
     try {
-      await get(script);
+      await getNames(script);
       login(s);
     } catch (error) {
       setError(true);

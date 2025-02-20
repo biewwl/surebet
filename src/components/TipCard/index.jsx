@@ -91,7 +91,7 @@ function TipCard({ data, view }) {
   const handleConfirmDelete = async () => {
     const [, line] = cel.match(/([a-zA-Z]+)([0-9]+)/).slice(1, 3);
     setLoading(true);
-    await deleteResult(script, line);
+    await deleteResult(script, line, sheet);
 
     setLoading(false);
     updateData();

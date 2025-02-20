@@ -8,7 +8,7 @@ export const postResult = async (script, data, sheet) => {
       method: "POST",
       body: JSON.stringify({
         method: "POST",
-        range: "F3:Q3",
+        range: "A10:L10",
         sheetName: sheet,
         values: [
           [
@@ -35,7 +35,7 @@ export const postWin = async (script, win, line, sheet) => {
       method: "POST",
       body: JSON.stringify({
         method: "POST",
-        range: `Q${line}:Q${line}`,
+        range: `L${line}:L${line}`,
         values: [[win]],
         sheetName: sheet,
       }),
