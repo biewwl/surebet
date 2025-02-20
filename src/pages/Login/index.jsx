@@ -6,8 +6,8 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import "./styles/Login.css";
 import { ThemeContext } from "../../context/ThemeContext";
 import lS from "manager-local-storage";
-import { formatDate, parseDate } from "../../utils/formatDate";
-import { get, getNames } from "../../api/get";
+import { formatDate } from "../../utils/formatDate";
+import { getNames } from "../../api/get";
 
 function Login() {
   const [script, setScript] = useState("");

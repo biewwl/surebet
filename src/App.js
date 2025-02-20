@@ -7,12 +7,12 @@ import Create from "./pages/Create";
 import { useContext, useEffect } from "react";
 import { DataContext } from "./context/DataContext";
 import Login from "./pages/Login";
-import { get, getNames, getResults } from "./api/get";
+import { getNames } from "./api/get";
 import Navigation from "./components/Navigation";
 import { ThemeContext } from "./context/ThemeContext";
 import { Helmet } from "react-helmet";
-import "./App.css";
 import Calculate from "./pages/Calculate";
+import "./App.css";
 
 function PrivateRoute({ element, script, ...rest }) {
   return script ? element : <Navigate to="/login" />;
@@ -34,14 +34,14 @@ function App() {
     const verify = async () => {
       if (script) {
         try {
-      await getNames(script);
+          await getNames(script);
         } catch (error) {
           logout();
         }
       }
     };
     verify();
-  }, [pathname]);
+  }, [pathname, logout, script]);
 
   return (
     <div className={`App bg-${theme}`}>

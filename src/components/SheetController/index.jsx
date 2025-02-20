@@ -9,9 +9,6 @@ function SheetController() {
   const { sheet, setSheet, sheets } = useContext(DataContext);
   const { theme } = useContext(ThemeContext);
 
-  console.log(sheets);
-  
-
   const selectedClass = (s) => (sheet === s ? " --selected" : "");
 
   return (

@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { getBalance, getNames, getResults } from "../api/get";
-import lS, { set } from "manager-local-storage";
+import lS from "manager-local-storage";
 import { formatResults } from "../utils/manageData";
 
 // Crie o contexto
