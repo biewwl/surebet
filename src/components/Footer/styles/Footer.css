@@ -19,3 +19,13 @@
   color: #d63030;
   cursor: pointer;
 }
+
+.footer a {
+  color: var(--accent);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}

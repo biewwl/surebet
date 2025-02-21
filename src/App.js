@@ -13,6 +13,7 @@ import { ThemeContext } from "./context/ThemeContext";
 import { Helmet } from "react-helmet";
 import Calculate from "./pages/Calculate";
 import "./App.css";
+import Help from "./pages/Help";
 
 function PrivateRoute({ element, script, ...rest }) {
   return script ? element : <Navigate to="/login" />;
@@ -55,6 +56,7 @@ function App() {
           element={<PublicRoute element={<Login />} script={script} />}
         />
         <Route path="/calculate" element={<Calculate />} />
+        <Route path="/help" element={<Help />} />
         <Route
           path="/"
           element={<PrivateRoute element={<Home />} script={script} />}

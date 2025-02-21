@@ -67,7 +67,7 @@ function Navigation() {
               <span className="navigation__item__title">Sair</span>
             </button>
           )}
-          {!script && (
+          {!script && pathname !== "/login" && (
             <Link
               className="navigation__item content --login"
               to={"/login"}

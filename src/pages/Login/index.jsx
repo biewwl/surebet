@@ -58,7 +58,7 @@ function Login() {
       <form className="login__form content" onSubmit={(e) => handleSubmit(e)}>
         {!loading && (
           <label htmlFor="script" className="login__form__label">
-            <span className="login__form__label__text">AppScript</span>
+            <span className="login__form__label__text">Apps Script</span>
             <input
               type="text"
               name="script"

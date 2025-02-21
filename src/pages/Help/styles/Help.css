@@ -1,0 +1,34 @@
+.help {
+  display: flex;
+  /* padding: 10px; */
+  flex-direction: column;
+}
+
+.help__steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+.help__steps__step {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.help__steps__step__text__link {
+  color: var(--accent);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.help__steps__step__text__link:hover {
+  text-decoration: underline;
+}
+
+.help__steps__step__guide {
+  font-size: 0.8em;
+  font-style: italic;
+}

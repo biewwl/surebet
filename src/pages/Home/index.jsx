@@ -8,7 +8,7 @@ import Balance from "../../components/Balance";
 import { useContext } from "react";
 import { DataContext } from "../../context/DataContext";
 import Loading from "../../components/Loading";
-import Calculate from "../Calculate";
+// import Calculate from "../Calculate";
 import SheetController from "../../components/SheetController";
 
 function Home() {
