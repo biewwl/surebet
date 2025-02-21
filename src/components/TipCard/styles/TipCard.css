@@ -250,13 +250,7 @@
 
 .tip-card__options__option-2__item.--selected.--bingo {
   background: #2d64fd;
-  background: linear-gradient(
-    74deg,
-    #86469c 0%,
-    #bc7fcd 22%,
-    #fb9ad1 72%,
-    #ffcdeaad 100%
-  );
+  background-image: linear-gradient(to right, #495aff 0%, #0acffead 100%);
   /* color: #fff; */
 }
 

@@ -33,7 +33,7 @@ const ProfitChart = ({ aspectRatio, n }) => {
 
   const [values, setValues] = useState([]);
   const [dates, setDates] = useState([]);
-  const [zoom, setZoom] = useState(7);
+  const [zoom, setZoom] = useState(dates.length > 7 ? 7 : dates.length);
   const [pan, setPan] = useState(false);
 
   useEffect(() => {
