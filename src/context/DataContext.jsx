@@ -14,7 +14,7 @@ export const DataProvider = ({ children }) => {
   const initialScript = lS.get(LS_KEY) ?? "";
 
   const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [update, setUpdate] = useState(false);
   const [script, setScript] = useState(initialScript);
   const [balance, setBalance] = useState([]);
