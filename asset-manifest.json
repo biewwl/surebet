@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/surebet/static/css/main.8fe8d370.css",
-    "main.js": "/surebet/static/js/main.af439398.js",
+    "main.css": "/surebet/static/css/main.51bd22c4.css",
+    "main.js": "/surebet/static/js/main.2dc84c7b.js",
     "static/media/ProductSans-Regular.ttf": "/surebet/static/media/ProductSans-Regular.2765c69613690b1b9c03.ttf",
     "static/media/cassinobet.png": "/surebet/static/media/cassinobet.bd722bede5337384a948.png",
     "static/media/betfair.png": "/surebet/static/media/betfair.8df1094ea8308de54ffd.png",
@@ -11,11 +11,11 @@
     "static/media/betano.webp": "/surebet/static/media/betano.4912fe5224d47ab83b02.webp",
     "static/media/estrelabet.webp": "/surebet/static/media/estrelabet.6d18f655c5ee5eeedaee.webp",
     "index.html": "/surebet/index.html",
-    "main.8fe8d370.css.map": "/surebet/static/css/main.8fe8d370.css.map",
-    "main.af439398.js.map": "/surebet/static/js/main.af439398.js.map"
+    "main.51bd22c4.css.map": "/surebet/static/css/main.51bd22c4.css.map",
+    "main.2dc84c7b.js.map": "/surebet/static/js/main.2dc84c7b.js.map"
   },
   "entrypoints": [
-    "static/css/main.8fe8d370.css",
-    "static/js/main.af439398.js"
+    "static/css/main.51bd22c4.css",
+    "static/js/main.2dc84c7b.js"
   ]
 }
