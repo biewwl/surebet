@@ -17,7 +17,7 @@ function Home() {
   return (
     <main className="home">
       <Logo />
-      <SheetController />
+      {!loading && <SheetController />}
       {!loading && (
         <div className="home__section">
           <SectionTitle icon="line-md:confirm-circle-twotone" title="Saldo" />

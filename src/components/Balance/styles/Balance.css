@@ -11,6 +11,32 @@
   padding: 20px;
   transition: 0.5s;
   animation: toTop 0.5s;
+  position: relative;
+}
+
+.balance__card.--other, .balance__card.--outflows {
+  cursor: pointer;
+}
+
+.balance__card.--other:before, .balance__card.--outflows:before {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  bottom: 5px;
+  right: 5px;
+  /* background-color: var(--accent); */
+  clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+  border-radius: 0.25em;
+  transition: 0.5s;
+}
+
+.bg-light .balance__card.--other:before, .bg-light .balance__card.--outflows:before {
+  background-color: var(--light-2);
+}
+
+.bg-dark .balance__card.--other:before, .bg-dark .balance__card.--outflows:before {
+  background-color: var(--dark);
 }
 
 .balance__card:hover {
@@ -36,4 +62,81 @@
 
 .balance__card__title__icon {
   font-size: 15px;
+}
+
+.manage-balance {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100dvw;
+  height: 100dvh;
+  background-color: rgba(0, 0, 0, 0.678);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.manage-balance__content {
+  padding: 10px 20px 20px;
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+}
+
+.manage-balance__content__close {
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+  border-radius: 50% !important;
+  background-color: #fd2d2d !important;
+  color: #fff;
+  cursor: pointer;
+}
+
+.manage-balance__content__form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.manage-balance__content__form__label {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  /* color: var(--accent); */
+}
+
+.manage-balance__content__form__label__text {
+  font-size: 0.8em;
+}
+
+.manage-balance__content__form__label__input {
+  flex-grow: 1;
+  padding: 10px;
+  border: none;
+  outline: none;
+  border-radius: 0.25em;
+  /* max-width: 100px; */
+}
+
+.manage-balance__content__form__button {
+  background-color: #17cc90;
+  border: none;
+  border-radius: 0.25em;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 10px;
+  width: 100%;
+  align-self: center;
 }

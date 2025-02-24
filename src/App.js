@@ -56,7 +56,7 @@ function App() {
           element={<PublicRoute element={<Login />} script={script} />}
         />
         <Route path="/calculate" element={<Calculate />} />
-        <Route path="/help" element={<Help />} />
+        <Route path="/guide" element={<Help />} />
         <Route
           path="/"
           element={<PrivateRoute element={<Home />} script={script} />}

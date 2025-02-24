@@ -63,7 +63,7 @@ function TipCard({ data, view }) {
 
   const pending = !win;
   const bingo = win === 12;
-
+  
   const result1 = odd1 * price1;
   const result2 = odd2 * price2;
   const result = bingo ? result1 + result2 : win === 1 ? result1 : result2;
@@ -103,7 +103,7 @@ function TipCard({ data, view }) {
 
   const titleMenu = () => {
     if (openDelete) return "Confirmar exclusão";
-    if (openWin && odd2) return "Qual odd vencedora?";
+    if (openWin && odd2) return description;
     if (openWin) return "Qual o resultado?";
     return "O que deseja fazer?";
   };
@@ -166,7 +166,11 @@ function TipCard({ data, view }) {
         </div>
         {bet2 && (
           <div className={`tip-card__tip__odd${winner(2)}`}>
-            <Link to={site2} target="_blank" className="tip-card__tip__odd__link">
+            <Link
+              to={site2}
+              target="_blank"
+              className="tip-card__tip__odd__link"
+            >
               <img src={image2} alt="" className="tip-card__tip__odd__logo" />
             </Link>
             <div className="tip-card__tip__odd__info">
@@ -182,7 +186,11 @@ function TipCard({ data, view }) {
         )}
         {bet3 && (
           <div className={`tip-card__tip__odd${winner(3)}`}>
-            <Link to={site3} target="_blank" className="tip-card__tip__odd__link">
+            <Link
+              to={site3}
+              target="_blank"
+              className="tip-card__tip__odd__link"
+            >
               <img src={image3} alt="" className="tip-card__tip__odd__logo" />
             </Link>
             <div className="tip-card__tip__odd__info">
@@ -258,7 +266,7 @@ function TipCard({ data, view }) {
                     )}`}
                     onClick={() => setOptWin(1)}
                   >
-                    {bet2 ? "1" : "Ganha"}
+                    {bet2 ? opt1  : "Ganha"}
                   </button>
                   {bet2 && !bet3 && (
                     <button
@@ -276,7 +284,7 @@ function TipCard({ data, view }) {
                     )}`}
                     onClick={() => setOptWin(2)}
                   >
-                    {bet2 ? "2" : "Perda"}
+                    {bet2 ? opt2 : "Perda"}
                   </button>
                   {bet3 && (
                     <button
@@ -285,7 +293,7 @@ function TipCard({ data, view }) {
                       )}`}
                       onClick={() => setOptWin(3)}
                     >
-                      3
+                      {opt3}
                     </button>
                   )}
                 </div>

@@ -48,3 +48,43 @@ export const postWin = async (script, win, line, sheet) => {
     return error.message;
   }
 };
+
+export const postNormals = async (script, value, sheet) => {
+  try {
+    const response = await fetch(script, {
+      method: "POST",
+      body: JSON.stringify({
+        method: "POST",
+        range: `B2:B2`,
+        values: [[value]],
+        sheetName: sheet,
+      }),
+    });
+
+    const responseJSON = await response.json();
+
+    return responseJSON;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+export const postOutflows = async (script, value, sheet) => {
+  try {
+    const response = await fetch(script, {
+      method: "POST",
+      body: JSON.stringify({
+        method: "POST",
+        range: `B5:B5`,
+        values: [[value]],
+        sheetName: sheet,
+      }),
+    });
+
+    const responseJSON = await response.json();
+
+    return responseJSON;
+  } catch (error) {
+    return error.message;
+  }
+};

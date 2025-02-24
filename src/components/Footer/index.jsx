@@ -8,14 +8,13 @@ function Footer() {
 
   return (
     <footer className="footer">
-      <p>
-        © Copyright 2025 biewwl, All rights reserved.{" "}
-        <Link to="/help">Quero criar uma conta</Link>.
-      </p>
-      {script && (
+      <p>© Copyright 2025 biewwl, All rights reserved.</p>
+      {script ? (
         <button className="footer__logout" onClick={logout}>
           Sair.
         </button>
+      ) : (
+        <Link to="/guide">Quero criar uma conta.</Link>
       )}
     </footer>
   );

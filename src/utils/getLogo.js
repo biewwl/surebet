@@ -9,6 +9,8 @@ import SportingBet from "../assets/sportingbet.png";
 import Novibet from "../assets/novibet.png";
 import CassinoBet from "../assets/cassinobet.png";
 import ApostaGanha from "../assets/apostaganha.png";
+import Bet7k from "../assets/bet7k.png";
+import VeraBet from "../assets/verabet.jpeg";
 
 export const getLogo = (name) => {
   const betName = name.toLowerCase();
@@ -45,6 +47,10 @@ export const getLogo = (name) => {
       return { logo: CassinoBet, site: "https://cassino.bet.br/sports" };
     case "apostaganha":
       return { logo: ApostaGanha, site: "https://apostaganha.bet.br/esportes" };
+    case "bet7k":
+      return { logo: Bet7k, site: "https://7k.bet.br/sports" };
+      case "verabet":
+      return { logo: VeraBet, site: "https://vera.bet.br/sports" };
     default:
       break;
   }
@@ -61,5 +67,7 @@ export const allLogos = {
   SportingBet,
   Novibet,
   CassinoBet,
-  ApostaGanha
+  ApostaGanha,
+  Bet7k,
+  VeraBet
 };

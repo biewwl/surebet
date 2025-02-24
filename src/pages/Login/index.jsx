@@ -85,14 +85,14 @@ function Login() {
         )}
       </form>
       <div className="login__saved">
-        {savedScripts.map((s, i) => (
+        {savedScripts.reverse().map((s, i) => (
           <div className={`login__saved__item content`} key={i}>
             <button
               className={`login__saved__item__button  c-${theme}`}
               onClick={(e) => handleSubmit(e, s.script)}
             >
               <Icon
-                icon="lets-icons:key-alt-duotone"
+                icon="uim:link-h"
                 className="login__saved__item__button__icon"
               />
 

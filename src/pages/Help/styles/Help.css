@@ -1,10 +1,12 @@
 .help {
   display: flex;
-  /* padding: 10px; */
+  padding: 0 10px;
+  gap: 10px;
   flex-direction: column;
 }
 
 .help__steps {
+  transition: 0.5s;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -16,16 +18,16 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  animation: toTop 0.5s;
+}
+
+.help__steps__step__text {
+  transition: 0.5s;
 }
 
 .help__steps__step__text__link {
   color: var(--accent);
-  text-decoration: none;
   cursor: pointer;
-}
-
-.help__steps__step__text__link:hover {
-  text-decoration: underline;
 }
 
 .help__steps__step__guide {
