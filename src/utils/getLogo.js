@@ -11,6 +11,8 @@ import CassinoBet from "../assets/cassinobet.png";
 import ApostaGanha from "../assets/apostaganha.png";
 import Bet7k from "../assets/bet7k.png";
 import VeraBet from "../assets/verabet.jpeg";
+import BetNacional from "../assets/betnacional.png";
+import McGames from "../assets/mcgames.png";
 
 export const getLogo = (name) => {
   const betName = name.toLowerCase();
@@ -49,10 +51,15 @@ export const getLogo = (name) => {
       return { logo: ApostaGanha, site: "https://apostaganha.bet.br/esportes" };
     case "bet7k":
       return { logo: Bet7k, site: "https://7k.bet.br/sports" };
-      case "verabet":
+    case "verabet":
       return { logo: VeraBet, site: "https://vera.bet.br/sports" };
+    case "betnacional":
+      return { logo: BetNacional, site: "https://betnacional.bet.br/" };
+    case "mcgames":
+      return { logo: McGames, site: "https://mcgames.bet.br/sports" };
     default:
-      break;
+      return "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.haworth.com%2Fna%2Fen%2Fdesign-resources%2Fsurfaces%2Fsurface%2F7R_10.html&psig=AOvVaw0PpMxq6uN3m6WOHGIrfK-L&ust=1740688082859000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOi0t8iW4osDFQAAAAAdAAAAABAE";
+    // break;
   }
 };
 
@@ -69,5 +76,7 @@ export const allLogos = {
   CassinoBet,
   ApostaGanha,
   Bet7k,
-  VeraBet
+  VeraBet,
+  BetNacional,
+  McGames,
 };

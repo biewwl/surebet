@@ -45,13 +45,25 @@ function TipCard({ data, view }) {
     date: { value: date },
   } = view ? dataView : data;
 
-  const [bet1, opt1] = option1.split(" | ");
-  const [bet2, opt2] = option2.split(" | ");
-  const [bet3, opt3] = option3.split(" | ");
+  const opt1Splitted = option1.split(" | ");
+  const opt2Splitted = option2.split(" | ");
+  const opt3Splitted = option3.split(" | ");
+
+  const opt1 = opt1Splitted[opt1Splitted.length - 1];
+  const opt2 = opt2Splitted[opt2Splitted.length - 1];
+  const opt3 = opt3Splitted[opt3Splitted.length - 1];
+
+  const bet1 = opt1Splitted[0];
+  const bet2 = opt2Splitted[0];
+  const bet3 = opt3Splitted[0];
 
   const logo1 = getLogo(bet1);
   const logo2 = getLogo(bet2);
   const logo3 = getLogo(bet3);
+
+  const bets1 = opt1Splitted.slice(0, opt1Splitted.length - 1);
+  const bets2 = opt2Splitted.slice(0, opt2Splitted.length - 1);
+  const bets3 = opt3Splitted.slice(0, opt3Splitted.length - 1);
 
   const image1 = logo1 ? logo1.logo : "";
   const image2 = logo2 ? logo2.logo : "";
@@ -63,7 +75,7 @@ function TipCard({ data, view }) {
 
   const pending = !win;
   const bingo = win === 12;
-  
+
   const result1 = odd1 * price1;
   const result2 = odd2 * price2;
   const result = bingo ? result1 + result2 : win === 1 ? result1 : result2;
@@ -153,9 +165,41 @@ function TipCard({ data, view }) {
         style={{ gridTemplateAreas: "'area1''area2''area3'" }}
       >
         <div className={`tip-card__tip__odd${winner(1)}`}>
-          <Link to={site1} target="_blank" className="tip-card__tip__odd__link">
-            <img src={image1} alt="" className="tip-card__tip__odd__logo" />
-          </Link>
+          {bets1.length > 1 ? (
+            <div className="tip-card__tip__odd__multiple">
+              <div className={`tip-card__tip__odd__multiple__count bg-${theme}`}>
+                {bets1.length}
+              </div>
+              {bets1.map((b) => {
+                const bLogo = getLogo(b);
+                const bImg = bLogo.logo;
+                const bSite = bLogo.site;
+
+                return (
+                  <Link
+                    to={bSite}
+                    target="_blank"
+                    className="tip-card__tip__odd__link"
+                    key={`${b}-1`}
+                  >
+                    <img
+                      src={bImg}
+                      alt=""
+                      className="tip-card__tip__odd__logo"
+                    />
+                  </Link>
+                );
+              })}
+            </div>
+          ) : (
+            <Link
+              to={site1}
+              target="_blank"
+              className="tip-card__tip__odd__link"
+            >
+              <img src={image1} alt="" className="tip-card__tip__odd__logo" />
+            </Link>
+          )}
           <div className="tip-card__tip__odd__info">
             <span>{opt1}</span>
             <div className="separator"></div>
@@ -166,13 +210,41 @@ function TipCard({ data, view }) {
         </div>
         {bet2 && (
           <div className={`tip-card__tip__odd${winner(2)}`}>
-            <Link
-              to={site2}
-              target="_blank"
-              className="tip-card__tip__odd__link"
-            >
-              <img src={image2} alt="" className="tip-card__tip__odd__logo" />
-            </Link>
+            {bets2.length > 1 ? (
+              <div className="tip-card__tip__odd__multiple">
+                <div className={`tip-card__tip__odd__multiple__count bg-${theme}`}>
+                  {bets2.length}
+                </div>
+                {bets2.map((b) => {
+                  const bLogo = getLogo(b);
+                  const bImg = bLogo.logo;
+                  const bSite = bLogo.site;
+
+                  return (
+                    <Link
+                      to={bSite}
+                      target="_blank"
+                      className="tip-card__tip__odd__link"
+                      key={`${b}-2`}
+                    >
+                      <img
+                        src={bImg}
+                        alt=""
+                        className="tip-card__tip__odd__logo"
+                      />
+                    </Link>
+                  );
+                })}
+              </div>
+            ) : (
+              <Link
+                to={site2}
+                target="_blank"
+                className="tip-card__tip__odd__link"
+              >
+                <img src={image2} alt="" className="tip-card__tip__odd__logo" />
+              </Link>
+            )}
             <div className="tip-card__tip__odd__info">
               <span>{opt2}</span>
               <div className="separator"></div>
@@ -186,13 +258,41 @@ function TipCard({ data, view }) {
         )}
         {bet3 && (
           <div className={`tip-card__tip__odd${winner(3)}`}>
-            <Link
-              to={site3}
-              target="_blank"
-              className="tip-card__tip__odd__link"
-            >
-              <img src={image3} alt="" className="tip-card__tip__odd__logo" />
-            </Link>
+            {bets3.length > 1 ? (
+              <div className="tip-card__tip__odd__multiple">
+                <div className={`tip-card__tip__odd__multiple__count bg-${theme}`}>
+                  {bets3.length}
+                </div>
+                {bets3.map((b) => {
+                  const bLogo = getLogo(b);
+                  const bImg = bLogo.logo;
+                  const bSite = bLogo.site;
+
+                  return (
+                    <Link
+                      to={bSite}
+                      target="_blank"
+                      className="tip-card__tip__odd__link"
+                      key={`${b}-2`}
+                    >
+                      <img
+                        src={bImg}
+                        alt=""
+                        className="tip-card__tip__odd__logo"
+                      />
+                    </Link>
+                  );
+                })}
+              </div>
+            ) : (
+              <Link
+                to={site3}
+                target="_blank"
+                className="tip-card__tip__odd__link"
+              >
+                <img src={image3} alt="" className="tip-card__tip__odd__logo" />
+              </Link>
+            )}
             <div className="tip-card__tip__odd__info">
               <span>{opt3}</span>
               <div className="separator"></div>
@@ -266,7 +366,7 @@ function TipCard({ data, view }) {
                     )}`}
                     onClick={() => setOptWin(1)}
                   >
-                    {bet2 ? opt1  : "Ganha"}
+                    {bet2 ? opt1 : "Ganha"}
                   </button>
                   {bet2 && !bet3 && (
                     <button

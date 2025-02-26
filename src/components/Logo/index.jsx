@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import "./styles/Logo.css";
 import { useContext } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
+import "./styles/Logo.css";
 
 function Logo() {
   const { theme } = useContext(ThemeContext);

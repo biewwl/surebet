@@ -135,6 +135,12 @@
   /* align-items: center; */
 }
 
+.calculate__inputs__details__place__value {
+  background: none;
+  border: none;
+  outline: none;
+}
+
 .calculate__inputs__details__place__title,
 .calculate__inputs__details__return__title,
 .calculate__inputs__details__profit__title {

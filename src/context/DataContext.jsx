@@ -29,7 +29,11 @@ export const DataProvider = ({ children }) => {
         const r = await getResults(script, sheet);
         const b = await getBalance(script, sheet);
 
-        const mappedResults = formatResults(r);
+        const mappedResults = formatResults(r).sort((a, b) => {
+          let dateA = new Date(a[0].value);
+          let dateB = new Date(b[0].value);
+          return dateA - dateB;
+        });
 
         setResults(mappedResults);
         setBalance(b);

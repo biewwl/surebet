@@ -258,3 +258,29 @@
   opacity: 0.3;
   cursor: not-allowed;
 }
+
+.tip-card__tip__odd:hover .tip-card__tip__odd__multiple {
+  width: auto;
+}
+
+.tip-card__tip__odd:hover .tip-card__tip__odd__multiple__count:first-child {
+  display: none;
+}
+
+.tip-card__tip__odd__multiple {
+  display: flex;
+  width: 25px;
+  overflow: hidden;
+  gap: 5px;
+}
+
+.tip-card__tip__odd__multiple__count {
+  min-width: 25px;
+  max-width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: 0.5s;
+}

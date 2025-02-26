@@ -1,10 +1,10 @@
 import { useContext, useState } from "react";
-import "./styles/Calculate.css";
 import { ThemeContext } from "../../context/ThemeContext";
 import { formatValue } from "../../utils/formatNumber";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Logo from "../../components/Logo";
 import SectionTitle from "../../components/SectionTitle";
+import "./styles/Calculate.css";
 
 function Calculate() {
   const [data, setData] = useState({
@@ -14,6 +14,7 @@ function Calculate() {
     // "Valor 2": 0,
     "Odd 3": "",
     // "Valor 3": 0,
+    total: 0,
   });
   const [showOdd3, setShowOdd3] = useState(false);
 
@@ -22,6 +23,7 @@ function Calculate() {
     "Valor a ser colocado": value1,
     "Odd 2": odd2,
     "Odd 3": odd3,
+    total,
   } = data;
 
   const { theme } = useContext(ThemeContext);
@@ -33,8 +35,37 @@ function Calculate() {
     value = value.replace("R$ ", "");
     value = value.replace(",", ".");
 
+    const newData = { ...data };
+    newData[name] = value;
+
+    const {
+      "Odd 1": o1,
+      "Valor a ser colocado": v1,
+      "Odd 2": o2,
+      "Odd 3": o3,
+      // t,
+    } = newData;
+
+    const v2 = safeCalculation(v1, o1, o2);
+    const v3 = safeCalculation(v1, o1, o3);
+
+    const newT = Number(v1) + v2 + v3;
+
     if (!isNaN(value) || value === ".") {
-      setData({ ...data, [name]: value });
+      if (name === "total") {
+        // console.log();
+
+        setData({
+          ...data,
+          [name]: value,
+          "Valor a ser colocado": (
+            value /
+            (1 + o1 / o2 + (o3 === "" ? 0 : o1 / o3))
+          ).toFixed(2),
+        });
+      } else {
+        setData({ ...data, [name]: value, total: newT.toFixed(2) });
+      }
     }
   };
 
@@ -53,7 +84,7 @@ function Calculate() {
 
   //   const total = result1 + result2 + result3;
 
-  //   console.log(total);
+  // console.log(total);
   // }
 
   const handleOdd3 = () => {
@@ -69,13 +100,12 @@ function Calculate() {
   const value2 = safeCalculation(value1, odd1, odd2);
   const value3 = safeCalculation(value1, odd1, odd3);
 
-  const totalTip = Number(value1) + value2 + value3;
   const returnTip = value1 * odd1;
 
   const profitClass = () => {
-    if (returnTip - totalTip > 0) {
+    if (returnTip - total > 0) {
       return " --win";
-    } else if (returnTip - totalTip < 0) {
+    } else if (returnTip - total < 0) {
       return " --loss";
     } else {
       return "";
@@ -242,11 +272,12 @@ function Calculate() {
                 />
                 Valor Total Apostado
               </span>
-              <span
+              <input
                 className={`calculate__inputs__details__place__value c-${theme}-1`}
-              >
-                {formatValue(totalTip)}
-              </span>
+                value={`R$ ${total}`}
+                onChange={handleChange}
+                name="total"
+              />
             </div>
             <div className="calculate__inputs__details__return">
               <span
@@ -265,20 +296,10 @@ function Calculate() {
               </span>
             </div>
             <div className={`calculate__inputs__details__profit bg-${theme}`}>
-              {/* <span
-                className={`calculate__inputs__details__profit__title c-${theme}`}
-              >
-                <Icon
-                  icon="material-symbols:play-arrow-rounded"
-                  rotate={3}
-                  className="calculate__inputs__details__place__title__icon"
-                />
-                Lucro
-              </span> */}
               <span
                 className={`calculate__inputs__details__profit__value c-${theme}-2`}
               >
-                {formatValue(returnTip - totalTip)}
+                {formatValue(returnTip - total)}
               </span>
             </div>
           </div>

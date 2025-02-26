@@ -34,16 +34,21 @@ function Create() {
     odd3: "",
   });
 
-  const { updateData, script, loading: loadingD, sheet } = useContext(DataContext);
+  const {
+    updateData,
+    script,
+    loading: loadingD,
+    sheet,
+  } = useContext(DataContext);
   const { theme } = useContext(ThemeContext);
 
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  const [option1BettingHouse, setOption1BettingHouse] = useState("");
-  const [option2BettingHouse, setOption2BettingHouse] = useState("");
-  const [option3BettingHouse, setOption3BettingHouse] = useState("");
+  const [option1BettingHouse, setOption1BettingHouse] = useState([]);
+  const [option2BettingHouse, setOption2BettingHouse] = useState([]);
+  const [option3BettingHouse, setOption3BettingHouse] = useState([]);
 
   const keys = Object.keys(formData);
 
@@ -67,9 +72,9 @@ function Create() {
     }
   };
 
-  const opt1Complete = (v) => `${option1BettingHouse} | ${v}`;
-  const opt2Complete = (v) => `${option2BettingHouse} | ${v}`;
-  const opt3Complete = (v) => `${option3BettingHouse} | ${v}`;
+  const opt1Complete = (v) => `${option1BettingHouse.join(" | ")} | ${v}`;
+  const opt2Complete = (v) => `${option2BettingHouse.join(" | ")} | ${v}`;
+  const opt3Complete = (v) => `${option3BettingHouse.join(" | ")} | ${v}`;
 
   const transformToNumber = (data) => {
     return {
@@ -103,11 +108,23 @@ function Create() {
 
   const handleSelectBetting = (name, i) => {
     if (i === 2) {
-      setOption1BettingHouse(name);
+      if (option1BettingHouse.some((b) => b === name)) {
+        setOption1BettingHouse(option1BettingHouse.filter((b) => b !== name));
+      } else {
+        setOption1BettingHouse([...option1BettingHouse, name]);
+      }
     } else if (i === 5) {
-      setOption2BettingHouse(name);
+      if (option2BettingHouse.some((b) => b === name)) {
+        setOption2BettingHouse(option2BettingHouse.filter((b) => b !== name));
+      } else {
+        setOption2BettingHouse([...option2BettingHouse, name]);
+      }
     } else if (i === 8) {
-      setOption3BettingHouse(name);
+      if (option3BettingHouse.some((b) => b === name)) {
+        setOption3BettingHouse(option3BettingHouse.filter((b) => b !== name));
+      } else {
+        setOption3BettingHouse([...option3BettingHouse, name]);
+      }
     }
   };
 
@@ -173,8 +190,12 @@ function Create() {
                       {Object.entries(allLogos).map((l, index) => {
                         const [name, logo] = l;
                         const selected =
-                          (i === 2 && option1BettingHouse === name) ||
-                          (i === 5 && option2BettingHouse === name);
+                          (i === 2 &&
+                            option1BettingHouse.some((b) => b === name)) ||
+                          (i === 5 &&
+                            option2BettingHouse.some((b) => b === name)) ||
+                          (i === 8 &&
+                            option3BettingHouse.some((b) => b === name));
                         const selectedC = selected ? "" : " --not-selected";
                         return (
                           <div
