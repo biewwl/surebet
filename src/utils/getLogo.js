@@ -13,6 +13,8 @@ import Bet7k from "../assets/bet7k.png";
 import VeraBet from "../assets/verabet.jpeg";
 import BetNacional from "../assets/betnacional.png";
 import McGames from "../assets/mcgames.png";
+import ApostaTudo from "../assets/apostatudo.png";
+import ReiDoPitaco from "../assets/reidopitaco.png";
 
 export const getLogo = (name) => {
   const betName = name.toLowerCase();
@@ -57,6 +59,10 @@ export const getLogo = (name) => {
       return { logo: BetNacional, site: "https://betnacional.bet.br/" };
     case "mcgames":
       return { logo: McGames, site: "https://mcgames.bet.br/sports" };
+    case "apostatudo":
+      return { logo: ApostaTudo, site: "https://apostatudo.bet.br/sports" };
+    case "reidopitaco":
+      return { logo: ReiDoPitaco, site: "https://reidopitaco.bet.br/betting" };
     default:
       return "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.haworth.com%2Fna%2Fen%2Fdesign-resources%2Fsurfaces%2Fsurface%2F7R_10.html&psig=AOvVaw0PpMxq6uN3m6WOHGIrfK-L&ust=1740688082859000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOi0t8iW4osDFQAAAAAdAAAAABAE";
     // break;
@@ -73,10 +79,12 @@ export const allLogos = {
   EstrelaBet,
   SportingBet,
   Novibet,
-  CassinoBet,
   ApostaGanha,
+  CassinoBet,
   Bet7k,
   VeraBet,
   BetNacional,
   McGames,
+  ApostaTudo,
+  ReiDoPitaco
 };
