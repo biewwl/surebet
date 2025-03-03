@@ -33,7 +33,7 @@ const ProfitChart = ({ aspectRatio, n }) => {
 
   const [values, setValues] = useState([]);
   const [dates, setDates] = useState([]);
-  const [zoom, setZoom] = useState(dates.length > 7 ? 7 : dates.length);
+  const [zoom, setZoom] = useState(results.length >= n ? n : results.length);
   const [pan, setPan] = useState(false);
 
   useEffect(() => {
@@ -182,7 +182,7 @@ const ProfitChart = ({ aspectRatio, n }) => {
     },
     scales: {
       x: {
-        min: dates.length - (dates.length - zoom),
+        min: dates.length - zoom,
         max: dates.length - 1,
         grid: {
           display: false, // Adicione esta linha para remover as linhas de grade no eixo x

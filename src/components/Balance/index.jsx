@@ -5,11 +5,13 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { ThemeContext } from "../../context/ThemeContext";
 import SectionTitle from "../SectionTitle";
 import { postNormals, postOutflows } from "../../api/post";
-import "./styles/Balance.css";
 import Loading from "../Loading";
+import "./styles/Balance.css";
+import { countDays } from "../../utils/countDays";
 
 function Balance() {
-  const { balance, updateData, script, sheet } = useContext(DataContext);
+  const { balance, updateData, script, sheet, results } =
+    useContext(DataContext);
   const { theme } = useContext(ThemeContext);
 
   const [openManage, setOpenManage] = useState(false);
@@ -17,6 +19,13 @@ function Balance() {
   const [loading, setLoading] = useState(false);
   const [inputNormals, setInputNormals] = useState("");
   const [inputOutflows, setInputOutflows] = useState("");
+
+  const pending = results.filter((r) => {
+    const w = r[r.length - 2];
+    return !w.value;
+  }).length;
+
+  countDays(results);
 
   const [initial, normals, current, profit, outflows, operations] = balance;
 
@@ -50,6 +59,8 @@ function Balance() {
     // setLoading(false);
   };
 
+  const [days, time] = countDays(results);
+
   const handleAddOutflows = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -58,6 +69,8 @@ function Balance() {
     updateData();
     // setLoading(false);
   };
+
+  console.log(profit[0].value, days);
 
   return (
     <>
@@ -72,17 +85,7 @@ function Balance() {
                 />
                 Lucro
               </span>
-              {formatValue(profit[0].value)}
-            </div>
-            <div className="balance__card content">
-              <span className={`balance__card__title c-${theme}-1`}>
-                <Icon
-                  icon="ph:flag-duotone"
-                  className="balance__card__title__icon"
-                />
-                Saldo Inicial
-              </span>
-              {formatValue(initial[0].value)}
+              {formatValue(profit[0].value + normals[0].value)}
             </div>
             <div className="balance__card content">
               <span className={`balance__card__title c-${theme}-1`}>
@@ -93,6 +96,16 @@ function Balance() {
                 Saldo Atual
               </span>
               {formatValue(current[0].value)}
+            </div>
+            <div className="balance__card content">
+              <span className={`balance__card__title c-${theme}-1`}>
+                <Icon
+                  icon="ph:flag-duotone"
+                  className="balance__card__title__icon"
+                />
+                Saldo Inicial
+              </span>
+              {formatValue(initial[0].value)}
             </div>
             <div
               className="balance__card --other content"
@@ -130,6 +143,42 @@ function Balance() {
                 Operações
               </span>
               {operations[0].value}
+            </div>
+            <div className="balance__card content">
+              <span className={`balance__card__title c-${theme}-1`}>
+                <Icon
+                  icon="lets-icons:date-today-duotone"
+                  className="balance__card__title__icon"
+                />
+                Dias
+              </span>
+              <p className="balance__card__detail">
+                {days}
+                <span className="balance__card__detail__text">({time})</span>
+              </p>
+            </div>
+            <div className="balance__card content">
+              <span className={`balance__card__title c-${theme}-1`}>
+                <Icon
+                  icon="carbon:chart-median"
+                  className="balance__card__title__icon"
+                />
+                Média
+              </span>
+              <p className="balance__card__detail">
+              {formatValue((profit[0].value / days).toFixed(2))}
+                <span className="balance__card__detail__text">(dia)</span>
+              </p>
+            </div>
+            <div className="balance__card content">
+              <span className={`balance__card__title c-${theme}-1`}>
+                <Icon
+                  icon="eos-icons:loading"
+                  className="balance__card__title__icon"
+                />
+                Pendentes
+              </span>
+              {pending}
             </div>
           </>
         )}

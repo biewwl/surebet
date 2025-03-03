@@ -14,6 +14,17 @@
   position: relative;
 }
 
+.balance__card__detail {
+  display: flex;
+  gap: 5px;
+  align-items: baseline;
+}
+
+.balance__card__detail__text {
+  font-size: 10px;
+  opacity: 0.5;
+}
+
 .balance__card.--other, .balance__card.--outflows {
   cursor: pointer;
 }

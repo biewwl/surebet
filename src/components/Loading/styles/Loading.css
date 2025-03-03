@@ -2,10 +2,21 @@
   flex-grow: 1;
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 30px;
-  color: var(--accent);
+  font-size: 11px;
+  /* color: var(--accent); */
+  gap: 10px;
+}
+
+.loading__count {
+  text-align: center;
+  padding: 0 20px;
+}
+
+.loading__count.--message {
+  animation: opc 2s infinite;
 }
 
 .spinner {
@@ -63,5 +74,15 @@
 
   100% {
     transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
+  }
+}
+
+@keyframes opc {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
   }
 }

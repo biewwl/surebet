@@ -15,6 +15,8 @@ import BetNacional from "../assets/betnacional.png";
 import McGames from "../assets/mcgames.png";
 import ApostaTudo from "../assets/apostatudo.png";
 import ReiDoPitaco from "../assets/reidopitaco.png";
+import JogoDeOuro from "../assets/jogodeouro.png";
+import Betfast from "../assets/betfast.png";
 
 export const getLogo = (name) => {
   const betName = name.toLowerCase();
@@ -63,6 +65,10 @@ export const getLogo = (name) => {
       return { logo: ApostaTudo, site: "https://apostatudo.bet.br/sports" };
     case "reidopitaco":
       return { logo: ReiDoPitaco, site: "https://reidopitaco.bet.br/betting" };
+    case "jogodeouro":
+      return { logo: JogoDeOuro, site: "https://jogodeouro.bet.br/pt/sports" };
+      case "betfast":
+        return { logo: Betfast, site: "https://betfast.bet.br/br" };
     default:
       return "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.haworth.com%2Fna%2Fen%2Fdesign-resources%2Fsurfaces%2Fsurface%2F7R_10.html&psig=AOvVaw0PpMxq6uN3m6WOHGIrfK-L&ust=1740688082859000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOi0t8iW4osDFQAAAAAdAAAAABAE";
     // break;
@@ -86,5 +92,7 @@ export const allLogos = {
   BetNacional,
   McGames,
   ApostaTudo,
-  ReiDoPitaco
+  ReiDoPitaco,
+  JogoDeOuro,
+  Betfast
 };

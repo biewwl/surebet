@@ -34,7 +34,7 @@ function Home() {
           <Tips />
         </div>
       )}
-      {loading && <Loading />}
+      {loading && <Loading counter />}
       {/* <Link to="/graph">
         <Icon
           icon="material-symbols:waterfall-chart"

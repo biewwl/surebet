@@ -19,10 +19,10 @@
 }
 
 .tip-card__description {
-  text-overflow: ellipsis;
+  /* text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  width: 100%;
+  width: 100%; */
 }
 
 .tip-card__tip {
