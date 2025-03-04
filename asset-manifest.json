@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/surebet/static/css/main.6b5aaef7.css",
-    "main.js": "/surebet/static/js/main.f1d67420.js",
+    "main.js": "/surebet/static/js/main.f46577cb.js",
     "static/media/ProductSans-Regular.ttf": "/surebet/static/media/ProductSans-Regular.2765c69613690b1b9c03.ttf",
     "static/media/betnacional.png": "/surebet/static/media/betnacional.763950234f70559eb2fa.png",
     "static/media/cassinobet.png": "/surebet/static/media/cassinobet.bd722bede5337384a948.png",
@@ -14,10 +14,10 @@
     "static/media/estrelabet.webp": "/surebet/static/media/estrelabet.6d18f655c5ee5eeedaee.webp",
     "index.html": "/surebet/index.html",
     "main.6b5aaef7.css.map": "/surebet/static/css/main.6b5aaef7.css.map",
-    "main.f1d67420.js.map": "/surebet/static/js/main.f1d67420.js.map"
+    "main.f46577cb.js.map": "/surebet/static/js/main.f46577cb.js.map"
   },
   "entrypoints": [
     "static/css/main.6b5aaef7.css",
-    "static/js/main.f1d67420.js"
+    "static/js/main.f46577cb.js"
   ]
 }
