@@ -1,12 +1,13 @@
 {
   "files": {
     "main.css": "/surebet/static/css/main.6b5aaef7.css",
-    "main.js": "/surebet/static/js/main.f46577cb.js",
+    "main.js": "/surebet/static/js/main.e2fa180a.js",
     "static/media/ProductSans-Regular.ttf": "/surebet/static/media/ProductSans-Regular.2765c69613690b1b9c03.ttf",
     "static/media/betnacional.png": "/surebet/static/media/betnacional.763950234f70559eb2fa.png",
     "static/media/cassinobet.png": "/surebet/static/media/cassinobet.bd722bede5337384a948.png",
     "static/media/jogodeouro.png": "/surebet/static/media/jogodeouro.2c7750f2d8c2db830bbc.png",
     "static/media/betfair.png": "/surebet/static/media/betfair.8df1094ea8308de54ffd.png",
+    "static/media/bateu.jpg": "/surebet/static/media/bateu.3f55f39638d2554a4b4c.jpg",
     "static/media/apostaganha.png": "/surebet/static/media/apostaganha.cd2e7bc040f19db120d6.png",
     "static/media/bet7k.png": "/surebet/static/media/bet7k.97439a3bef682852d9c3.png",
     "static/media/sportingbet.png": "/surebet/static/media/sportingbet.d385abfdc3123496489f.png",
@@ -14,10 +15,10 @@
     "static/media/estrelabet.webp": "/surebet/static/media/estrelabet.6d18f655c5ee5eeedaee.webp",
     "index.html": "/surebet/index.html",
     "main.6b5aaef7.css.map": "/surebet/static/css/main.6b5aaef7.css.map",
-    "main.f46577cb.js.map": "/surebet/static/js/main.f46577cb.js.map"
+    "main.e2fa180a.js.map": "/surebet/static/js/main.e2fa180a.js.map"
   },
   "entrypoints": [
     "static/css/main.6b5aaef7.css",
-    "static/js/main.f46577cb.js"
+    "static/js/main.e2fa180a.js"
   ]
 }
