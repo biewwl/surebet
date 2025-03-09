@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/surebet/static/css/main.b651a46f.css",
-    "main.js": "/surebet/static/js/main.b3d481ed.js",
+    "main.css": "/surebet/static/css/main.b3321194.css",
+    "main.js": "/surebet/static/js/main.34311559.js",
     "static/media/betao.jpg": "/surebet/static/media/betao.f2404d2e40ae05ea5013.jpg",
     "static/media/ProductSans-Regular.ttf": "/surebet/static/media/ProductSans-Regular.2765c69613690b1b9c03.ttf",
     "static/media/betnacional.png": "/surebet/static/media/betnacional.763950234f70559eb2fa.png",
@@ -17,11 +17,11 @@
     "static/media/betano.webp": "/surebet/static/media/betano.4912fe5224d47ab83b02.webp",
     "static/media/estrelabet.webp": "/surebet/static/media/estrelabet.6d18f655c5ee5eeedaee.webp",
     "index.html": "/surebet/index.html",
-    "main.b651a46f.css.map": "/surebet/static/css/main.b651a46f.css.map",
-    "main.b3d481ed.js.map": "/surebet/static/js/main.b3d481ed.js.map"
+    "main.b3321194.css.map": "/surebet/static/css/main.b3321194.css.map",
+    "main.34311559.js.map": "/surebet/static/js/main.34311559.js.map"
   },
   "entrypoints": [
-    "static/css/main.b651a46f.css",
-    "static/js/main.b3d481ed.js"
+    "static/css/main.b3321194.css",
+    "static/js/main.34311559.js"
   ]
 }
