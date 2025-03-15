@@ -28,6 +28,11 @@ function Navigation() {
       icon: "iconamoon:home-duotone",
       title: "Início",
     },
+    {
+      path: "/profit-graph",
+      icon: "uil:list-ol",
+      title: "Lucro por casa",
+    },
   ];
 
   const handleOpen = () => setOpen(!open);

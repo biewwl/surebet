@@ -23,13 +23,13 @@ export const countDays = (results) => {
   if (days < 30) {
     detailedString = "";
   } else if (days >= 30 && days < 365) {
-    detailedString = `${months} ${
+    detailedString = `(${months} ${
       months > 1 ? "meses" : "mês"
-    } e ${remainingDays} dia${remainingDays > 1 ? "s" : ""}`;
+    } e ${remainingDays} dia${remainingDays > 1 ? "s" : ""})`;
   } else {
-    detailedString = `${years} ano${years > 1 ? "s" : ""} ${remainingMonths} ${
+    detailedString = `(${years} ano${years > 1 ? "s" : ""} ${remainingMonths} ${
       remainingMonths > 1 ? "meses" : "mês"
-    } e ${remainingDays} dia${remainingDays > 1 ? "s" : ""}`;
+    } e ${remainingDays} dia${remainingDays > 1 ? "s" : ""})`;
   }
 
   // console.log(`O número de dias entre as datas é: ${days}`);

@@ -17,9 +17,24 @@ import ApostaTudo from "../assets/apostatudo.png";
 import ReiDoPitaco from "../assets/reidopitaco.png";
 import JogoDeOuro from "../assets/jogodeouro.png";
 import Betfast from "../assets/betfast.png";
+import UxBet from "../assets/uxbet.png";
+import Bateu from "../assets/bateu.jpg";
+import EsportivaBet from "../assets/esportivabet.png";
+import Br4Bet from "../assets/br4.jpeg";
+import VaiDeBet from "../assets/vaidebet.jpeg";
+import BetfairExchange from "../assets/betfairexchange.webp";
+import Betao from "../assets/betao.jpg";
+import Lotogreen from "../assets/lotogreen.jpg";
+import Blaze from "../assets/blaze.png";
+import SeguroBet from "../assets/segurobet.jpeg";
+import CasaDeApostas from "../assets/casadeapostas.png";
 
 export const getLogo = (name) => {
   const betName = name.toLowerCase();
+
+  const firstLetter = betName.charAt(0).toUpperCase();
+  const restOfName = betName.slice(1);
+  const formattedName = firstLetter + restOfName;
 
   switch (betName) {
     case "betano":
@@ -67,10 +82,53 @@ export const getLogo = (name) => {
       return { logo: ReiDoPitaco, site: "https://reidopitaco.bet.br/betting" };
     case "jogodeouro":
       return { logo: JogoDeOuro, site: "https://jogodeouro.bet.br/pt/sports" };
-      case "betfast":
-        return { logo: Betfast, site: "https://betfast.bet.br/br" };
+    case "betfast":
+      return { logo: Betfast, site: "https://betfast.bet.br/br" };
+    case "uxbet":
+      return { logo: UxBet, site: "https://www.ux.bet.br/home/events-area" };
+    case "bateu":
+      return { logo: Bateu, site: "https://bateu.bet.br/sports" };
+    case "esportivabet":
+      return { logo: EsportivaBet, site: "https://esportiva.bet.br/sports" };
+    case "br4bet":
+      return { logo: Br4Bet, site: "https://br4.bet.br/sports#/overview" };
+    case "vaidebet":
+      return { logo: VaiDeBet, site: "https://vaidebet.com/ptb/bet/main" };
+    case "betfairexchange":
+      return {
+        logo: BetfairExchange,
+        site: "https://www.betfair.bet.br/exchange/plus/",
+      };
+    case "betao":
+      return {
+        logo: Betao,
+        site: "https://betao.bet.br/pb/sports/pre-match/event-view",
+      };
+    case "lotogreen":
+      return {
+        logo: Lotogreen,
+        site: "https://lotogreen.bet.br/sports#/overview",
+      };
+    case "blaze":
+      return {
+        logo: Blaze,
+        site: "https://blaze.bet.br/pt/sports",
+      };
+    case "segurobet":
+      return {
+        logo: SeguroBet,
+        site: "https://segurobet.bet.br/pt/sports",
+      };
+    case "casadeapostas":
+      return {
+        logo: CasaDeApostas,
+        site: "https://casadeapostas.bet.br/br/sports",
+      };
     default:
-      return "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.haworth.com%2Fna%2Fen%2Fdesign-resources%2Fsurfaces%2Fsurface%2F7R_10.html&psig=AOvVaw0PpMxq6uN3m6WOHGIrfK-L&ust=1740688082859000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOi0t8iW4osDFQAAAAAdAAAAABAE";
+      return {
+        logo: `https://ui-avatars.com/api/?name=${formattedName}&background=99999925&color=999&uppercase=false`,
+        site: "https://www.google.com",
+      };
     // break;
   }
 };
@@ -78,6 +136,7 @@ export const getLogo = (name) => {
 export const allLogos = {
   Betano,
   Betfair,
+  BetfairExchange,
   Bet365,
   Superbet,
   KTO,
@@ -94,5 +153,15 @@ export const allLogos = {
   ApostaTudo,
   ReiDoPitaco,
   JogoDeOuro,
-  Betfast
+  Betfast,
+  UxBet,
+  Bateu,
+  EsportivaBet,
+  Br4Bet,
+  VaiDeBet,
+  Betao,
+  Lotogreen,
+  Blaze,
+  SeguroBet,
+  CasaDeApostas,
 };

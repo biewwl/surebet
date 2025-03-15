@@ -79,16 +79,16 @@ function Create() {
   const transformToNumber = (data) => {
     return {
       ...data,
-      description: data.description ? data.description : "Jogador A - gols",
-      option1: data.option1 ? opt1Complete(data.option1) : opt1Complete("0"),
-      option2: data.option2 ? opt2Complete(data.option2) : opt2Complete("0"),
-      option3: data.option3 ? opt3Complete(data.option3) : opt3Complete("0"),
+      description: data.description ? data.description : "Time A x Time B - Resultado final",
+      option1: data.option1 ? opt1Complete(data.option1) : opt1Complete("Time A"),
+      option2: data.option2 ? opt2Complete(data.option2) : opt2Complete("Empate"),
+      option3: data.option3 ? opt3Complete(data.option3) : opt3Complete("Time B"),
       price1: data.price1 ? parseFloat(data.price1) : 0,
       price2: data.price2 ? parseFloat(data.price2) : 0,
       price3: data.price3 ? parseFloat(data.price3) : 0,
-      odd1: data.odd1 ? parseFloat(data.odd1) : 1,
-      odd2: data.odd2 ? parseFloat(data.odd2) : 1,
-      odd3: data.odd3 ? parseFloat(data.odd3) : 1,
+      odd1: data.odd1 ? parseFloat(data.odd1) : 0,
+      odd2: data.odd2 ? parseFloat(data.odd2) : 0,
+      odd3: data.odd3 ? parseFloat(data.odd3) : 0,
     };
   };
 

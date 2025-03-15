@@ -12,17 +12,21 @@
 }
 
 .calculate__inputs {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); */
   gap: 20px;
   flex-grow: 1;
   padding: 0 10px;
 }
 
 .calculate__inputs__group {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: 1fr 18px 1fr 18px 1fr;
+  /* flex-direction: column; */
+  align-items: center;
+  gap: 5px;
   padding: 20px;
   /* border-radius: 0.25em !important; */
   /* aspect-ratio: 1/1; */
@@ -62,14 +66,15 @@
 .calculate__inputs__group__label {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 5px;
   /* aspect-ratio: 1 / 1; */
   /* padding: 10px; */
   /* width: 100%; */
 }
 
-.calculate__inputs__group__label:first-child {
-  gap: 3px;
-
+.calculate__inputs__group__signs {
+  margin-top: 20px;
 }
 
 .calculate__inputs__group__label__title {
@@ -80,12 +85,19 @@
   padding: 10px;
   border-radius: 0.5em;
   border: none;
-  max-width: 100%;
+  max-width: 90px;
+  min-width: 90px;
   flex-grow: 1;
-  /* text-align: center; */
-  font-size: 1em;
+  text-align: center;
+  font-size: 0.8em;
   outline: none;
   transition: 0.5s;
+}
+
+.calculate__inputs__group__label__input.--stake {
+  color: var(--accent);  
+  /* max-width: 100px; */
+
 }
 
 .calculate__inputs__group__label__input.--place {
@@ -118,14 +130,22 @@
 
 .calculate__inputs__details {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  /* flex-direction: column; */
+  flex-wrap: wrap;
+  gap: 40px 5px;
   padding: 20px;
+  width: 100%;
+  align-items: center;
   /* background-color: var(--accent); */
   /* border-radius: 0.25em !important; */
-  justify-content: space-between;
+  justify-items: center;
   animation: toTop 0.5s;
   transition: 0.5s;
+}
+
+.calculate__inputs__details .calculate__inputs__group__label {
+  min-width: 150px;
+  flex-grow: 1;
 }
 
 .calculate__inputs__details__place {
@@ -147,6 +167,7 @@
   display: flex;
   align-items: center;
   font-size: 0.8em;
+  padding-right: 2px;
   gap: 3px;
   transition: 0.5s;
 }
@@ -170,18 +191,19 @@
 
 .calculate__inputs__details__profit__value {
   font-size: 15px;
-  padding: 10px;
   display: flex;
   justify-content: center;
   transition: 0.5s;
 }
 
-.calculate.--loss .calculate__inputs__details__profit__value {
-  background-color: #fd2d2d;
-  background: linear-gradient(74deg, #fd2d2d 0%, #fd2d2de3 100%);
+.calculate.--loss .calculate__inputs__group__label__input {
+  color: #fd2d2d;
+  /* background: linear-gradient(74deg, #fd2d2d 0%, #fd2d2de3 100%); */
 }
 
-.calculate.--win .calculate__inputs__details__profit__value {
-  background: #17cc90;
-  background: linear-gradient(74deg, #17cc90 0%, #17cc90e3 100%);
+.calculate.--win .calculate__inputs__group__label__input.--profit
+/* ,.calculate.--win .calculate__inputs__group__label__input.--stake */
+{
+  color: #17cc90;
+  /* background: linear-gradient(74deg, #17cc90 0%, #17cc90e3 100%); */
 }

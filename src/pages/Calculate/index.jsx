@@ -9,18 +9,18 @@ import "./styles/Calculate.css";
 function Calculate() {
   const [data, setData] = useState({
     "Odd 1": "",
-    "Valor a ser colocado": "",
+    Stake: "",
     "Odd 2": "",
     // "Valor 2": 0,
     "Odd 3": "",
     // "Valor 3": 0,
-    total: 0,
+    total: "",
   });
   const [showOdd3, setShowOdd3] = useState(false);
 
   const {
     "Odd 1": odd1,
-    "Valor a ser colocado": value1,
+    Stake: value1,
     "Odd 2": odd2,
     "Odd 3": odd3,
     total,
@@ -40,7 +40,7 @@ function Calculate() {
 
     const {
       "Odd 1": o1,
-      "Valor a ser colocado": v1,
+      Stake: v1,
       "Odd 2": o2,
       "Odd 3": o3,
       // t,
@@ -53,18 +53,17 @@ function Calculate() {
 
     if (!isNaN(value) || value === ".") {
       if (name === "total") {
-        // console.log();
-
         setData({
           ...data,
           [name]: value,
-          "Valor a ser colocado": (
-            value /
-            (1 + o1 / o2 + (o3 === "" ? 0 : o1 / o3))
-          ).toFixed(2),
+          Stake: (value / (1 + o1 / o2 + (o3 === "" ? 0 : o1 / o3))).toFixed(2),
         });
       } else {
-        setData({ ...data, [name]: value, total: newT.toFixed(2) });
+        setData({
+          ...data,
+          [name]: value,
+          total: newT === 0 ? "" : newT.toFixed(2),
+        });
       }
     }
   };
@@ -102,6 +101,11 @@ function Calculate() {
 
   const returnTip = value1 * odd1;
 
+  const stakeReturn = returnTip - total;
+  const arbitrage = isNaN(((stakeReturn / total) * 100).toFixed(2))
+    ? 0
+    : ((stakeReturn / total) * 100).toFixed(2);
+
   const profitClass = () => {
     if (returnTip - total > 0) {
       return " --win";
@@ -112,49 +116,62 @@ function Calculate() {
     }
   };
 
+  const hasOdds = odd1 && odd2;
+
   return (
-    <main className={`calculate ${profitClass()} c-${theme}`}>
+    <main className={`calculate ${profitClass()} c-${theme}-1`}>
       <Logo />
       <section className="calculate__section">
         <SectionTitle icon="fluent:math-symbols-20-filled" title="Calcular" />
         <div className="calculate__inputs">
           <div className={`calculate__inputs__group content`}>
             {group1.map((input, i) => (
-              <label
-                htmlFor={input}
-                key={input}
-                className={`calculate__inputs__group__label`}
-              >
-                <span className="calculate__inputs__group__label__title">
-                  {input}
-                </span>
-                <input
-                  id={input}
-                  type="text"
-                  name={input}
-                  value={(i === 1 ? "R$ " : "") + data[input]}
-                  onChange={handleChange}
-                  className={`calculate__inputs__group__label__input bg-${theme} c-${theme}${
-                    i === 1 ? ` --place` : ""
-                  }`}
-                />
-              </label>
+              <>
+                <label
+                  htmlFor={input}
+                  key={input}
+                  className={`calculate__inputs__group__label`}
+                >
+                  <span className="calculate__inputs__group__label__title">
+                    {input}
+                  </span>
+                  <input
+                    id={input}
+                    type="text"
+                    name={input}
+                    value={(i === 1 ? "R$ " : "") + data[input]}
+                    onChange={handleChange}
+                    className={`calculate__inputs__group__label__input bg-${theme} c-${theme}
+                    ${i === 1 ? " --stake" : ""}
+                    `}
+                  />
+                </label>
+                {i === 0 ? (
+                  <Icon
+                    icon="uim:multiply"
+                    width="18"
+                    height="18"
+                    className="calculate__inputs__group__signs"
+                  />
+                ) : (
+                  <Icon
+                    icon="material-symbols-light:equal-rounded"
+                    width="18"
+                    height="18"
+                    className="calculate__inputs__group__signs"
+                  />
+                )}
+              </>
             ))}
-            <div className="calculate__inputs__group__result">
-              {/* <div className="calculate__inputs__group__result__place">
-                <span className="calculate__inputs__group__result__place__title">
-                  Valor a ser colocado
-                </span>
-                <span>R$ 52,00</span>
-              </div> */}
-              <div className="calculate__inputs__group__result__return">
-                <span className="calculate__inputs__group__result__return__title">
-                  Retorno
-                </span>
-                <span className={`c-${theme}-1`}>
-                  {formatValue(value1 * odd1)}
-                </span>
-              </div>
+            <div className="calculate__inputs__group__label">
+              <span className="calculate__inputs__group__result__return__title">
+                Retorno
+              </span>
+              <span
+                className={`calculate__inputs__group__label__input c-${theme} --return`}
+              >
+                {formatValue(value1 * odd1)}
+              </span>
             </div>
           </div>
           <div className={`calculate__inputs__group content`}>
@@ -177,25 +194,37 @@ function Calculate() {
                 />
               </label>
             ))}
-            <div className="calculate__inputs__group__result">
-              <div className="calculate__inputs__group__result__place">
-                <span className="calculate__inputs__group__result__place__title">
-                  Valor a ser colocado
-                </span>
-                <span
-                  className={`calculate__inputs__group__result__place__value`}
-                >
-                  {formatValue(value2)}
-                </span>
-              </div>
-              <div className="calculate__inputs__group__result__return">
-                <span className="calculate__inputs__group__result__return__title">
-                  Retorno
-                </span>
-                <span className={`c-${theme}-1`}>
-                  {formatValue(value2 * odd2)}
-                </span>
-              </div>
+            <Icon
+              icon="uim:multiply"
+              width="18"
+              height="18"
+              className="calculate__inputs__group__signs"
+            />
+            <div className="calculate__inputs__group__label">
+              <span className="calculate__inputs__group__result__place__title">
+                Stake
+              </span>
+              <span
+                className={`calculate__inputs__group__label__input --stake`}
+              >
+                {formatValue(value2)}
+              </span>
+            </div>
+            <Icon
+              icon="material-symbols-light:equal-rounded"
+              width="18"
+              height="18"
+              className="calculate__inputs__group__signs"
+            />
+            <div className="calculate__inputs__group__label">
+              <span className="calculate__inputs__group__result__return__title">
+                Retorno
+              </span>
+              <span
+                className={`calculate__inputs__group__label__input c-${theme}`}
+              >
+                {formatValue(value2 * odd2)}
+              </span>
             </div>
           </div>
           {showOdd3 && (
@@ -219,25 +248,37 @@ function Calculate() {
                   />
                 </label>
               ))}
-              <div className="calculate__inputs__group__result">
-                <div className="calculate__inputs__group__result__place">
-                  <span className="calculate__inputs__group__result__place__title">
-                    Valor a ser colocado
-                  </span>
-                  <span
-                    className={`calculate__inputs__group__result__place__value`}
-                  >
-                    {formatValue(value3)}
-                  </span>
-                </div>
-                <div className="calculate__inputs__group__result__return">
-                  <span className="calculate__inputs__group__result__return__title">
-                    Retorno
-                  </span>
-                  <span className={`c-${theme}-1`}>
-                    {formatValue(value3 * odd3)}
-                  </span>
-                </div>
+              <Icon
+                icon="uim:multiply"
+                width="18"
+                height="18"
+                className="calculate__inputs__group__signs"
+              />
+              <div className="calculate__inputs__group__label">
+                <span className="calculate__inputs__group__result__place__title">
+                  Stake
+                </span>
+                <span
+                  className={`calculate__inputs__group__label__input --stake`}
+                >
+                  {formatValue(value3)}
+                </span>
+              </div>
+              <Icon
+                icon="material-symbols-light:equal-rounded"
+                width="18"
+                height="18"
+                className="calculate__inputs__group__signs"
+              />
+              <div className="calculate__inputs__group__label">
+                <span className="calculate__inputs__group__result__return__title">
+                  Retorno
+                </span>
+                <span
+                  className={`calculate__inputs__group__label__input c-${theme}`}
+                >
+                  {formatValue(value3 * odd3)}
+                </span>
               </div>
               <button
                 onClick={handleOdd3}
@@ -262,26 +303,29 @@ function Calculate() {
             </button>
           )}
           <div className="calculate__inputs__details content">
-            <div className="calculate__inputs__details__place">
+            <div className="calculate__inputs__group__label">
               <span
-                className={`calculate__inputs__details__place__title c-${theme}`}
+                className={`calculate__inputs__details__place__title c-${theme}-1`}
               >
                 <Icon
                   icon="dashicons:money-alt"
                   className="calculate__inputs__details__place__title__icon"
                 />
-                Valor Total Apostado
+                Stake Total
               </span>
               <input
-                className={`calculate__inputs__details__place__value c-${theme}-1`}
-                value={`R$ ${total}`}
+                className={`calculate__inputs__group__label__input ${
+                  !hasOdds ? `bg-${theme}-2` : `bg-${theme}`
+                } c-${theme}`}
+                value={!hasOdds ? "R$ 0,00" : `R$ ${total}`}
                 onChange={handleChange}
                 name="total"
+                disabled={!hasOdds}
               />
             </div>
-            <div className="calculate__inputs__details__return">
+            <div className="calculate__inputs__group__label">
               <span
-                className={`calculate__inputs__details__return__title c-${theme}`}
+                className={`calculate__inputs__details__return__title c-${theme}-1`}
               >
                 <Icon
                   icon="bx:rotate-left"
@@ -290,16 +334,42 @@ function Calculate() {
                 Retorno
               </span>
               <span
-                className={`calculate__inputs__details__return__value  c-${theme}-1`}
+                className={`calculate__inputs__group__label__input  c-${theme}`}
               >
                 {formatValue(returnTip)}
               </span>
             </div>
-            <div className={`calculate__inputs__details__profit bg-${theme}`}>
+
+            <div className={`calculate__inputs__group__label`}>
               <span
-                className={`calculate__inputs__details__profit__value c-${theme}-2`}
+                className={`calculate__inputs__details__return__title c-${theme}-1`}
               >
-                {formatValue(returnTip - total)}
+                <Icon
+                  icon="majesticons:percent-line"
+                  className="calculate__inputs__details__place__title__icon"
+                />
+                Arbitragem
+              </span>
+              <span
+                className={`calculate__inputs__group__label__input  c-${theme}`}
+              >
+                {arbitrage}%
+              </span>
+            </div>
+            <div className={`calculate__inputs__group__label`}>
+              <span
+                className={`calculate__inputs__details__return__title c-${theme}-1`}
+              >
+                <Icon
+                  icon="material-symbols:money-bag-outline-rounded"
+                  className="calculate__inputs__details__place__title__icon"
+                />
+                Lucro
+              </span>
+              <span
+                className={`calculate__inputs__group__label__input --profit`}
+              >
+                {formatValue(stakeReturn)}
               </span>
             </div>
           </div>
@@ -310,3 +380,15 @@ function Calculate() {
 }
 
 export default Calculate;
+
+// function calcularValorParaRisco(riscoDesejado, odd) {
+//   // Cálculo do valor a ser apostado com base no risco desejado
+//   const valorApostado = riscoDesejado / (odd - 1);
+//   return valorApostado.toFixed(2); // Retorna com 2 casas decimais
+// }
+
+// // Exemplo de uso:
+// const riscoDesejado = 100; // Risco que você deseja controlar
+// const odd = 3.05; // Odd contra
+// const valorApostado = calcularValorParaRisco(riscoDesejado, odd);
+// console.log("Valor a ser apostado: R$", valorApostado);

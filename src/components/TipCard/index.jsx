@@ -78,7 +78,26 @@ function TipCard({ data, view }) {
 
   const result1 = odd1 * price1;
   const result2 = odd2 * price2;
-  const result = bingo ? result1 + result2 : win === 1 ? result1 : result2;
+  const result3 = odd3 * price3;
+
+  let result = 0;
+
+  switch (win) {
+    case bingo:
+      result = result1 + result2;
+      break;
+    case 1:
+      result = result1;
+      break;
+    case 2:
+      result = result2;
+      break;
+    case 3:
+      result = result3;
+      break;
+    default:
+      break;
+  }
 
   const draw =
     Number(result).toFixed(2) === (price1 + price2).toFixed(2) && !bingo;
@@ -142,6 +161,12 @@ function TipCard({ data, view }) {
 
   const profitText = lose ? String(profit).split("-")[1] : profit;
 
+  const arbitrage = win
+    ? ((profitText / (price1 + price2 + price3)) * 100)
+        .toFixed(2)
+        .replace(".", ",")
+    : null;
+
   return (
     <div
       className={`tip-card content${pendingC}${drawC}${bingoC}${loseC} c-${theme}`}
@@ -167,7 +192,9 @@ function TipCard({ data, view }) {
         <div className={`tip-card__tip__odd${winner(1)}`}>
           {bets1.length > 1 ? (
             <div className="tip-card__tip__odd__multiple">
-              <div className={`tip-card__tip__odd__multiple__count bg-${theme}`}>
+              <div
+                className={`tip-card__tip__odd__multiple__count bg-${theme}`}
+              >
                 {bets1.length}
               </div>
               {bets1.map((b) => {
@@ -200,19 +227,23 @@ function TipCard({ data, view }) {
               <img src={image1} alt="" className="tip-card__tip__odd__logo" />
             </Link>
           )}
-          <div className="tip-card__tip__odd__info">
+          <div className="card__tip__odd__infos">
             <span>{opt1}</span>
-            <div className="separator"></div>
-            <span>{odd1.toFixed(2)}</span>
+            <div className={`card__tip__odd__infos__info c-${theme}-1`}>
+              <span>{odd1.toFixed(2)}</span>
+              <div className="separator"></div>
+              {formatValue(price1)}
+            </div>
           </div>
-          {formatValue(price1)}
-          <div className={`tip-card__tip__odd__line bg-${theme}-invert`}></div>
+          {/* <div className={`tip-card__tip__odd__line bg-${theme}-invert`}></div> */}
         </div>
         {bet2 && (
           <div className={`tip-card__tip__odd${winner(2)}`}>
             {bets2.length > 1 ? (
               <div className="tip-card__tip__odd__multiple">
-                <div className={`tip-card__tip__odd__multiple__count bg-${theme}`}>
+                <div
+                  className={`tip-card__tip__odd__multiple__count bg-${theme}`}
+                >
                   {bets2.length}
                 </div>
                 {bets2.map((b) => {
@@ -245,22 +276,26 @@ function TipCard({ data, view }) {
                 <img src={image2} alt="" className="tip-card__tip__odd__logo" />
               </Link>
             )}
-            <div className="tip-card__tip__odd__info">
+            <div className="card__tip__odd__infos">
               <span>{opt2}</span>
-              <div className="separator"></div>
-              <span>{odd2.toFixed(2)}</span>
+              <div className={`card__tip__odd__infos__info c-${theme}-1`}>
+                <span>{odd2.toFixed(2)}</span>
+                <div className="separator"></div>
+                {formatValue(price2)}
+              </div>
             </div>
-            {formatValue(price2)}
-            <div
+            {/* <div
               className={`tip-card__tip__odd__line bg-${theme}-invert`}
-            ></div>
+            ></div> */}
           </div>
         )}
         {bet3 && (
           <div className={`tip-card__tip__odd${winner(3)}`}>
             {bets3.length > 1 ? (
               <div className="tip-card__tip__odd__multiple">
-                <div className={`tip-card__tip__odd__multiple__count bg-${theme}`}>
+                <div
+                  className={`tip-card__tip__odd__multiple__count bg-${theme}`}
+                >
                   {bets3.length}
                 </div>
                 {bets3.map((b) => {
@@ -293,15 +328,17 @@ function TipCard({ data, view }) {
                 <img src={image3} alt="" className="tip-card__tip__odd__logo" />
               </Link>
             )}
-            <div className="tip-card__tip__odd__info">
+            <div className="card__tip__odd__infos">
               <span>{opt3}</span>
-              <div className="separator"></div>
-              <span>{odd3.toFixed(2)}</span>
+              <div className={`card__tip__odd__infos__info c-${theme}-1`}>
+                <span>{odd3.toFixed(2)}</span>
+                <div className="separator"></div>
+                {formatValue(price3)}
+              </div>
             </div>
-            {formatValue(price3)}
-            <div
+            {/* <div
               className={`tip-card__tip__odd__line bg-${theme}-invert`}
-            ></div>
+            ></div> */}
           </div>
         )}
       </section>
@@ -315,6 +352,17 @@ function TipCard({ data, view }) {
               {formatValue(price1 + price2 + price3)}
             </span>
           </li>
+          {arbitrage && (
+            <li className="tip-card__tip__profit__details__item">
+              Arbitragem:{" "}
+              <span
+                className={`tip-card__tip__profit__details__item__value --arbitrage`}
+              >
+                {lose && "-"}
+                {arbitrage}%
+              </span>
+            </li>
+          )}
           <li className="tip-card__tip__profit__details__item">
             Retorno:{" "}
             <span
@@ -398,13 +446,17 @@ function TipCard({ data, view }) {
                   )}
                 </div>
               )}
-              {!openDelete && !win && (
+              {!openDelete && (
                 <button
                   className={`tip-card__options__option --win bg-${theme} c-${theme}`}
                   onClick={openWin ? handleEdit : handleOpenWin}
                   disabled={openWin ? !optWin : false}
                 >
-                  {openWin ? "Confirmar" : "Definir Ganhador"}
+                  {openWin
+                    ? "Confirmar"
+                    : !win
+                    ? "Definir Ganhador"
+                    : "Editar Ganhador"}
                 </button>
               )}
               {!openWin && (

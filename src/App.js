@@ -14,6 +14,7 @@ import { Helmet } from "react-helmet";
 import Calculate from "./pages/Calculate";
 import "./App.css";
 import Help from "./pages/Help";
+import ProfitByBet from "./pages/ProfitByBet";
 
 function PrivateRoute({ element, script, ...rest }) {
   return script ? element : <Navigate to="/login" />;
@@ -70,8 +71,12 @@ function App() {
           element={<PrivateRoute element={<Create />} script={script} />}
         />
         <Route
-          path="*"
-          element={<PrivateRoute element={<Home />} script={script} />}
+          path="/create"
+          element={<PrivateRoute element={<Create />} script={script} />}
+        />
+        <Route
+          path="/profit-graph"
+          element={<ProfitByBet element={<Home />} script={script} />}
         />
       </Routes>
       <Footer />

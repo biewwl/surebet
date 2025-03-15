@@ -1,0 +1,63 @@
+.profit-by-bet {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  flex-grow: 1;
+}
+
+.profit-by-bet__chart {
+  max-height: 60vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.profit-by-bet__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  justify-content: center;
+  margin-top: 20px;
+  transition: 0.5s;
+}
+
+.profit-by-bet__cards__card {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 25px 1fr;
+  transition: 0.5s;
+}
+
+.profit-by-bet__cards__card.--gold .profit-by-bet__cards__card__content {
+  background-image: linear-gradient(to right, #495aff 0%, #495affad 100%);
+  /* color: #fff; */
+}
+
+.profit-by-bet__cards__card__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-radius: 25px;
+  padding: 5px 20px 5px 5px;
+  align-self: flex-start;
+}
+
+.profit-by-bet__cards__card__content > div {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.profit-by-bet__cards__card__content__link {
+  display: flex;
+  align-items: center;
+}
+
+.profit-by-bet__cards__card__content__link__logo {
+  width: 35px;
+  border-radius: 50%;
+}

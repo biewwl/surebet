@@ -6,8 +6,8 @@ import { ThemeContext } from "../../context/ThemeContext";
 import SectionTitle from "../SectionTitle";
 import { postNormals, postOutflows } from "../../api/post";
 import Loading from "../Loading";
-import "./styles/Balance.css";
 import { countDays } from "../../utils/countDays";
+import "./styles/Balance.css";
 
 function Balance() {
   const { balance, updateData, script, sheet, results } =
@@ -69,8 +69,6 @@ function Balance() {
     updateData();
     // setLoading(false);
   };
-
-  console.log(profit[0].value, days);
 
   return (
     <>
@@ -154,7 +152,7 @@ function Balance() {
               </span>
               <p className="balance__card__detail">
                 {days}
-                <span className="balance__card__detail__text">({time})</span>
+                <span className="balance__card__detail__text">{time}</span>
               </p>
             </div>
             <div className="balance__card content">
@@ -166,7 +164,7 @@ function Balance() {
                 Média
               </span>
               <p className="balance__card__detail">
-              {formatValue((profit[0].value / days).toFixed(2))}
+                {formatValue((profit[0].value / days).toFixed(2))}
                 <span className="balance__card__detail__text">(dia)</span>
               </p>
             </div>
