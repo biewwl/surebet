@@ -7,17 +7,20 @@ import { DataContext } from "../../context/DataContext";
 import { deleteResult } from "../../api/delete";
 import Loading from "../Loading";
 import { postWin } from "../../api/post";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ThemeContext } from "../../context/ThemeContext";
 import "./styles/TipCard.css";
+import { downloadCard } from "../../utils/downloadCard";
+import { EditContext } from "../../context/EditContext";
+import { formatDataWithCol } from "../../utils/manageData";
 
-function TipCard({ data, view }) {
-  const dataView = {};
-
+function TipCard({ data, view, i }) {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   const { updateData, script, sheet } = useContext(DataContext);
   const { theme } = useContext(ThemeContext);
+  const { createEdit } = useContext(EditContext);
 
   const [options, setOptions] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
@@ -25,25 +28,22 @@ function TipCard({ data, view }) {
   const [loading, setLoading] = useState(false);
   const [optWin, setOptWin] = useState("");
 
-  Object.entries(data).forEach(([name, value]) => {
-    dataView[name] = { value };
-  });
-
   const {
-    option1: { value: option1, cel },
-    option2: { value: option2 },
-    option3: { value: option3 },
-    odd1: { value: odd1 },
-    odd2: { value: odd2 },
-    odd3: { value: odd3 },
-    description: { value: description },
-    price1: { value: price1 },
-    price2: { value: price2 },
-    price3: { value: price3 },
-    win: { value: win },
-    profit: { value: profit },
-    date: { value: date },
-  } = view ? dataView : data;
+    option1,
+    option2,
+    option3,
+    odd1,
+    odd2,
+    odd3,
+    description,
+    price1,
+    price2,
+    price3,
+    win,
+    profit,
+    date,
+    cel = "a0"
+  } = view ? data : formatDataWithCol(data);
 
   const opt1Splitted = option1.split(" | ");
   const opt2Splitted = option2.split(" | ");
@@ -119,14 +119,21 @@ function TipCard({ data, view }) {
     setOpenDelete(!openDelete);
   };
 
+  const [, line] = cel.match(/([a-zA-Z]+)([0-9]+)/).slice(1, 3);
+
   const handleConfirmDelete = async () => {
-    const [, line] = cel.match(/([a-zA-Z]+)([0-9]+)/).slice(1, 3);
     setLoading(true);
     await deleteResult(script, line, sheet);
 
     setLoading(false);
     updateData();
   };
+
+  const handleEdit = () => {
+    createEdit(data, line);
+    navigate("/create");
+  };
+
 
   const handleOpenWin = async () => {
     setOpenWin(!openWin);
@@ -151,8 +158,7 @@ function TipCard({ data, view }) {
     return `c-${theme}`;
   };
 
-  const handleEdit = async () => {
-    const [, line] = cel.match(/([a-zA-Z]+)([0-9]+)/).slice(1, 3);
+  const handleDefine = async () => {
     setLoading(true);
     await postWin(script, optWin, line, sheet);
     setLoading(false);
@@ -167,9 +173,14 @@ function TipCard({ data, view }) {
         .replace(".", ",")
     : null;
 
+  const download = () => {
+    setOptions(false);
+    downloadCard(i, description);
+  };
+
   return (
     <div
-      className={`tip-card content${pendingC}${drawC}${bingoC}${loseC} c-${theme}`}
+      className={`tip-card --${i} content${pendingC}${drawC}${bingoC}${loseC} c-${theme}`}
       // style={{width}}
     >
       <span className="tip-card__date">
@@ -449,24 +460,76 @@ function TipCard({ data, view }) {
               {!openDelete && (
                 <button
                   className={`tip-card__options__option --win bg-${theme} c-${theme}`}
-                  onClick={openWin ? handleEdit : handleOpenWin}
+                  onClick={openWin ? handleDefine : handleOpenWin}
                   disabled={openWin ? !optWin : false}
                 >
-                  {openWin
-                    ? "Confirmar"
-                    : !win
-                    ? "Definir Ganhador"
-                    : "Editar Ganhador"}
+                  {openWin ? (
+                    <>
+                      Confirmar
+                      <Icon icon="akar-icons:check" height="18" width="18" />
+                    </>
+                  ) : !win ? (
+                    <>
+                      Definir Ganhador
+                      <Icon
+                        icon="line-md:confirm-circle-twotone"
+                        width="18"
+                        height="18"
+                      />
+                    </>
+                  ) : (
+                    <>
+                      Editar Ganhador
+                      <Icon icon="cuida:edit-outline" width="18" height="18" />
+                    </>
+                  )}
                 </button>
               )}
-              {!openWin && (
+              {!openDelete && !openWin && (
+                <button
+                  className={`tip-card__options__option --win bg-${theme} c-${theme}`}
+                  onClick={download}
+                >
+                  Download
+                  <Icon
+                    icon="line-md:downloading-loop"
+                    width="18"
+                    height="18"
+                  />
+                </button>
+              )}
+              {!openWin && openDelete && (
                 <button
                   className="tip-card__options__option --delete"
                   onClick={openDelete ? handleConfirmDelete : handleOpenDelete}
                 >
-                  {openDelete ? "Confirmar exclusão" : "Excluir"}
+                  Confirmar exclusão
+                  <Icon icon="akar-icons:check" />
                 </button>
               )}
+              <div className="card__options__option__delete-edit">
+                {!openWin && !openDelete && (
+                  <button className={`tip-card__options__option --win bg-${theme} c-${theme}`} onClick={handleEdit}>
+                    Editar
+                    <Icon
+                      icon="majesticons:edit-pen-4-line"
+                      width="17"
+                      height="17"
+                    />
+                  </button>
+                )}
+                {!openWin && !openDelete && (
+                  <button
+                    className="tip-card__options__option --delete"
+                    onClick={
+                      openDelete ? handleConfirmDelete : handleOpenDelete
+                    }
+                  >
+                    Excluir
+                    <Icon icon="ph:trash-duotone" width="18" height="18" />
+                  </button>
+                )}
+              </div>
               <button
                 className={`tip-card__options__option bg-${theme} c-${theme} --cancel`}
                 onClick={openDelete || openWin ? handleBack : handleOpenOptions}

@@ -3,15 +3,59 @@ import { formatDate, parseDate } from "./formatDate";
 export const disabled = ({
   description,
   option1,
-  price1,
-  odd1,
-  option1BettingHouse,
   option2,
+  option3,
+  price1,
   price2,
+  price3,
+  odd1,
   odd2,
+  odd3,
+  option1BettingHouse,
+  option2BettingHouse,
+  option3BettingHouse,
 }) => {
-  if (!description || !option1 || !price1 || !odd1 || !option1BettingHouse)
-    return true;
+  let isDisabled = false;
+
+  if (option3 || option3BettingHouse.length > 0 || price3 || odd3) {
+    if (
+      !option3 ||
+      !price3 ||
+      price3 <= 0 ||
+      !odd3 ||
+      odd3 <= 0 ||
+      option3BettingHouse.length === 0 ||
+      !option2 ||
+      !price2 ||
+      !odd2 ||
+      option2BettingHouse.length === 0
+    )
+      isDisabled = true;
+  }
+
+  if (option2) {
+    if (
+      !price2 ||
+      price2 <= 0 ||
+      !odd2 ||
+      odd2 <= 0 ||
+      option2BettingHouse.length === 0
+    )
+      isDisabled = true;
+  }
+
+  if (
+    !description ||
+    !option1 ||
+    !price1 ||
+    !odd1 ||
+    option1BettingHouse.length === 0 ||
+    (option3 && !option2)
+  ) {
+    isDisabled = true;
+  }
+
+  return isDisabled;
 };
 
 export const formatData = ({
@@ -27,19 +71,16 @@ export const formatData = ({
   price3,
   odd3,
 }) => {
-
-  const OPTION2 = option2 === " | 0" ? "" : option2;
+  const OPTION2 = option2 === " | Empate" ? "" : option2;
   const PRICE2 = price2 === 0 ? "" : price2;
-  const ODD2 = odd2 === 1 ? "" : odd2;
+  const ODD2 = odd2 === 0 ? "" : odd2;
 
-
-  const OPTION3 = option3 === " | 0" ? "" : option3;
+  const OPTION3 = option3 === " | Time B" ? "" : option3;
   const PRICE3 = price3 === 0 ? "" : price3;
-  const ODD3 = odd3 === 1 ? "" : odd3;
-
+  const ODD3 = odd3 === 0 ? "" : odd3;
 
   const values = [
-    parseDate(formatDate(date), true),
+    date,
     description,
     option1,
     price1,
@@ -84,3 +125,38 @@ export const formatResults = (results) =>
 
     return [...newR, { value: profit }];
   });
+
+export const formatDataWithCol = (data) => {
+  const {
+    option1: { value: option1, cel = "a0" },
+    option2: { value: option2 },
+    option3: { value: option3 },
+    odd1: { value: odd1 },
+    odd2: { value: odd2 },
+    odd3: { value: odd3 },
+    description: { value: description },
+    price1: { value: price1 },
+    price2: { value: price2 },
+    price3: { value: price3 },
+    win: { value: win },
+    profit: { value: profit },
+    date: { value: date },
+  } = data;
+
+  return {
+    date,
+    description,
+    option1,
+    price1,
+    odd1,
+    option2,
+    price2,
+    odd2,
+    option3,
+    price3,
+    odd3,
+    win,
+    profit,
+    cel
+  };
+};

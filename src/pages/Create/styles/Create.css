@@ -109,7 +109,7 @@
 }
 
 .create__view__inputs__save {
-  background-color: #17cc90;
+  background-color: var(--accent);
   border: none;
   border-radius: 0.5em;
   cursor: pointer;
@@ -120,10 +120,20 @@
   padding: 10px;
   width: 100%;
   align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8em;
+  gap: 5px;
+  transition: 0.5s;
 }
 
 .create__view__inputs__save:disabled {
   opacity: 0.2;
   cursor: not-allowed;
   background-color: #9e9e9e;
+}
+
+.create__view__inputs__save__icon {
+  font-size: 25px;
 }

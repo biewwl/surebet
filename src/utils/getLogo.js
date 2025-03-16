@@ -28,6 +28,7 @@ import Lotogreen from "../assets/lotogreen.jpg";
 import Blaze from "../assets/blaze.png";
 import SeguroBet from "../assets/segurobet.jpeg";
 import CasaDeApostas from "../assets/casadeapostas.png";
+import BravoBet from "../assets/bravo.png";
 
 export const getLogo = (name) => {
   const betName = name.toLowerCase();
@@ -124,6 +125,11 @@ export const getLogo = (name) => {
         logo: CasaDeApostas,
         site: "https://casadeapostas.bet.br/br/sports",
       };
+    case "bravobet":
+      return {
+        logo: BravoBet,
+        site: "https://www.bravo.bet.br/esports",
+      };
     default:
       return {
         logo: `https://ui-avatars.com/api/?name=${formattedName}&background=99999925&color=999&uppercase=false`,
@@ -164,4 +170,5 @@ export const allLogos = {
   Blaze,
   SeguroBet,
   CasaDeApostas,
+  BravoBet,
 };

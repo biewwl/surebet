@@ -32,7 +32,7 @@
 }
 
 .profit-by-bet__cards__card.--gold .profit-by-bet__cards__card__content {
-  background-image: linear-gradient(to right, #495aff 0%, #495affad 100%);
+  background-image: linear-gradient(to right, var(--accent) 0%, #495affad 100%);
   /* color: #fff; */
 }
 

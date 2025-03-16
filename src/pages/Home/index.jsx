@@ -10,6 +10,7 @@ import { DataContext } from "../../context/DataContext";
 import Loading from "../../components/Loading";
 // import Calculate from "../Calculate";
 import SheetController from "../../components/SheetController";
+import domtoimage from "dom-to-image-more";
 
 function Home() {
   const { loading } = useContext(DataContext);

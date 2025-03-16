@@ -10,6 +10,7 @@
     "chartjs-plugin-zoom": "^2.2.0",
     "cra-template": "1.2.0",
     "date-fns": "^4.1.0",
+    "dom-to-image-more": "^3.5.0",
     "gh-pages": "^6.3.0",
     "manager-local-storage": "^1.1.0",
     "moment": "^2.30.1",

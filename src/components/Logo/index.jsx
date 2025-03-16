@@ -9,11 +9,12 @@ function Logo() {
   return (
     <Link to="/" className={`logo c-${theme}${theme === "light" ? "-1" : ""}`}>
       biewwl
-      <p className={`logo__slogan c-${theme}${theme === "light" ? "-1" : ""}`}>
+      <span className="logo__dot">.</span>
+      {/* <p className={`logo__slogan c-${theme}${theme === "light" ? "-1" : ""}`}>
         <span className="logo__slogan__sure">sure</span>bet
         {" + "}
         <span className="logo__slogan__sure">super</span>odds
-      </p>
+      </p> */}
     </Link>
   );
 }

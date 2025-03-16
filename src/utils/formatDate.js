@@ -14,13 +14,18 @@ export function formatDate(dateString) {
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() + 1);
 
+  // Obtenha as horas e minutos
+  const hours = date.getHours().toString().padStart(2, "0"); // Formata as horas com dois dígitos
+  const minutes = date.getMinutes().toString().padStart(2, "0"); // Formata os minutos com dois dígitos
+  const timeString = `às ${hours}:${minutes}`;
+
   // Compare a data fornecida com hoje, ontem e amanhã
   if (date.toDateString() === today.toDateString()) {
-    return "Hoje";
+    return `Hoje ${timeString}`;
   } else if (date.toDateString() === yesterday.toDateString()) {
-    return "Ontem";
+    return `Ontem ${timeString}`;
   } else if (date.toDateString() === tomorrow.toDateString()) {
-    return "Amanhã";
+    return `Amanhã ${timeString}`;
   }
 
   // Opções para formatação da data
@@ -29,7 +34,7 @@ export function formatDate(dateString) {
   // Formate a data para uma string por extenso
   const formattedDate = date.toLocaleDateString("pt-BR", options);
 
-  return formattedDate;
+  return `${formattedDate} ${timeString}`;
 }
 
 export function parseDate(dateString, all = false) {
@@ -55,6 +60,14 @@ export function parseDate(dateString, all = false) {
     return `${dayStr}/${monthStr}`;
   }
 
+  // Verificar se a string contém horário ("às hh:mm")
+  let timePart = "";
+  if (dateString.includes(" às ")) {
+    const parts = dateString.split(" às ");
+    dateString = parts[0];
+    timePart = parts[1]; // Pega a parte do horário
+  }
+
   // Verificar se a string é "Hoje", "Ontem" ou "Amanhã"
   if (
     dateString.toLowerCase() === "hoje" ||
@@ -73,7 +86,7 @@ export function parseDate(dateString, all = false) {
         date = new Date(today);
         date.setDate(today.getDate() + 1);
       }
-      return formatDate(date);
+      return timePart ? `${formatDate(date)} ${timePart}` : formatDate(date);
     }
     return dateString;
   }
@@ -85,5 +98,5 @@ export function parseDate(dateString, all = false) {
 
   const date = new Date(year, month, day);
 
-  return formatDate(date);
+  return timePart ? `${formatDate(date)} ${timePart}` : formatDate(date);
 }

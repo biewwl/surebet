@@ -388,7 +388,7 @@ export default Calculate;
 // }
 
 // // Exemplo de uso:
-// const riscoDesejado = 100; // Risco que você deseja controlar
+// const riscoDesejado = 240.63; // Risco que você deseja controlar
 // const odd = 3.05; // Odd contra
 // const valorApostado = calcularValorParaRisco(riscoDesejado, odd);
 // console.log("Valor a ser apostado: R$", valorApostado);

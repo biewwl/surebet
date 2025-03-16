@@ -39,7 +39,7 @@ const PieChart = ({ dataArray }) => {
     datasets: [
       {
         data: dataValues, // Valores inteiros
-        backgroundColor: generateGradientColors("#2d64fd", dataArray.length), // Cores dinamicamente geradas
+        backgroundColor: generateGradientColors("#495aff", dataArray.length), // Cores dinamicamente geradas
         borderColor: theme === "light" ? "#eee" : "#000", // Bordas com opacidade 1
         borderWidth: 0.25,
       },

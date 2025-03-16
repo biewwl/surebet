@@ -5,13 +5,16 @@ import "./index.css";
 import { DataProvider } from "./context/DataContext";
 import { HashRouter } from "react-router-dom";
 import { ThemeProvider } from "./context/ThemeContext";
+import { EditProvider } from "./context/EditContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <HashRouter>
     <DataProvider>
       <ThemeProvider>
-        <App />
+        <EditProvider>
+          <App />
+        </EditProvider>
       </ThemeProvider>
     </DataProvider>
   </HashRouter>

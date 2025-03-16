@@ -43,7 +43,7 @@ function Tips() {
   return (
     <section className="tips">
       {formattedData.reverse().map((d, i) => (
-        <TipCard data={d} key={i} />
+        <TipCard data={d} key={i} i={i} />
       ))}
     </section>
   );
