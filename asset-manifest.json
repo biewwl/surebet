@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/surebet/static/css/main.bcc361ce.css",
-    "main.js": "/surebet/static/js/main.ee3f9428.js",
+    "main.js": "/surebet/static/js/main.30438b3c.js",
     "static/media/zen-dark.jpg": "/surebet/static/media/zen-dark.aed899d11a5ed793acfc.jpg",
     "static/media/betao.jpg": "/surebet/static/media/betao.f2404d2e40ae05ea5013.jpg",
     "static/media/zen-light.jpg": "/surebet/static/media/zen-light.4b582f7e15bbef8e012a.jpg",
@@ -27,10 +27,10 @@
     "static/media/estrelabet.webp": "/surebet/static/media/estrelabet.6d18f655c5ee5eeedaee.webp",
     "index.html": "/surebet/index.html",
     "main.bcc361ce.css.map": "/surebet/static/css/main.bcc361ce.css.map",
-    "main.ee3f9428.js.map": "/surebet/static/js/main.ee3f9428.js.map"
+    "main.30438b3c.js.map": "/surebet/static/js/main.30438b3c.js.map"
   },
   "entrypoints": [
     "static/css/main.bcc361ce.css",
-    "static/js/main.ee3f9428.js"
+    "static/js/main.30438b3c.js"
   ]
 }
