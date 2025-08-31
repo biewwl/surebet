@@ -1,0 +1,438 @@
+.create {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  /* align-items: center; */
+  gap: 30px;
+}
+
+.create__section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.create__loading {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  animation: toTop 0.5s;
+}
+
+.create__loading__icon {
+  font-size: 4em;
+  color: #c1c1c1;
+}
+
+.create__view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+  width: 100%;
+  /* padding: 20px; */
+  justify-content: center;
+  animation: toTop 0.5s;
+}
+
+.create__view__sport {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  /* padding: 20px 0; */
+}
+
+.create__view__sport__option {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 15px;
+  border-radius: 0.25em;
+  cursor: pointer;
+  flex-grow: 1;
+  border: none;
+  opacity: 0.3;
+}
+
+.create__view__sport__option.--selected {
+  opacity: 1;
+}
+
+.create__view__inputs {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  min-width: 40%;
+  transition: 0.5s;
+  gap: 30px;
+  /* justify-items: flex-start; */
+}
+
+.create__view__inputs__label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+  justify-content: center;
+}
+
+.create__view__inputs__label__text {
+  align-items: center;
+  display: flex;
+  font-size: 0.7em;
+  gap: 5px;
+}
+
+.create__view__inputs__label__text__icon {
+  font-size: 18px;
+}
+
+.create__view__inputs__label__input {
+  /* background-color: #f1f1f1; */
+  border: none;
+  border-radius: 0.5em;
+  /* flex-grow: 1; */
+  outline: none;
+  padding: 10px;
+  width: 100%;
+  transition: 0.5s;
+}
+
+.create__view__inputs__freebet {
+  display: flex;
+  align-items: flex-end;
+}
+
+.create__view__inputs__freebet__label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  font-size: 0.7em;
+  padding: 10px;
+  border-radius: 0.5em;
+  width: 100%;
+  justify-content: center;
+}
+
+.create__view__inputs__freebet__label.--is-free {
+  background: linear-gradient(74deg, #17cc90 0%, #17cc90ad 100%);
+  color: #fff;
+}
+
+.create__view__inputs__freebet__label__input {
+  display: none;
+}
+
+.create__view__inputs__freebet__label__icon {
+  font-size: 16px;
+}
+
+.create__view__inputs__betting-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: 150px;
+  gap: 10px;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  padding: 10px 0;
+}
+
+.create__view__inputs__betting-options::-webkit-scrollbar {
+  display: none;
+}
+
+.create__view__inputs__betting-options__option {
+  scroll-snap-align: start;
+  align-self: center;
+  display: flex;
+  transition: 0.5s;
+  height: 40px;
+  aspect-ratio: 1/1;
+}
+
+.create__view__inputs__betting-options__option.--not-selected {
+  filter: grayscale(0.5);
+  opacity: 0.3;
+}
+
+.create__view__inputs__betting-options__option:hover {
+  opacity: 1;
+  filter: none;
+}
+
+.create__view__inputs__betting-options__option__logo {
+  width: 100%;
+  cursor: pointer;
+  border-radius: 0.25em;
+}
+
+.create__view__inputs__save {
+  background-color: var(--accent);
+  border: none;
+  border-radius: 0.5em;
+  cursor: pointer;
+  font-size: 16px;
+  /* grid-column-end: 3;
+  grid-column-start: 1; */
+  margin-block-start: 20px;
+  padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8em;
+  gap: 8px;
+  transition: 0.5s;
+}
+
+.create__view__inputs__save:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+  background-color: #9e9e9e;
+}
+
+.create__view__inputs__save__icon {
+  font-size: 18px;
+}
+
+.react-datepicker-popper {
+  z-index: 2 !important;
+}
+
+/*  */
+
+.create__modal__houses {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  justify-items: center;
+}
+
+.create__modal__houses__item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 0.25em;
+  opacity: 0.3;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: 0.3s;
+}
+
+.create__modal__houses__item.--selected {
+  opacity: 1;
+  border: 2px solid var(--accent);
+  filter: sepia(100%) saturate(200%) hue-rotate(180deg);
+}
+
+.create__modal__houses__item__logo {
+  width: 30px;
+  border-radius: 0.25em;
+}
+
+.create__odds {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+  gap: 20px;
+}
+
+.create__odds__odd {
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 0.5em;
+  position: relative;
+}
+
+.create__odds__odd__title {
+  margin-block-end: 30px;
+}
+
+.create__section__odd__multiple {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  margin-block-end: 30px;
+}
+
+.create__section__odd__multiple__item {
+  display: grid;
+  grid-template-columns: 30px 1fr 10px 1fr 30px;
+  justify-items: center;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+}
+
+.create__section__odd__multiple__item__count {
+  font-size: 12px !important;
+}
+
+.create__section__odd__multiple__item__remove {
+  background: none;
+  height: 30px;
+  width: 30px;
+  margin-block-start: 15px;
+  /* aspect-ratio: 1 / 1; */
+  border: none;
+  outline: none;
+}
+
+.create__section__odd__multiple__item__remove svg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fd2d2d;
+  cursor: pointer;
+}
+
+.create__section__odd__multiple__item span {
+  margin-block-start: 10px;
+  font-size: 1.4em;
+}
+
+.create__odds__odd label, .label-1 {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 0.6em;
+  width: 100%;
+}
+
+.create__odds__odd label input, .label-1 input {
+  padding: 10px;
+  border-radius: 0.5em;
+  border: none;
+  outline: none;
+}
+
+.create__section__odd__multiple__add {
+  border: none;
+  padding: 10px;
+  border-radius: 0.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.create__section__odd__values {
+  display: flex;
+  gap: 10px;
+}
+
+.create__houses__add {
+  height: 30px;
+  width: 30px;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.create__remove-odd {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #fd2d2d;
+  cursor: pointer;
+}
+
+.create__actions {
+  display: flex;
+  gap: 10px;
+}
+
+.create__actions button {
+  padding: 10px;
+  border: none;
+  border-radius: 0.25em;
+}
+
+.create__actions__submit{
+  background-color: var(--accent);
+}
+
+.create__actions button:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+  filter: grayscale();
+}
+
+.create__modal__backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.822);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 10;
+  padding: 20px;
+}
+
+.create__modal {
+  border-radius: 0.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 800px;
+  max-height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  padding: 20px !important;
+}
+
+.create__modal::-webkit-scrollbar {
+  display: none;
+}
+
+.create__modal__actions {
+  padding: 20px 0;
+  display: flex;
+  gap: 20px;
+}
+
+.create__modal__actions button {
+  padding: 10px;
+  border: none;
+  border-radius: 0.25em;
+  cursor: pointer;
+  color: #fff;
+}
+
+.create__modal__actions__submit {
+  background-color: var(--accent);
+}
+
+.create__modal__actions__cancel{
+  background-color: #fd2d2d;
+}
+
+.create__actions button:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+  filter: grayscale();
+}
+
+.create__modal__issue-list {
+  list-style: none;
+}

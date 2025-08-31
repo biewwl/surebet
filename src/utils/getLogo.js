@@ -18,7 +18,7 @@ import ReiDoPitaco from "../assets/reidopitaco.png";
 import JogoDeOuro from "../assets/jogodeouro.png";
 import Betfast from "../assets/betfast.png";
 import UxBet from "../assets/uxbet.png";
-import Bateu from "../assets/bateu.jpg";
+import Bateu from "../assets/bateubet.webp";
 import EsportivaBet from "../assets/esportivabet.png";
 import Br4Bet from "../assets/br4.jpeg";
 import VaiDeBet from "../assets/vaidebet.jpeg";
@@ -29,6 +29,26 @@ import Blaze from "../assets/blaze.png";
 import SeguroBet from "../assets/segurobet.jpeg";
 import CasaDeApostas from "../assets/casadeapostas.png";
 import BravoBet from "../assets/bravo.png";
+import PixBet from "../assets/pixbet.png";
+import LuvaBet from "../assets/luvabet.png";
+import GolDeBet from "../assets/goldebet.png";
+import FlaBet from "../assets/flabet.jpeg";
+import HiperBet from "../assets/hiperbet.jpeg";
+import BrasilDaSorte from "../assets/brasildasorte.png";
+import F12Bet from "../assets/f12bet.jpg";
+import MrJackBet from "../assets/mrjackbet.jpg";
+import LanceDaSorte from "../assets/lancedasorte.webp";
+import PagolBet from "../assets/pagol.jpeg";
+import FourPlayBet from "../assets/4playbet.jpeg";
+import VivaSorte from "../assets/vivasorte.jpeg";
+import BetDaSorte from "../assets/betdasorte.png";
+import BetPix365 from "../assets/betpix365.png";
+import BolsaDeAposta from "../assets/bolsadeaposta.png";
+import MultiBet from "../assets/multibet.png";
+import BetEsporte from "../assets/betesporte.jpeg";
+import AlfaBet from "../assets/alfabet.png";
+import QGbet from "../assets/qgbet.png";
+import Fullbet from "../assets/fullbet.jpg";
 
 export const getLogo = (name) => {
   const betName = name.toLowerCase();
@@ -39,21 +59,21 @@ export const getLogo = (name) => {
 
   switch (betName) {
     case "betano":
-      return { logo: Betano, site: "https://www.betano.bet.br" };
+      return { logo: Betano, site: "https://betano.bet.br" };
     case "betfair":
-      return { logo: Betfair, site: "https://www.betfair.bet.br/apostas/" };
+      return { logo: Betfair, site: "https://betfair.bet.br/apostas/" };
     case "bet365":
-      return { logo: Bet365, site: "https://www.bet365.bet.br/#/HO/" };
+      return { logo: Bet365, site: "https://bet365.bet.br/#/HO/" };
     case "superbet":
       return { logo: Superbet, site: "https://superbet.bet.br/" };
     case "kto":
-      return { logo: KTO, site: "https://www.kto.bet.br/esportes/" };
+      return { logo: KTO, site: "https://kto.bet.br/esportes/" };
     case "pinnacle":
       return { logo: Pinnacle, site: "https://pinnacle.bet.br/sportsbook" };
     case "estrelabet":
       return {
         logo: EstrelaBet,
-        site: "https://www.estrelabet.bet.br/pb/esportes#/overview",
+        site: "https://estrelabet.bet.br/pb/esportes#/overview",
       };
     case "sportingbet":
       return {
@@ -63,7 +83,7 @@ export const getLogo = (name) => {
     case "novibet":
       return {
         logo: Novibet,
-        site: "https://www.novibet.bet.br/apostas-esportivas",
+        site: "https://novibet.bet.br/apostas-esportivas",
       };
     case "cassinobet":
       return { logo: CassinoBet, site: "https://cassino.bet.br/sports" };
@@ -86,7 +106,7 @@ export const getLogo = (name) => {
     case "betfast":
       return { logo: Betfast, site: "https://betfast.bet.br/br" };
     case "uxbet":
-      return { logo: UxBet, site: "https://www.ux.bet.br/home/events-area" };
+      return { logo: UxBet, site: "https://ux.bet.br/home/events-area" };
     case "bateu":
       return { logo: Bateu, site: "https://bateu.bet.br/sports" };
     case "esportivabet":
@@ -98,7 +118,7 @@ export const getLogo = (name) => {
     case "betfairexchange":
       return {
         logo: BetfairExchange,
-        site: "https://www.betfair.bet.br/exchange/plus/",
+        site: "https://betfair.bet.br/exchange/plus/",
       };
     case "betao":
       return {
@@ -118,7 +138,7 @@ export const getLogo = (name) => {
     case "segurobet":
       return {
         logo: SeguroBet,
-        site: "https://segurobet.bet.br/pt/sports",
+        site: "https://www.seguro.bet.br/pre-jogo",
       };
     case "casadeapostas":
       return {
@@ -128,12 +148,114 @@ export const getLogo = (name) => {
     case "bravobet":
       return {
         logo: BravoBet,
-        site: "https://www.bravo.bet.br/esports",
+        site: "https://bravo.bet.br/esports",
       };
+    case "pixbet":
+      return {
+        logo: PixBet,
+        site: "https://pix.bet.br/sports",
+      };
+    case "luvabet":
+      return {
+        logo: LuvaBet,
+        site: "https://luva.bet.br/sportsbook/Football/International",
+      };
+    case "goldebet":
+      return {
+        logo: GolDeBet,
+        site: "https://goldebet.bet.br/sports#/overview",
+      };
+    case "flabet":
+      return {
+        logo: FlaBet,
+        site: "https://fla.bet.br/",
+      };
+    case "hiperbet":
+      return {
+        logo: HiperBet,
+        site: "https://m.hiper.bet.br/ptb/bet/sports",
+      };
+    case "brasildasorte":
+      return {
+        logo: BrasilDaSorte,
+        site: "https://brasildasorte.bet.br/home/events-area",
+      };
+    case "f12bet":
+      return {
+        logo: F12Bet,
+        site: "https://f12.bet.br/prejogo/",
+      };
+    case "mrjackbet":
+      return {
+        logo: MrJackBet,
+        site: "https://mrjack.bet.br/",
+      };
+    case "lancedasorte":
+      return {
+        logo: LanceDaSorte,
+        site: "https://lancedesorte.bet.br/",
+      };
+    case "pagolbet":
+      return {
+        logo: PagolBet,
+        site: "https://pagol.bet.br/br/aposta-esportiva/home",
+      };
+    case "fourplaybet":
+      return {
+        logo: FourPlayBet,
+        site: "https://4play.bet.br/apostas-esportivas/destaques",
+      };
+    case "vivasorte":
+      return {
+        logo: VivaSorte,
+        site: "https://vivasorte.bet.br/",
+      };
+    case "betdasorte":
+      return {
+        logo: BetDaSorte,
+        site: "https://betdasorte.bet.br/sports",
+      };
+    case "betpix365":
+      return {
+        logo: BetPix365,
+        site: "https://betpix365.bet.br/ptb/bet/main",
+      };
+    case "bolsadeaposta":
+      return {
+        logo: BolsaDeAposta,
+        site: "https://bolsadeaposta.bet.br/b/exchange",
+      };
+    case "multibet":
+      return {
+        logo: MultiBet,
+        site: "https://multi.bet.br/sports#/overview",
+      };
+    case "betesporte":
+      return {
+        logo: BetEsporte,
+        site: "https://betesporte.bet.br/sports",
+      };
+    case "alfabet":
+      return {
+        logo: AlfaBet,
+        site: "https://alfabet.bet.br",
+      };
+    case "qgbet":
+      return {
+        logo: QGbet,
+        site: "https://qg.bet.br/",
+      };
+
+    case "fullbet":
+      return {
+        logo: Fullbet,
+        site: "https://fulltbet.bet.br/b/exchange",
+      };
+    // Add more cases as needed
     default:
       return {
         logo: `https://ui-avatars.com/api/?name=${formattedName}&background=99999925&color=999&uppercase=false`,
-        site: "https://www.google.com",
+        site: "/",
       };
     // break;
   }
@@ -171,4 +293,24 @@ export const allLogos = {
   SeguroBet,
   CasaDeApostas,
   BravoBet,
+  PixBet,
+  LuvaBet,
+  GolDeBet,
+  FlaBet,
+  HiperBet,
+  BrasilDaSorte,
+  F12Bet,
+  MrJackBet,
+  LanceDaSorte,
+  PagolBet,
+  FourPlayBet,
+  VivaSorte,
+  BetDaSorte,
+  BetPix365,
+  BolsaDeAposta,
+  MultiBet,
+  BetEsporte,
+  AlfaBet,
+  QGbet,
+  Fullbet
 };

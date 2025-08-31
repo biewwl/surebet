@@ -1,0 +1,536 @@
+import { useContext, useState, useMemo } from "react";
+import "./styles/Create.css";
+import Logo from "../../components/Logo";
+import { Icon } from "@iconify/react/dist/iconify.js";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { registerLocale } from "react-datepicker";
+import { pt } from "date-fns/locale/pt";
+import { allLogos, getLogo } from "../../utils/getLogo";
+import SectionTitle from "../../components/SectionTitle";
+import Loading from "../../components/Loading";
+import { ThemeContext } from "../../context/ThemeContext";
+import { Link, useNavigate } from "react-router-dom";
+import createRequest from "../../utils/createRequest";
+import { postResult } from "../../api/post";
+import { DataContext } from "../../context/DataContext";
+
+registerLocale("pt", pt);
+
+function Create() {
+  const { theme } = useContext(ThemeContext);
+  const { updateData, script, sheet } = useContext(DataContext);
+
+
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    date: new Date(),
+    match: "",
+  });
+  const [odds, setOdds] = useState([
+    {
+      price: "",
+      odd: "",
+      houses: [],
+      multiples: [{ description: "", bet: "" }],
+    },
+  ]);
+
+  // Modal de confirmação
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [issues, setIssues] = useState([]);
+
+  // Seleção de casa
+  const [selectHouseFrom, setSelectHouseFrom] = useState(null);
+  const [selectListHouseFrom, setSelectListHouseFrom] = useState([]);
+  const betHouses = Object.keys(allLogos);
+
+  // Habilita o botão Criar somente se:
+  // - partida não vazia
+  // - data selecionada
+  // - na primeira odd:
+  //     * ao menos uma casa selecionada
+  //     * price e odd preenchidos
+  //     * ao menos uma múltipla completa
+  const canSubmit = useMemo(() => {
+    const matchFilled = formData.match.trim() !== "";
+
+    const firstOdd = odds[0] || {};
+    const hasHouse =
+      Array.isArray(firstOdd.houses) && firstOdd.houses.length > 0;
+    const hasPriceOdd =
+      firstOdd.price?.trim() !== "" && firstOdd.odd?.trim() !== "";
+    const hasMultiple =
+      Array.isArray(firstOdd.multiples) &&
+      firstOdd.multiples.some(
+        (m) => m.description.trim() !== "" && m.bet.trim() !== ""
+      );
+
+    return matchFilled && hasHouse && hasPriceOdd && hasMultiple;
+  }, [formData.match, odds]);
+
+  // Habilita o botão de adicionar nova odd
+  const canAddOdd = useMemo(() => {
+    const last = odds[odds.length - 1];
+    if (!last) return false;
+    const hasHouse = last.houses.length > 0;
+    const hasPriceOdd = last.price.trim() !== "" && last.odd.trim() !== "";
+    const hasOneMulti = last.multiples.some(
+      (m) => m.description.trim() !== "" && m.bet.trim() !== ""
+    );
+    return hasHouse && hasPriceOdd && hasOneMulti;
+  }, [odds]);
+
+  // Atualiza uma odd no array
+  const updateOdd = (index, newData) =>
+    setOdds((prev) =>
+      prev.map((odd, i) => (i === index ? { ...odd, ...newData } : odd))
+    );
+
+  // Adicionar / remover odds
+  const handleAddOdd = () =>
+    setOdds((prev) => [
+      ...prev,
+      {
+        price: "",
+        odd: "",
+        houses: [],
+        multiples: [{ description: "", bet: "" }],
+      },
+    ]);
+  const handleDeleteOdd = (index) =>
+    setOdds((prev) => prev.filter((_, i) => i !== index));
+
+  // Adicionar / remover múltiplas
+  const handleAddMultiple = (oddIndex) => {
+    const target = odds[oddIndex];
+    updateOdd(oddIndex, {
+      multiples: [...target.multiples, { description: "", bet: "" }],
+    });
+  };
+  const handleDeleteMultiple = (oddIndex, multiIndex) => {
+    const target = odds[oddIndex];
+    const filtered = target.multiples.filter((_, i) => i !== multiIndex);
+    updateOdd(oddIndex, { multiples: filtered });
+  };
+
+  // Change handlers
+  const handleChangeMultiple = (oddIndex, multiIndex, field, value) => {
+    const target = odds[oddIndex];
+    const updated = target.multiples.map((m, i) =>
+      i === multiIndex ? { ...m, [field]: value } : m
+    );
+    updateOdd(oddIndex, { multiples: updated });
+  };
+  const handleChangeField = (oddIndex, field, value) =>
+    updateOdd(oddIndex, { [field]: value });
+
+  // Seleção de casas
+  const handleOpenSelectHouse = (oddIndex) => {
+    setSelectHouseFrom(oddIndex);
+    setSelectListHouseFrom(odds[oddIndex].houses);
+  };
+  const handleSelectHouse = (house) => {
+    setSelectListHouseFrom((prev) =>
+      prev.includes(house) ? prev.filter((h) => h !== house) : [...prev, house]
+    );
+  };
+  const handleConfirmSelectHouse = () => {
+    updateOdd(selectHouseFrom, { houses: selectListHouseFrom });
+    setSelectHouseFrom(null);
+    setSelectListHouseFrom([]);
+  };
+  const classSelectedHouse = (house) =>
+    selectListHouseFrom.includes(house) ? " --selected" : "";
+
+  // Validação e coleta de issues antes de enviar
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const foundIssues = [];
+
+    odds.forEach((odd, oi) => {
+      const oddLabel = `Odd ${oi + 1}`;
+      if (odd.houses.length === 0) {
+        foundIssues.push(`${oddLabel}: nenhuma casa selecionada`);
+      }
+      if (odd.price.trim() === "") {
+        foundIssues.push(`${oddLabel}: valor gasto não preenchido`);
+      }
+      if (odd.odd.trim() === "") {
+        foundIssues.push(`${oddLabel}: odd não preenchida`);
+      }
+
+      odd.multiples.forEach((m, mi) => {
+        const multiLabel = `${oddLabel} - múltipla ${mi + 1}`;
+        const desc = m.description.trim();
+        const bet = m.bet.trim();
+
+        if (desc === "" && bet === "") {
+          foundIssues.push(`${multiLabel}: será removida pois está vazia`);
+        } else if (desc === "" || bet === "") {
+          if (desc === "")
+            foundIssues.push(`${multiLabel}: falta preencher Descrição`);
+          if (bet === "")
+            foundIssues.push(`${multiLabel}: falta preencher Bet`);
+        }
+      });
+    });
+
+    if (foundIssues.length) {
+      setIssues(foundIssues);
+      setShowConfirm(true);
+    } else {
+      finalizeSubmit();
+    }
+  };
+
+  // Remove itens incompletos e envia
+  const handleConfirmRemoveAndSubmit = () => {
+    const cleanedOdds = odds.reduce((acc, odd) => {
+      const cleanedMultiples = odd.multiples.filter(
+        (m) => m.description.trim() !== "" && m.bet.trim() !== ""
+      );
+      const oddIsValid =
+        odd.houses.length > 0 &&
+        odd.price.trim() !== "" &&
+        odd.odd.trim() !== "" &&
+        cleanedMultiples.length > 0;
+      if (oddIsValid) acc.push({ ...odd, multiples: cleanedMultiples });
+      return acc;
+    }, []);
+
+    setOdds(cleanedOdds);
+    setShowConfirm(false);
+    finalizeSubmit();
+  };
+  
+  const navigate = useNavigate();
+
+  const finalizeSubmit = async () => {
+    setLoading(true);
+    await postResult(script, createRequest({ ...formData, odds }), sheet);
+    setLoading(false);
+    updateData();
+    navigate("/");
+  };
+
+  return (
+    <main className="create">
+      <Logo />
+
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className={`create__section c-${theme}`}>
+          <SectionTitle icon="line-md:plus-circle-twotone" title="Criar" />
+
+          <form className="create__view__inputs" onSubmit={handleSubmit}>
+            {/* Data e Partida */}
+            <label htmlFor="date" className="label-1">
+              Data
+              <DatePicker
+                selected={formData.date}
+                onChange={(date) =>
+                  setFormData((f) => ({ ...f, date: date || f.date }))
+                }
+                className={`create__view__inputs__label__input bg-${theme}-2 c-${theme}`}
+                locale="pt"
+                showTimeSelect
+                id="date"
+                timeFormat="HH:mm"
+                timeIntervals={15}
+                timeCaption="Horário"
+                dateFormat="dd/MM/yyyy HH:mm"
+              />
+            </label>
+
+            <label htmlFor="match" className="label-1">
+              <span className={`c-${theme}`}>Partida</span>
+              <input
+                type="text"
+                id="match"
+                name="match"
+                value={formData.match}
+                onChange={(e) =>
+                  setFormData((f) => ({ ...f, match: e.target.value }))
+                }
+                className={`create__view__inputs__label__input bg-${theme}-2 c-${theme}`}
+                placeholder="Time A x Time B"
+                autoComplete="off"
+              />
+            </label>
+
+            {/* Odds dinâmicas */}
+            <div className={`create__odds`}>
+              {odds.map((odd, idx) => (
+                <div key={idx} className={`create__odds__odd bg-${theme}-2`}>
+                  <h4 className="create__odds__odd__title">Odd {idx + 1}</h4>
+                  {/* Múltiplas */}
+                  <div className="create__section__odd__multiple">
+                    {odd.multiples.map((m, j) => (
+                      <div
+                        key={j}
+                        className="create__section__odd__multiple__item"
+                      >
+                        <span className="create__section__odd__multiple__item__count">
+                          {j + 1}
+                        </span>
+                        <label htmlFor={`desc-${idx}-${j}`}>
+                          Descrição {j + 1}
+                          <input
+                            id={`desc-${idx}-${j}`}
+                            className={`bg-${theme} c-${theme}`}
+                            type="text"
+                            value={m.description}
+                            onChange={(e) =>
+                              handleChangeMultiple(
+                                idx,
+                                j,
+                                "description",
+                                e.target.value
+                              )
+                            }
+                          />
+                        </label>
+                        <span>:</span>
+                        <label htmlFor={`bet-${idx}-${j}`}>
+                          Bet {j + 1}
+                          <input
+                            id={`bet-${idx}-${j}`}
+                            className={`bg-${theme} c-${theme}`}
+                            type="text"
+                            value={m.bet}
+                            onChange={(e) =>
+                              handleChangeMultiple(
+                                idx,
+                                j,
+                                "bet",
+                                e.target.value
+                              )
+                            }
+                          />
+                        </label>
+                        {j > 0 && (
+                          <button
+                            type="button"
+                            className={`create__section__odd__multiple__item__remove`}
+                            onClick={() => handleDeleteMultiple(idx, j)}
+                          >
+                            <Icon
+                              icon="lets-icons:close-round"
+                              width="18"
+                              height="18"
+                            />
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                    {/* Botão adicionar múltipla */}
+                    {odd.houses.length > 0 &&
+                      odd.price.trim() !== "" &&
+                      odd.odd.trim() !== "" &&
+                      odd.multiples[0].description.trim() !== "" &&
+                      odd.multiples[0].bet.trim() !== "" && (
+                        <button
+                          type="button"
+                          onClick={() => handleAddMultiple(idx)}
+                          className={`create__section__odd__multiple__add c-${theme} bg-${theme}`}
+                        >
+                          <Icon icon="ic:round-add" width="18" height="18" />
+                          Adicionar nova seleção
+                        </button>
+                      )}
+                  </div>
+                  {/* Valor Gasto e Odd */}
+                  <div className="create__section__odd__values">
+                    <label htmlFor={`price-${idx}`}>
+                      Valor Gasto
+                      <input
+                        id={`price-${idx}`}
+                        type="text"
+                        value={odd.price}
+                        className={`bg-${theme} c-${theme}`}
+                        onChange={(e) =>
+                          handleChangeField(idx, "price", e.target.value)
+                        }
+                      />
+                    </label>
+                    <label htmlFor={`odd-${idx}`}>
+                      Odd
+                      <input
+                        id={`odd-${idx}`}
+                        type="text"
+                        value={odd.odd}
+                        className={`bg-${theme} c-${theme}`}
+                        onChange={(e) =>
+                          handleChangeField(idx, "odd", e.target.value)
+                        }
+                      />
+                    </label>
+                  </div>
+                  {/* Selecionar casas */}
+                  <section className="tip-card-resume__odds">
+                    <span>Casas de aposta usadas:</span>
+                    <div className="tip-card-resume__odds__list">
+                      {odds[idx].houses.map((house, groupIndex) => {
+                        // separa o primeiro (descrição) e os demais (valores)
+                        const bLogo = getLogo(house);
+                        const bImg = bLogo.logo;
+                        const bSite = bLogo.site;
+                        return (
+                          <Link
+                            to={bSite}
+                            target="_blank"
+                            className="tip-card__tip__odd__link"
+                            key={groupIndex}
+                          >
+                            <img
+                              src={bImg}
+                              alt=""
+                              className="tip-card-resume__tip__odd__logo"
+                            />
+                          </Link>
+                        );
+                      })}
+                      <button
+                        type="button"
+                        onClick={() => handleOpenSelectHouse(idx)}
+                        className={`create__houses__add bg-${theme} c-${theme}`}
+                      >
+                        <Icon icon="ic:round-add" width="18" height="18" />
+                      </button>
+                    </div>
+                  </section>
+                  {idx > 0 && (
+                    <button
+                      type="button"
+                      className="create__remove-odd"
+                      onClick={() => handleDeleteOdd(idx)}
+                    >
+                      <Icon
+                        icon="lets-icons:close-round"
+                        width="24"
+                        height="24"
+                      />
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Botão adicionar odd */}
+            <div className="create__actions">
+              <button
+                type="button"
+                onClick={handleAddOdd}
+                disabled={!canAddOdd}
+                className={`bg-${theme}-2 c-${theme}`}
+                title={
+                  !canAddOdd
+                    ? "Complete casas, valor, odd e ao menos uma múltipla"
+                    : ""
+                }
+              >
+                Adicionar Odd
+              </button>
+              {/* Botão Criar */}
+              <button
+                type="submit"
+                disabled={!canSubmit}
+                className={`create__actions__submit c-${theme}-2`}
+                title={
+                  !canSubmit
+                    ? "Preencha data, partida, casa, valor, odd e primeira múltipla"
+                    : ""
+                }
+              >
+                Criar
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* Modal de confirmação */}
+      {showConfirm && (
+        <div className="create__modal__backdrop">
+          <div className="create__modal">
+            <h3>Campos faltando / itens vazios</h3>
+            <ul>
+              {issues.map((msg, i) => (
+                <li key={i}>{msg}</li>
+              ))}
+            </ul>
+            <div className="create__modal__actions">
+              <button type="button" onClick={() => setShowConfirm(false)}>
+                Voltar e corrigir
+              </button>
+              <button type="button" onClick={handleConfirmRemoveAndSubmit}>
+                Remover itens incompletos e enviar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de seleção de casas */}
+      {selectHouseFrom !== null && (
+        <div
+          className="create__modal__backdrop"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setSelectHouseFrom(null);
+              setSelectListHouseFrom([]);
+            }
+          }}
+        >
+          <div className={`create__modal bg-${theme}`}>
+            <h3 className={`c-${theme}`}>Casas de Aposta</h3>
+            <div className="create__modal__houses">
+              {betHouses.map((house) => {
+                const { logo } = getLogo(house);
+                return (
+                  <div
+                    key={house}
+                    className={`create__modal__houses__item${classSelectedHouse(
+                      house
+                    )} bg-${theme}-2 c-${theme}`}
+                    onClick={() => handleSelectHouse(house)}
+                  >
+                    <img
+                      src={logo}
+                      alt={house}
+                      className="create__modal__houses__item__logo"
+                    />
+                    <span>{house}</span>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="create__modal__actions">
+              <button
+                type="button"
+                className="create__modal__actions__cancel"
+                onClick={() => {
+                  setSelectHouseFrom(null);
+                  setSelectListHouseFrom([]);
+                }}
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                className="create__modal__actions__submit"
+                onClick={handleConfirmSelectHouse}
+              >
+                Confirmar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </main>
+  );
+}
+
+export default Create;

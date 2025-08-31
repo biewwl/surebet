@@ -22,29 +22,51 @@ import Loading from "../../components/Loading";
 import { ThemeContext } from "../../context/ThemeContext";
 import { EditContext } from "../../context/EditContext";
 import { putResult } from "../../api/put";
+import { sports } from "../../utils/sportIcons";
 registerLocale("pt", pt);
 
 function Create() {
   const { theme } = useContext(ThemeContext);
   const { lineEdit, edit, resetEdit } = useContext(EditContext);
 
+  const params = new URLSearchParams(window.location.search);
+  const dataParam = params.get("data");
+
+  let initialData = {
+    date: new Date(),
+    description: "",
+    option1: "",
+    price1: "",
+    odd1: "",
+    option2: "",
+    price2: "",
+    odd2: "",
+    option3: "",
+    price3: "",
+    odd3: "",
+    freebet: "",
+  };
+
+  if (dataParam) {
+    try {
+      const decodedData = decodeURIComponent(dataParam);
+      const parsedData = JSON.parse(decodedData);
+      initialData = {
+        ...initialData,
+        ...parsedData,
+      };
+    } catch (error) {
+      console.error("Error parsing data parameter:", error);
+    }
+    const newUrl =
+      window.location.origin + window.location.pathname + window.location.hash;
+    window.history.replaceState(null, "", newUrl);
+  }
+
   const [formData, setFormData] = useState(
-    lineEdit
-      ? formatDataWithCol(edit)
-      : {
-          date: new Date(),
-          description: "",
-          option1: "",
-          price1: "",
-          odd1: "",
-          option2: "",
-          price2: "",
-          odd2: "",
-          option3: "",
-          price3: "",
-          odd3: "",
-        }
+    lineEdit ? formatDataWithCol(edit) : initialData
   );
+  const [freebet, setFreebet] = useState(String(formData.freebet));
 
   const { updateData, script, sheet } = useContext(DataContext);
 
@@ -52,11 +74,11 @@ function Create() {
 
   const navigate = useNavigate();
 
-  console.log(formData.date);
-
   const [option1BettingHouse, setOption1BettingHouse] = useState([]);
   const [option2BettingHouse, setOption2BettingHouse] = useState([]);
   const [option3BettingHouse, setOption3BettingHouse] = useState([]);
+
+  const [selectedSport, setSelectedSport] = useState("");
 
   const keys = Object.keys(formData).slice(0, 11);
 
@@ -88,8 +110,8 @@ function Create() {
     return {
       ...data,
       description: data.description
-        ? data.description
-        : "Time A x Time B - Resultado final",
+        ? `${selectedSport} ${data.description}`
+        : `${selectedSport} Time A x Time B - Resultado final`,
       option1: data.option1
         ? opt1Complete(data.option1)
         : opt1Complete("Time A"),
@@ -105,6 +127,7 @@ function Create() {
       odd1: data.odd1 ? parseFloat(data.odd1) : 0,
       odd2: data.odd2 ? parseFloat(data.odd2) : 0,
       odd3: data.odd3 ? parseFloat(data.odd3) : 0,
+      freebet,
     };
   };
 
@@ -148,6 +171,8 @@ function Create() {
     setLoading(true);
     const data = formatData(transformToNumber(formData));
 
+    // return console.log(data);
+
     if (lineEdit) {
       await putResult(script, data, lineEdit, sheet);
     } else {
@@ -161,7 +186,7 @@ function Create() {
 
   useEffect(() => {
     const setEdition = () => {
-      if (lineEdit) {
+      if (lineEdit || dataParam) {
         const editBettingHouse = formData.option1.split(" | ");
         const editBettingHouse2 = formData.option2.split(" | ");
         const editBettingHouse3 = formData.option3.split(" | ");
@@ -170,8 +195,19 @@ function Create() {
         setOption2BettingHouse(editBettingHouse2.slice(0, -1));
         setOption3BettingHouse(editBettingHouse3.slice(0, -1));
 
+        const sport = formData.description.match(/^::[A-Z]{3}::/)
+          ? formData.description.match(/^::[A-Z]{3}::/)[0]
+          : false;
+
+        const newDescription = sport
+          ? formData.description.replace(/^::[A-Z]{3}::/, "").trimStart()
+          : formData.description.trimStart();
+
+        setSelectedSport(sport);
+
         setFormData({
           ...formData,
+          description: newDescription,
           option1: editBettingHouse[editBettingHouse.length - 1],
           option2: editBettingHouse2[editBettingHouse2.length - 1],
           option3: editBettingHouse3[editBettingHouse3.length - 1],
@@ -187,6 +223,53 @@ function Create() {
     };
   }, []);
 
+  const sportsData = Object.entries(sports);
+
+  const isSelectedSport = (s) => {
+    if (s === selectedSport) return " --selected";
+    return "";
+  };
+
+  const handleSelectSport = (s) => {
+    setSelectedSport(s);
+  };
+
+  const freebetLabel = {
+    3: 1,
+    6: 2,
+    9: 3,
+  };
+
+  const updateFreebet = (num) => {
+    if (num < 1 || num > 3) return; // Apenas valores de 1 a 3 são permitidos
+
+    let freebetArray = freebet.split("").sort(); // Garante que a string está ordenada
+    const index = freebetArray.indexOf(num.toString());
+
+    if (index !== -1) {
+      // Remove o número caso já exista
+      freebetArray.splice(index, 1);
+    } else {
+      // Adiciona o número mantendo a ordem
+      freebetArray.push(num.toString());
+      freebetArray.sort(); // Garante a ordem numérica
+    }
+
+    const newFreebet = freebetArray.join("");
+
+    // Verifica se a combinação é válida antes de atualizar o estado
+    const validCombinations = ["", "1", "2", "3", "12", "13", "23", "123"];
+    if (validCombinations.includes(newFreebet)) {
+      setFreebet(newFreebet);
+    }
+  };
+
+  const isFreebet = (i) => freebet.includes(String(freebetLabel[i]));
+  const classFreebet = (i) => {
+    if (isFreebet(i)) return " --is-free";
+    return "";
+  };
+
   return (
     <main className="create">
       <Logo />
@@ -198,9 +281,36 @@ function Create() {
 
           <div className="create__view">
             <TipCard
-              data={{ ...transformToNumber(formData), win: "", profit: "" }}
+              data={{
+                ...transformToNumber(formData),
+                win: "",
+                profit: "",
+              }}
               view
             />
+            <div className="create__view__sport">
+              {sportsData.map((k) => {
+                return (
+                  <button
+                    className={`create__view__sport__option bg-${theme}-2 c-${theme}${isSelectedSport(
+                      k[0]
+                    )}`}
+                    onClick={() => handleSelectSport(k[0])}
+                  >
+                    <Icon icon={k[1].icon} />
+                    {k[1].name}
+                  </button>
+                );
+              })}
+              <button
+                className={`create__view__sport__option bg-${theme}-2 c-${theme}${isSelectedSport(
+                  ""
+                )}`}
+                onClick={() => handleSelectSport("")}
+              >
+                Sem Decoração
+              </button>
+            </div>
             <div className="create__view__inputs content">
               {keys.map((k, i) => (
                 <>
@@ -236,10 +346,35 @@ function Create() {
                         timeIntervals={15} // Intervalo de 15 minutos para seleção de horário
                         timeCaption="Horário"
                         dateFormat="dd/MM/yyyy HH:mm"
-                        
                       />
                     )}
                   </label>
+                  {(i === 3 || i === 6 || i === 9) && (
+                    <div className="create__view__inputs__freebet">
+                      <label
+                        htmlFor={`free-${freebetLabel[i]}`}
+                        className={`create__view__inputs__freebet__label bg-${theme}${classFreebet(
+                          i
+                        )}`}
+                      >
+                        <input
+                          type="checkbox"
+                          name={`free-${freebetLabel[i]}`}
+                          id={`free-${freebetLabel[i]}`}
+                          checked={isFreebet(i)}
+                          onChange={() => updateFreebet(freebetLabel[i])}
+                          className="create__view__inputs__freebet__label__input"
+                        />
+                        {
+                          <Icon
+                            icon="tabler:gift-filled"
+                            className="create__view__inputs__freebet__label__icon"
+                          />
+                        }
+                        Aposta Grátis
+                      </label>
+                    </div>
+                  )}
                   {(i === 2 || i === 5 || i === 8) && (
                     <div className="create__view__inputs__betting-options">
                       {Object.entries(allLogos).map((l, index) => {
@@ -280,11 +415,23 @@ function Create() {
                 })}
                 onClick={handleSubmit}
               >
-                {lineEdit ? "Editar Evento" : "Criar Evento"}
-                <Icon
-                  icon="si:add-line"
-                  className="create__view__inputs__save__icon"
-                />
+                {lineEdit ? (
+                  <>
+                    Editar Evento
+                    <Icon
+                      icon="line-md:confirm-circle"
+                      className="create__view__inputs__save__icon"
+                    />
+                  </>
+                ) : (
+                  <>
+                    Criar Evento
+                    <Icon
+                      icon="line-md:plus-circle"
+                      className="create__view__inputs__save__icon"
+                    />
+                  </>
+                )}
               </button>
             </div>
           </div>

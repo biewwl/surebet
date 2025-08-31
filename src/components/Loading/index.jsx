@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 import "./styles/Loading.css";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 function Loading({ counter }) {
   const [time, setTime] = useState(0);
@@ -29,14 +30,13 @@ function Loading({ counter }) {
 
   return (
     <div className="loading">
-      <div className="spinner">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
+      <Icon
+        className="loading__icon"
+        icon="game-icons:pentagram-rose"
+        width="512"
+        height="512"
+      />
+
       {counter && (
         <>
           {showMessage ? ( // Mostra a mensagem ou o contador baseado no estado

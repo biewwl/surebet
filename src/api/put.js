@@ -1,10 +1,11 @@
 export const putResult = async (script, data, line, sheet) => {
+
   try {
     const response = await fetch(script, {
       method: "POST",
       body: JSON.stringify({
         method: "POST",
-        range: `A${line}:K${line}`,
+        range: `A${line}:M${line}`,
         values: [
           [
             ...data,

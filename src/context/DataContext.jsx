@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { getBalance, getNames, getResults } from "../api/get";
 import lS from "manager-local-storage";
-import { formatResults } from "../utils/manageData";
+// import { formatResults } from "../utils/manageData";
 
 // Crie o contexto
 export const DataContext = createContext();
@@ -27,15 +27,15 @@ export const DataProvider = ({ children }) => {
         setLoading(true);
 
         const r = await getResults(script, sheet);
-        const b = await getBalance(script, sheet);
+        const b = await getBalance(script, sheet);        
 
-        const mappedResults = formatResults(r).sort((a, b) => {
+        const mappedResults = r.sort((a, b) => {
           let dateA = new Date(a[0].value);
           let dateB = new Date(b[0].value);
           return dateA - dateB;
         });
 
-        setResults(mappedResults);
+        setResults(mappedResults.reverse());
         setBalance(b);
         setLoading(false);
       }
@@ -75,6 +75,27 @@ export const DataProvider = ({ children }) => {
 
   const updateData = () => setUpdate(!update);
 
+  let pending1Sum = 0;
+
+  results
+    .filter((r) => r[2].value === "")
+    .forEach((r) => {
+      const o = r[5].value;
+      const v = r[6].value;
+
+      const isFree = String(r[3].value).split("").includes(String(1));
+
+      let result = 0;
+
+      if (isFree) {
+        result = v * o - v; //
+      } else {
+        result = v * o;
+      }
+
+      return (pending1Sum += result);
+    });
+
   return (
     <DataContext.Provider
       value={{
@@ -88,6 +109,7 @@ export const DataProvider = ({ children }) => {
         sheet,
         setSheet,
         sheets,
+        pending1Sum,
       }}
     >
       {children}

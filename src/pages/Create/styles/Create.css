@@ -29,22 +29,49 @@
 
 .create__view {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
   width: 100%;
   /* padding: 20px; */
   justify-content: center;
   animation: toTop 0.5s;
 }
 
+.create__view__sport {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  /* padding: 20px 0; */
+}
+
+.create__view__sport__option {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 15px;
+  border-radius: 0.25em;
+  cursor: pointer;
+  flex-grow: 1;
+  border: none;
+  opacity: 0.3;
+}
+
+.create__view__sport__option.--selected {
+  opacity: 1;
+}
+
 .create__view__inputs {
   display: grid;
   flex-grow: 1;
-  gap: 20px;
+  gap: 40px;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   padding: 20px;
   min-width: 40%;
   transition: 0.5s;
+  /* justify-items: flex-start; */
 }
 
 .create__view__inputs__label {
@@ -77,19 +104,58 @@
   transition: 0.5s;
 }
 
-.create__view__inputs__betting-options {
+.create__view__inputs__freebet {
+  display: flex;
   align-items: flex-end;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
-  height: 100%;
-  padding-top: 20px;
+}
+
+.create__view__inputs__freebet__label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  font-size: 0.7em;
+  padding: 10px;
+  border-radius: 0.5em;
+  width: 100%;
+  justify-content: center;
+}
+
+.create__view__inputs__freebet__label.--is-free {
+  background: linear-gradient(74deg, #17cc90 0%, #17cc90ad 100%);
+  color: #fff;
+}
+
+.create__view__inputs__freebet__label__input {
+  display: none;
+}
+
+.create__view__inputs__freebet__label__icon {
+  font-size: 16px;
+}
+
+.create__view__inputs__betting-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: 150px;
   gap: 10px;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  padding: 10px 0;
+}
+
+.create__view__inputs__betting-options::-webkit-scrollbar {
+  display: none;
 }
 
 .create__view__inputs__betting-options__option {
+  scroll-snap-align: start;
   align-self: center;
   display: flex;
   transition: 0.5s;
+  height: 40px;
+  aspect-ratio: 1/1;
 }
 
 .create__view__inputs__betting-options__option.--not-selected {
@@ -117,14 +183,12 @@
   /* grid-column-end: 3;
   grid-column-start: 1; */
   margin-block-start: 20px;
-  padding: 10px;
-  width: 100%;
-  align-self: center;
+  padding: 10px 30px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   font-size: 0.8em;
-  gap: 5px;
+  gap: 8px;
   transition: 0.5s;
 }
 
@@ -135,5 +199,9 @@
 }
 
 .create__view__inputs__save__icon {
-  font-size: 25px;
+  font-size: 18px;
+}
+
+.react-datepicker-popper {
+  z-index: 2 !important;
 }

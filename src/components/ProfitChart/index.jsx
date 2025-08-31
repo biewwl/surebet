@@ -16,6 +16,7 @@ import { groupAndSumByDate } from "../../utils/groupAndSumByDate.js";
 import "./styles/ProfitChart.css";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { ThemeContext } from "../../context/ThemeContext.jsx";
+import sumProfit from "../../utils/sumProfit.js";
 
 ChartJS.register(
   CategoryScale,
@@ -33,21 +34,25 @@ const ProfitChart = ({ aspectRatio, n }) => {
 
   const [values, setValues] = useState([]);
   const [dates, setDates] = useState([]);
-  const [zoom, setZoom] = useState(results.length >= n ? n : results.length);
+  const [zoom, setZoom] = useState(results.length <= n ? n : 1);
   const [pan, setPan] = useState(false);
-
+  
   useEffect(() => {
     const getData = () => {
-      const newResults = results.map((r1) => {
-        const newR = r1.map((r2) => r2.value);
-        return [...newR];
+      
+      const newResults = results.map((r) => {
+        const profit = sumProfit(r);
+        return [r[0].value, profit];
+      }).sort((a, b) => {
+        let dateA = new Date(a[0]);
+        let dateB = new Date(b[0]);
+        return dateA - dateB;
       });
-
+      
       const mappedResults = newResults.map((r) => {
-        const [date] = r;
-        const value = r[12];
+        const [date, value] = r;
 
-        const extDate = formatDate(date);
+        const [extDate] = formatDate(date).split(" às");
 
         return {
           date: parseDate(extDate),
@@ -182,13 +187,14 @@ const ProfitChart = ({ aspectRatio, n }) => {
     },
     scales: {
       x: {
-        min: dates.length - zoom,
+        // Fórmula para inverter o range e controlar o zoom
+        min: Math.max(0, dates.length - (values.length - zoom)),
         max: dates.length - 1,
         grid: {
-          display: false, // Adicione esta linha para remover as linhas de grade no eixo x
+          display: false,
         },
         ticks: {
-          display: false, // Remover as legendas no eixo x
+          display: false,
         },
       },
       y: {

@@ -70,6 +70,8 @@ export const formatData = ({
   option3,
   price3,
   odd3,
+  win = "",
+  freebet
 }) => {
   const OPTION2 = option2 === " | Empate" ? "" : option2;
   const PRICE2 = price2 === 0 ? "" : price2;
@@ -91,6 +93,8 @@ export const formatData = ({
     OPTION3,
     PRICE3,
     ODD3,
+    win,
+    freebet
   ];
 
   return values;
@@ -105,7 +109,9 @@ export const formatResults = (results) =>
       return r2;
     });
 
-    const { value } = newR[newR.length - 1];
+    // extrai os valores conforme o código original
+    const { value } = newR[newR.length - 2];      // odd vencedora, conforme site
+    const { value: freebet } = newR[newR.length - 1];  // coluna FREEBET (valor da coluna N)
     const price1 = Number(r1[3].value);
     const odd1 = Number(r1[4].value);
     const price2 = Number(r1[6].value);
@@ -113,17 +119,37 @@ export const formatResults = (results) =>
     const price3 = Number(r1[9].value);
     const odd3 = Number(r1[10].value);
 
-    let profit = 0 - (price1 + price2 + price3);
+    // converte freebet para string para facilitar a verificação
+    const fb = freebet.toString();
 
-    // console.log(price1, price2, price3);
+    let profit;
 
-    if (value === 1) profit = price1 * odd1 - (price1 + price2 + price3);
-    if (value === 2) profit = price2 * odd2 - (price1 + price2 + price3);
-    if (value === 3) profit = price3 * odd3 - (price1 + price2 + price3);
-    if (value === 12)
-      profit = price1 * odd1 + price2 * odd2 - (price1 + price2);
+    if (value === 1) {
+      // Odd 1 vence: subtrai sempre o valor integral de price1,
+      // enquanto que para Odd 2 e Odd 3, se estiver freebet, não desconta seu valor.
+      profit = price1 * odd1 - (price1 + (fb.includes("2") ? 0 : price2) + (fb.includes("3") ? 0 : price3));
+    } else if (value === 2) {
+      // Odd 2 vence: subtrai sempre o valor integral de price2,
+      // enquanto que para Odd 1 e Odd 3, se estiver freebet, não desconta seu valor.
+      profit = price2 * odd2 - ((fb.includes("1") ? 0 : price1) + price2 + (fb.includes("3") ? 0 : price3));
+    } else if (value === 3) {
+      // Odd 3 vence: subtrai sempre o valor integral de price3,
+      // enquanto que para Odd 1 e Odd 2, se estiver freebet, não desconta seu valor.
+      profit = price3 * odd3 - ((fb.includes("1") ? 0 : price1) + (fb.includes("2") ? 0 : price2) + price3);
+    } else if (value === 12) {
+      // Combinação 12: considera Odd 1 e Odd 2 vencedoras (ambas são descontadas na totalidade)
+      profit = (price1 * odd1 - price1) + (price2 * odd2 - price2);
+    } else if (value === 13) {
+      // Combinação 13: considera Odd 1 e Odd 3 vencedoras
+      profit = (price1 * odd1 - price1) + (price3 * odd3 - price3);
+    } else {
+      // Se não houver odd vencedora definida, subtrai os custos considerando as freebet
+      profit = - ((fb.includes("1") ? 0 : price1) + (fb.includes("2") ? 0 : price2) + (fb.includes("3") ? 0 : price3));
+    }
 
     return [...newR, { value: profit }];
+
+
   });
 
 export const formatDataWithCol = (data) => {
@@ -140,6 +166,7 @@ export const formatDataWithCol = (data) => {
     price3: { value: price3 },
     win: { value: win },
     profit: { value: profit },
+    freebet: { value: freebet },
     date: { value: date },
   } = data;
 
@@ -157,6 +184,7 @@ export const formatDataWithCol = (data) => {
     odd3,
     win,
     profit,
+    freebet,
     cel
   };
 };

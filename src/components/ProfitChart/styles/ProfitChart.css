@@ -22,6 +22,6 @@
 }
 
 .profit-chart__controls__item.--selected {
-  background-color: #2097e657;
+  background-color: var(--accent);
   /* color: var(--color-white); */
 }

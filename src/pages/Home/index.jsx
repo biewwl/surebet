@@ -4,22 +4,25 @@ import "./styles/Home.css";
 import Tips from "../../components/Tips";
 import Logo from "../../components/Logo";
 import SectionTitle from "../../components/SectionTitle";
-import Balance from "../../components/Balance";
+// import Balance from "../../components/Balance";
+import Balance from "../../components/Balance_new";
 import { useContext } from "react";
 import { DataContext } from "../../context/DataContext";
 import Loading from "../../components/Loading";
 // import Calculate from "../Calculate";
 import SheetController from "../../components/SheetController";
-import domtoimage from "dom-to-image-more";
+// import domtoimage from "dom-to-image-more";
+import { ModeContext } from "../../context/ModeContext";
 
 function Home() {
   const { loading } = useContext(DataContext);
+  const { mode } = useContext(ModeContext);
 
   return (
     <main className="home">
       <Logo />
       {!loading && <SheetController />}
-      {!loading && (
+      {!loading && mode !== "zen" && (
         <div className="home__section">
           <SectionTitle icon="line-md:confirm-circle-twotone" title="Saldo" />
           <Balance />

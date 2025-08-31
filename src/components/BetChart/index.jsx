@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Pie } from "react-chartjs-2";
+import { Pie, Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { ThemeContext } from "../../context/ThemeContext";
 
@@ -41,7 +41,8 @@ const PieChart = ({ dataArray }) => {
         data: dataValues, // Valores inteiros
         backgroundColor: generateGradientColors("#495aff", dataArray.length), // Cores dinamicamente geradas
         borderColor: theme === "light" ? "#eee" : "#000", // Bordas com opacidade 1
-        borderWidth: 0.25,
+        borderWidth: 0,
+        // borderRadius: 15,
       },
     ],
   };
@@ -51,6 +52,10 @@ const PieChart = ({ dataArray }) => {
     plugins: {
       legend: {
         position: "top",
+        labels: {
+          boxWidth: 20, // Ajusta o tamanho da caixa da legenda
+          padding: 10, // Espaçamento entre a legenda e o gráfico
+        },
       },
       tooltip: {
         callbacks: {
@@ -59,6 +64,7 @@ const PieChart = ({ dataArray }) => {
         },
       },
     },
+    
   };
 
   return <Pie data={data} options={options} />;

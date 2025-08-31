@@ -1,0 +1,26 @@
+.bet-houses {
+  padding: 10px;
+}
+
+.bet-houses__section__items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  padding: 10px;
+}
+
+.bet-houses__section__items__item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  animation: toTop 0.5s;
+}
+
+.bet-houses__section__items__item__img {
+  width: 40px;
+  border-radius: 10px;
+  background: #303030;
+}

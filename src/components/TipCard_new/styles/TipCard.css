@@ -1,0 +1,152 @@
+.tip-card {
+  padding: 20px 10px !important;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+
+.tip-card.--new {
+  max-width: 800px;
+  max-height: 100%;
+  width: 100%;
+  padding: 20px !important;
+}
+
+.tip-card.tip-card.--new::-webkit-scrollbar {
+  display: none;
+}
+
+.tip-card__header {
+  width: 100%;
+  /* pointer-events: none; */
+}
+
+.tip-card__header__close-btn {
+  background: none;
+  border: none;
+  color: #c1c1c1;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.tip-card__header__date {
+  font-size: 0.7em;
+  padding: 5px;
+  text-align: center;
+}
+
+.tip-card__odds {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  width: 100%;
+  /* justify-items: center; */
+  gap: 10px;
+  
+}
+
+.tip-card__odds__odd {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding: 10px;
+  border-radius: 0.5em;
+  position: relative;
+  align-items: flex-start;
+  justify-content: space-between;
+  overflow: hidden;
+  transition: 0.5s;
+}
+
+.tip-card__odds__odd.--winner {
+  background: #17cc900c;
+  border: 2px solid #17cc90;
+}
+
+.tip-card__odds__odd.--loser:hover {
+  opacity: 1;
+}
+
+.tip-card__odds__odd.--loser {
+  opacity: 0.3;
+}
+
+.tip-card__odds__odd__index {
+  position: absolute;
+  bottom: 11px;
+  right: 20px;
+  font-size: 30px;
+  z-index: 1;
+  opacity: 0.1;
+}
+
+.tip-card__odds__items__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  z-index: 2;
+  position: relative;
+}
+
+.tip-card__odds__items__list__item {
+  display: flex;
+  gap: 5px;
+  font-size: 0.9em;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.tip-card__odds__items__list__item__description {
+  font-weight: bold;
+}
+
+.tip-card__odds__items__list__item__value {
+  /* opacity: 0.6; */
+  font-size: 0.9em;
+  /* font-style: italic; */
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tip-card__odds__items__list__item__value__icon {
+  color: #0aff99;
+  margin-block-end: 1px;
+}
+
+.tip-card__odds__items__odd {
+  display: flex;
+  gap: 10px;
+  padding: 5px 20px 5px 5px;
+  /* width: 100%; */
+  /* background-color: red; */
+  /* justify-content: space-between; */
+  align-items: center;
+  border-radius: 25px;
+  position: relative;
+  z-index: 2;
+}
+
+.tip-card__odds__items__odd__values {
+  display: flex;
+  gap: 10px;
+  flex-direction: row-reverse;
+  font-size: 0.8em;
+}
+
+.tip-card__odds__items__odd__values__1.--freebet {
+  color: #17cc90;
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.tip-card__odds__items__odd__values__0 {
+  opacity: 0.6;
+}
+
+.tip-card__odds__items__odd__values__0::before {
+  content: "•";
+  margin-right: 10px;
+}

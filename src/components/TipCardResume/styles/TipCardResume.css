@@ -1,0 +1,85 @@
+.tip-card-resume__odds {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.8em;
+  padding: 5px;
+}
+
+.tip-card:not(.--resume) {
+  overflow-y: auto;
+}
+
+.tip-card-resume__odds__list {
+  display: flex;
+  gap: 10px;
+}
+
+.tip-card-resume__tip__odd__logo {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.tip-card-resume__profit {
+  width: 100%;
+  padding: 5px 10px;
+  display: flex;
+  border-radius: 25px;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.tip-card-resume__profit.--pending {
+  background: linear-gradient(74deg, #fc9e23 0%, #fc9e23ad 100%);
+}
+
+.tip-card__tip__profit__details__item__value.--pending {
+  color: #fc9e23;
+}
+
+.tip-card-resume__profit.--profit {
+  background: linear-gradient(74deg, #17cc90 0%, #17cc90ad 100%);
+}
+
+.tip-card__tip__profit__details__item__value.--profit {
+  color: #17cc90;
+}
+
+.tip-card-resume__profit.--loss {
+  background: linear-gradient(74deg, #fd2d2d 0%, #fd2d2dad 100%);
+}
+
+.tip-card__tip__profit__details__item__value.--draw {
+  color: #fd2d2d !important;
+}
+
+.tip-card-resume__profit.--draw {
+  background: linear-gradient(74deg, #a8a8a825 0%, #4b4a4a25 100%);
+  color: #c1c1c1e3 !important;
+}
+
+.tip-card__tip__profit__details__item__value.--draw, .tip-card-resume__profit.--draw div {
+  color: #c1c1c1e3 !important;
+}
+
+.tip-card-resume__full-view {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.822);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 10;
+  padding: 20px;
+}
+
+.tip-card-resume__description {
+  padding: 5px;
+  font-weight: 700;
+  font-size: 1.1em;
+}

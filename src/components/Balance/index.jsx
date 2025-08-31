@@ -8,9 +8,10 @@ import { postNormals, postOutflows } from "../../api/post";
 import Loading from "../Loading";
 import { countDays } from "../../utils/countDays";
 import "./styles/Balance.css";
+// import { useNavigate } from "react-router-dom";
 
 function Balance() {
-  const { balance, updateData, script, sheet, results } =
+  const { balance, updateData, script, sheet, results, pending1Sum } =
     useContext(DataContext);
   const { theme } = useContext(ThemeContext);
 
@@ -21,13 +22,16 @@ function Balance() {
   const [inputOutflows, setInputOutflows] = useState("");
 
   const pending = results.filter((r) => {
-    const w = r[r.length - 2];
+    const w = r[r.length - 3];
     return !w.value;
   }).length;
 
   countDays(results);
 
-  const [initial, normals, current, profit, outflows, operations] = balance;
+  const [initial, normals, current, profit, outflows, operations, meta] =
+    balance;
+
+  // const realProfit = profit[0].value + normals[0].value;
 
   const handleOpenManage = (opt) => {
     setInputNormals("");
@@ -70,6 +74,34 @@ function Balance() {
     // setLoading(false);
   };
 
+  const metaClass = () => {
+    if (current[0].value >= meta[0].value) {
+      return " --done";
+    } else if (current[0].value < meta[0].value) {
+      return " --pending";
+    }
+  };
+
+  const metaValue = () => {
+    if (meta[0].value - current[0].value < 0) {
+      return formatValue((meta[0].value - current[0].value) * -1);
+    }
+    return formatValue(meta[0].value - current[0].value);
+  };
+
+  const calculatePercentage = (n, m) => {
+    if (m === 0) return 0; // Evita divisão por zero
+    return Math.min((n / m) * 100, 100); // Garante que o resultado não exceda 100%
+  };
+
+  const freebetCount = results.filter((r) => r[12].value).length;
+
+  // const navigate = useNavigate();
+
+  // const navigateToCalculate = () => {
+  //   navigate("/monetizze-calculate");
+  // };
+
   return (
     <>
       <section className={`balance c-${theme}`}>
@@ -85,7 +117,7 @@ function Balance() {
               </span>
               {formatValue(profit[0].value + normals[0].value)}
             </div>
-            <div className="balance__card content">
+            <div className="balance__card content --meta">
               <span className={`balance__card__title c-${theme}-1`}>
                 <Icon
                   icon="ph:piggy-bank-duotone"
@@ -93,8 +125,43 @@ function Balance() {
                 />
                 Saldo Atual
               </span>
-              {formatValue(current[0].value)}
+              <p className="balance__card__detail">
+                <span>{formatValue(current[0].value)}</span>
+                <span className="balance__card__detail__text">
+                  * {formatValue(current[0].value + pending1Sum)}
+                </span>
+              </p>
+              {/* {formatValue(current[0].value)} */}
             </div>
+            {meta && (
+              <div
+                className="balance__card content --meta"
+                // onDoubleClick={navigateToCalculate}
+              >
+                <div
+                  className={`balance__card__progress ${metaClass()}`}
+                  style={{
+                    width: `${calculatePercentage(
+                      current[0].value,
+                      meta[0].value
+                    )}%`,
+                  }}
+                ></div>
+                <span className={`balance__card__title c-${theme}-1`}>
+                  <Icon
+                    icon="mdi:target"
+                    className="balance__card__title__icon"
+                  />
+                  Meta
+                </span>
+                <p className="balance__card__detail">
+                  <span className={metaClass()}>{metaValue()}</span>
+                  <span className="balance__card__detail__text">
+                    de {formatValue(meta[0].value)}
+                  </span>
+                </p>
+              </div>
+            )}
             <div className="balance__card content">
               <span className={`balance__card__title c-${theme}-1`}>
                 <Icon
@@ -145,7 +212,7 @@ function Balance() {
             <div className="balance__card content">
               <span className={`balance__card__title c-${theme}-1`}>
                 <Icon
-                  icon="lets-icons:date-today-duotone"
+                  icon="stash:calendar-duotone"
                   className="balance__card__title__icon"
                 />
                 Dias
@@ -177,6 +244,16 @@ function Balance() {
                 Pendentes
               </span>
               {pending}
+            </div>
+            <div className="balance__card content">
+              <span className={`balance__card__title c-${theme}-1`}>
+                <Icon
+                  icon="tabler:gift-filled"
+                  className="balance__card__title__icon"
+                />
+                Apostas Grátis
+              </span>
+              {freebetCount}
             </div>
           </>
         )}

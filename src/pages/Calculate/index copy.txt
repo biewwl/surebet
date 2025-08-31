@@ -1,0 +1,496 @@
+import { useContext, useState } from "react";
+import { ThemeContext } from "../../context/ThemeContext";
+import { formatValue } from "../../utils/formatNumber";
+import { Icon } from "@iconify/react/dist/iconify.js";
+import Logo from "../../components/Logo";
+import SectionTitle from "../../components/SectionTitle";
+import "./styles/Calculate.css";
+
+// Função para normalizar os valores dos inputs – NÃO altera a exibição (R$ e vírgula)
+const sanitizeValue = (value) => {
+  return value.replace(/[^0-9.,]/g, "").replace(/,/g, ".");
+};
+
+
+function Calculate() {
+  const [data, setData] = useState({
+    "Odd 1": "",
+    Stake: "",
+    "Odd 2": "",
+    "Odd 3": "",
+    total: "",
+  });
+  const [showOdd3, setShowOdd3] = useState(false);
+  const [isFreeBet, setIsFreeBet] = useState({
+    "Odd 1": false,
+    "Odd 2": false,
+    "Odd 3": false,
+  });
+
+  const {
+    "Odd 1": odd1,
+    Stake: stakeInput,
+    "Odd 2": odd2,
+    "Odd 3": odd3,
+    // total,
+  } = data;
+  const { theme } = useContext(ThemeContext);
+
+  // Se a stake estiver preenchida, converte para número, senão 0
+  const stake1 = Number(stakeInput) || 0;
+
+  // Define o retorno base da Odd 1:
+  // Se freebet, retorna: stake1 × (odd1 - 1);
+  // Senão, retorna: stake1 × odd1.
+  const baseReturn =
+    stake1 === 0 || odd1 === ""
+      ? 0
+      : isFreeBet["Odd 1"]
+      ? stake1 * (Number(odd1) - 1)
+      : stake1 * Number(odd1);
+
+  // Para que os demais retornos se igualem ao retorno base,
+  // calcula os stakes para as outras odds de forma que:
+  // se freebet, stake = baseReturn / (odd - 1)
+  // senão, stake = baseReturn / odd.
+  const stake2 =
+    odd2 === "" || baseReturn === 0
+      ? 0
+      : isFreeBet["Odd 2"]
+      ? baseReturn / (Number(odd2) - 1)
+      : baseReturn / Number(odd2);
+  const stake3 =
+    !showOdd3 || odd3 === "" || baseReturn === 0
+      ? 0
+      : isFreeBet["Odd 3"]
+      ? baseReturn / (Number(odd3) - 1)
+      : baseReturn / Number(odd3);
+
+  // Define os custos efetivos: se for freebet, custo = 0; senão, é o valor apostado.
+  const cost1 = isFreeBet["Odd 1"] ? 0 : stake1;
+  const cost2 = isFreeBet["Odd 2"] ? 0 : stake2;
+  const cost3 = showOdd3 ? (isFreeBet["Odd 3"] ? 0 : stake3) : 0;
+  const totalCost = cost1 + cost2 + cost3;
+
+  // Em todos os cenários, o retorno efetivo é calculado como:
+  // para freebet: stake × (odd - 1)
+  // para aposta normal: stake × odd.
+  const return1 =
+    stake1 === 0 || odd1 === ""
+      ? 0
+      : isFreeBet["Odd 1"]
+      ? stake1 * (Number(odd1) - 1)
+      : stake1 * Number(odd1);
+  const return2 =
+    stake2 === 0 || odd2 === ""
+      ? 0
+      : isFreeBet["Odd 2"]
+      ? stake2 * (Number(odd2) - 1)
+      : stake2 * Number(odd2);
+  const return3 =
+    stake3 === 0 || odd3 === ""
+      ? 0
+      : isFreeBet["Odd 3"]
+      ? stake3 * (Number(odd3) - 1)
+      : stake3 * Number(odd3);
+
+  // Lucro definido como a diferença entre o retorno base e o total investido.
+  const profit = baseReturn - totalCost;
+  // Arbitragem agora é calculada como (lucro / total investido) * 100. Se totalCost for zero, retorna 0.
+  const arbitrage =
+    totalCost === 0 ? 0 : ((profit / totalCost) * 100).toFixed(2);
+
+  // Classe CSS para identificar lucro ou prejuízo.
+  const profitClass = () => {
+    if (profit > 0) return " --win";
+    if (profit < 0) return " --loss";
+    return "";
+  };
+
+  // Handler para alteração dos inputs. Mantém a estrutura original.
+  // Incluímos também o cálculo reverso quando o usuário edita o "total" investido.
+  const handleChange = ({ target }) => {
+    const { name } = target;
+    let value = sanitizeValue(target.value);
+    const newData = { ...data, [name]: value };
+
+    if (
+      (!isNaN(value) || value === ".") &&
+      name === "total" &&
+      Number(value) > 0
+    ) {
+      // Para o cálculo reverso, definimos um fator para cada odd com base em Odd 1.
+      const baseF1 =
+        odd1 === "" ? 0 : isFreeBet["Odd 1"] ? Number(odd1) - 1 : Number(odd1);
+      const factor1 = isFreeBet["Odd 1"] ? 0 : 1;
+      const factor2 =
+        odd2 === ""
+          ? 0
+          : isFreeBet["Odd 2"]
+          ? baseF1 / (Number(odd2) - 1)
+          : baseF1 / Number(odd2);
+      const factor3 =
+        !showOdd3 || odd3 === ""
+          ? 0
+          : isFreeBet["Odd 3"]
+          ? baseF1 / (Number(odd3) - 1)
+          : baseF1 / Number(odd3);
+      const totalFactor = factor1 + factor2 + factor3;
+      if (totalFactor > 0) {
+        // Calcula a stake principal (Odd1) para que a soma dos custos pagos seja igual ao total.
+        const computedStake = (Number(value) / totalFactor).toFixed(2);
+        newData["Stake"] = computedStake;
+      }
+    } else if (!isNaN(value) || value === ".") {
+      // Atualiza se não for o total.
+      const newStake1 = Number(newData["Stake"]) || 0;
+      const newBaseReturn =
+        newStake1 === 0 || newData["Odd 1"] === ""
+          ? 0
+          : isFreeBet["Odd 1"]
+          ? newStake1 * (Number(newData["Odd 1"]) - 1)
+          : newStake1 * Number(newData["Odd 1"]);
+      const s2 =
+        newData["Odd 2"] === ""
+          ? 0
+          : isFreeBet["Odd 2"]
+          ? newBaseReturn / (Number(newData["Odd 2"]) - 1)
+          : newBaseReturn / Number(newData["Odd 2"]);
+      const s3 =
+        !showOdd3 || newData["Odd 3"] === ""
+          ? 0
+          : isFreeBet["Odd 3"]
+          ? newBaseReturn / (Number(newData["Odd 3"]) - 1)
+          : newBaseReturn / Number(newData["Odd 3"]);
+      const cost_1 = isFreeBet["Odd 1"] ? 0 : newStake1;
+      const cost_2 = isFreeBet["Odd 2"] ? 0 : s2;
+      const cost_3 = showOdd3 ? (isFreeBet["Odd 3"] ? 0 : s3) : 0;
+      const newTotal = cost_1 + cost_2 + cost_3;
+      newData["total"] = newTotal === 0 ? "" : newTotal.toFixed(2);
+    }
+    setData(newData);
+  };
+
+  const handleOdd3 = () => {
+    setShowOdd3(!showOdd3);
+    setData({ ...data, "Odd 3": "" });
+  };
+
+  const classFreeBet = (odd) => {
+    return isFreeBet[odd] ? " --freebet" : "";
+  };
+
+  return (
+    <main className={`calculate${profitClass()} c-${theme}-1`}>
+      <Logo />
+      <section className="calculate__section">
+        <SectionTitle icon="fluent:math-symbols-20-filled" title="Calcular" />
+        <div className="calculate__inputs">
+          {/* Grupo 1: Odd 1 e Stake */}
+          <div className={`calculate__inputs__group content${classFreeBet("Odd 1")}`}>
+            {["Odd 1", "Stake"].map((input, i) => (
+              <>
+                <label
+                  htmlFor={input}
+                  key={input}
+                  className={"calculate__inputs__group__label"}
+                >
+                  <span className="calculate__inputs__group__label__title">
+                    {input}
+                  </span>
+                  <input
+                    id={input}
+                    type="text"
+                    name={input}
+                    value={(i === 1 ? "R$ " : "") + data[input]}
+                    onChange={handleChange}
+                    className={`calculate__inputs__group__label__input bg-${theme} c-${theme} ${
+                      i === 1 ? " --stake" : ""
+                    }`}
+                  />
+                </label>
+                {i === 0 ? (
+                  <Icon
+                    icon="uim:multiply"
+                    width="18"
+                    height="18"
+                    className="calculate__inputs__group__signs"
+                  />
+                ) : (
+                  <Icon
+                    icon="material-symbols-light:equal-rounded"
+                    width="18"
+                    height="18"
+                    className="calculate__inputs__group__signs"
+                  />
+                )}
+              </>
+            ))}
+
+            <div className={"calculate__inputs__group__label"}>
+              <span className="calculate__inputs__group__result__return__title">
+                Retorno
+              </span>
+              <span
+                className={`calculate__inputs__group__label__input c-${theme} --return`}
+              >
+                {formatValue(return1)}
+              </span>
+            </div>
+            <div className="calculate__inputs__freebet">
+              <label className={`calculate__inputs__freebet__label bg-${theme}`}>
+                <input
+                  className="calculate__inputs__freebet__label__input"
+                  type="checkbox"
+                  checked={isFreeBet["Odd 1"]}
+                  onChange={() =>
+                    setIsFreeBet({ ...isFreeBet, "Odd 1": !isFreeBet["Odd 1"] })
+                  }
+                />
+                <Icon icon="fa6-solid:arrows-rotate" />
+                {isFreeBet["Odd 1"] ? "Saldo Real" : "Free Bet"}
+              </label>
+            </div>
+          </div>
+
+          {/* Grupo 2: Odd 2 */}
+          <div className={`calculate__inputs__group content ${classFreeBet("Odd 2")}`}>
+            {["Odd 2"].map((input) => (
+              <label
+                htmlFor={input}
+                key={input}
+                className={"calculate__inputs__group__label"}
+              >
+                <span className="calculate__inputs__group__label__title">
+                  {input}
+                </span>
+                <input
+                  id={input}
+                  type="text"
+                  name={input}
+                  value={data[input]}
+                  onChange={handleChange}
+                  className={`calculate__inputs__group__label__input bg-${theme} c-${theme}`}
+                />
+              </label>
+            ))}
+
+            <Icon
+              icon="uim:multiply"
+              width="18"
+              height="18"
+              className="calculate__inputs__group__signs"
+            />
+            <div className="calculate__inputs__group__label">
+              <span className="calculate__inputs__group__result__place__title">
+                Stake
+              </span>
+              <span className="calculate__inputs__group__label__input --stake">
+                {formatValue(stake2)}
+              </span>
+            </div>
+            <Icon
+              icon="material-symbols-light:equal-rounded"
+              width="18"
+              height="18"
+              className="calculate__inputs__group__signs"
+            />
+            <div className="calculate__inputs__group__label">
+              <span className="calculate__inputs__group__result__return__title">
+                Retorno
+              </span>
+              <span
+                className={`calculate__inputs__group__label__input c-${theme}`}
+              >
+                {formatValue(return2)}
+              </span>
+            </div>
+            <div className="calculate__inputs__freebet">
+              <label className={`calculate__inputs__freebet__label bg-${theme}`}>
+                <input
+                  className="calculate__inputs__freebet__label__input"
+                  type="checkbox"
+                  checked={isFreeBet["Odd 2"]}
+                  onChange={() =>
+                    setIsFreeBet({ ...isFreeBet, "Odd 2": !isFreeBet["Odd 2"] })
+                  }
+                />
+                <Icon icon="fa6-solid:arrows-rotate" />
+                {isFreeBet["Odd 2"] ? "Saldo Real" : "Free Bet"}
+              </label>
+            </div>
+          </div>
+
+          {/* Grupo 3: Odd 3 (opcional) */}
+          {showOdd3 && (
+            <div className={`calculate__inputs__group content ${classFreeBet("Odd 3")}`}>
+              {["Odd 3"].map((input) => (
+                <label
+                  htmlFor={input}
+                  key={input}
+                  className="calculate__inputs__group__label"
+                >
+                  <span className="calculate__inputs__group__label__title">
+                    {input}
+                  </span>
+                  <input
+                    id={input}
+                    type="text"
+                    name={input}
+                    value={data[input]}
+                    onChange={handleChange}
+                    className={`calculate__inputs__group__label__input bg-${theme} c-${theme}`}
+                  />
+                </label>
+              ))}
+
+              <Icon
+                icon="uim:multiply"
+                width="18"
+                height="18"
+                className="calculate__inputs__group__signs"
+              />
+              <div className="calculate__inputs__group__label">
+                <span className="calculate__inputs__group__result__place__title">
+                  Stake
+                </span>
+                <span className="calculate__inputs__group__label__input --stake">
+                  {formatValue(stake3)}
+                </span>
+              </div>
+              <Icon
+                icon="material-symbols-light:equal-rounded"
+                width="18"
+                height="18"
+                className="calculate__inputs__group__signs"
+              />
+              <div className="calculate__inputs__group__label">
+                <span className="calculate__inputs__group__result__return__title">
+                  Retorno
+                </span>
+                <span
+                  className={`calculate__inputs__group__label__input c-${theme}`}
+                >
+                  {formatValue(return3)}
+                </span>
+              </div>
+              <button
+                onClick={handleOdd3}
+                className={`calculate__inputs__group__close-odd3 c-${theme}-2`}
+              >
+                <Icon
+                  icon="bx:bx-x"
+                  className="calculate__inputs__group__label__input__icon"
+                />
+              </button>
+              <div className="calculate__inputs__freebet">
+                <label className={`calculate__inputs__freebet__label bg-${theme}`}>
+                  <input
+                    className="calculate__inputs__freebet__label__input"
+                    type="checkbox"
+                    checked={isFreeBet["Odd 3"]}
+                    onChange={() =>
+                      setIsFreeBet({
+                        ...isFreeBet,
+                        "Odd 3": !isFreeBet["Odd 3"],
+                      })
+                    }
+                  />
+                <Icon icon="fa6-solid:arrows-rotate" />
+                {isFreeBet["Odd 3"] ? "Saldo Real" : "Free Bet"}
+                </label>
+              </div>
+            </div>
+          )}
+          {!showOdd3 && (
+            <button
+              className={`calculate__inputs__add-btn c-${theme}`}
+              onClick={handleOdd3}
+            >
+              <Icon
+                className={`calculate__inputs__add-btn__icon bg-${theme}-2`}
+                icon="line-md:plus"
+              />
+            </button>
+          )}
+
+          {/* Detalhes finais */}
+          <div className="calculate__inputs__details content">
+            <div className="calculate__inputs__group__label">
+              <span
+                className={`calculate__inputs__details__place__title c-${theme}-1`}
+              >
+                <Icon
+                  icon="dashicons:money-alt"
+                  className="calculate__inputs__details__place__title__icon"
+                />
+                Stake Total
+              </span>
+              <input
+                className={`calculate__inputs__group__label__input ${
+                  totalCost === 0 ? `bg-${theme}-2` : `bg-${theme}`
+                } c-${theme}`}
+                value={
+                  totalCost === 0 ? "R$ 0,00" : `R$ ${totalCost.toFixed(2)}`
+                }
+                onChange={handleChange}
+                name="total"
+                disabled={totalCost === 0}
+              />
+            </div>
+            <div className="calculate__inputs__group__label">
+              <span
+                className={`calculate__inputs__details__return__title c-${theme}-1`}
+              >
+                <Icon
+                  icon="bx:rotate-left"
+                  className="calculate__inputs__details__place__title__icon"
+                />
+                Retorno
+              </span>
+              <span
+                className={`calculate__inputs__group__label__input c-${theme}`}
+              >
+                {formatValue(return1)}
+              </span>
+            </div>
+            <div className={`calculate__inputs__group__label`}>
+              <span
+                className={`calculate__inputs__details__return__title c-${theme}-1`}
+              >
+                <Icon
+                  icon="majesticons:percent-line"
+                  className="calculate__inputs__details__place__title__icon"
+                />
+                Arbitragem
+              </span>
+              <span
+                className={`calculate__inputs__group__label__input c-${theme}`}
+              >
+                {arbitrage}%
+              </span>
+            </div>
+            <div className={`calculate__inputs__group__label`}>
+              <span
+                className={`calculate__inputs__details__return__title c-${theme}-1`}
+              >
+                <Icon
+                  icon="material-symbols:money-bag-outline-rounded"
+                  className="calculate__inputs__details__place__title__icon"
+                />
+                Lucro
+              </span>
+              <span
+                className={`calculate__inputs__group__label__input --profit`}
+              >
+                {formatValue(profit)}
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+export default Calculate;

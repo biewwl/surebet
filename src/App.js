@@ -3,7 +3,7 @@ import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import Graph from "./pages/Graph";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
-import Create from "./pages/Create";
+import Create from "./pages/Create_new";
 import { useContext, useEffect } from "react";
 import { DataContext } from "./context/DataContext";
 import Login from "./pages/Login";
@@ -12,9 +12,11 @@ import Navigation from "./components/Navigation";
 import { ThemeContext } from "./context/ThemeContext";
 import { Helmet } from "react-helmet";
 import Calculate from "./pages/Calculate";
-import "./App.css";
 import Help from "./pages/Help";
-import ProfitByBet from "./pages/ProfitByBet";
+import ProfitByBet from "./pages/ProfitByBet_new";
+import { ModeContext } from "./context/ModeContext";
+import BetHouses from "./pages/BetHouses";
+import "./App.css";
 
 function PrivateRoute({ element, script, ...rest }) {
   return script ? element : <Navigate to="/login" />;
@@ -45,8 +47,12 @@ function App() {
     verify();
   }, [pathname, logout, script]);
 
+    const { mode } = useContext(ModeContext);
+
+    const bgZen = mode === "zen" ? "-zen" : "";
+
   return (
-    <div className={`App bg-${theme}`}>
+    <div className={`App bg${bgZen}-${theme}`}>
       <ScrollToTop />
       <Helmet>
         <meta name="theme-color" content={themeColor} />
@@ -71,8 +77,8 @@ function App() {
           element={<PrivateRoute element={<Create />} script={script} />}
         />
         <Route
-          path="/create"
-          element={<PrivateRoute element={<Create />} script={script} />}
+          path="/bet-houses"
+          element={<BetHouses />}
         />
         <Route
           path="/profit-graph"

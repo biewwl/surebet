@@ -13,6 +13,8 @@ import "./styles/TipCard.css";
 import { downloadCard } from "../../utils/downloadCard";
 import { EditContext } from "../../context/EditContext";
 import { formatDataWithCol } from "../../utils/manageData";
+import { sports } from "../../utils/sportIcons";
+import { is } from "date-fns/locale";
 
 function TipCard({ data, view, i }) {
   const { pathname } = useLocation();
@@ -27,6 +29,7 @@ function TipCard({ data, view, i }) {
   const [openWin, setOpenWin] = useState(false);
   const [loading, setLoading] = useState(false);
   const [optWin, setOptWin] = useState("");
+  const [copied, setCopied] = useState(false);
 
   const {
     option1,
@@ -41,9 +44,15 @@ function TipCard({ data, view, i }) {
     price3,
     win,
     profit,
+    freebet,
     date,
-    cel = "a0"
+    cel = "a0",
   } = view ? data : formatDataWithCol(data);
+
+  // console.log(lose, result, profit);
+  const freebetString = String(freebet);
+
+  const isFreebet = (b) => freebetString.includes(b);
 
   const opt1Splitted = option1.split(" | ");
   const opt2Splitted = option2.split(" | ");
@@ -74,7 +83,7 @@ function TipCard({ data, view, i }) {
   const site3 = logo3 ? logo3.site : "";
 
   const pending = !win;
-  const bingo = win === 12;
+  const bingo = win === 12 || (!bet2 && win === 1 && profit > 150);
 
   const result1 = odd1 * price1;
   const result2 = odd2 * price2;
@@ -82,18 +91,28 @@ function TipCard({ data, view, i }) {
 
   let result = 0;
 
+  if (bingo) {
+    result = result1 + result2;
+  }
+
   switch (win) {
-    case bingo:
-      result = result1 + result2;
-      break;
     case 1:
       result = result1;
+      if (isFreebet("1")) {
+        result -= price1;
+      }
       break;
     case 2:
       result = result2;
+      if (isFreebet("2")) {
+        result -= price2;
+      }
       break;
     case 3:
       result = result3;
+      if (isFreebet("3")) {
+        result -= price3;
+      }
       break;
     default:
       break;
@@ -104,7 +123,9 @@ function TipCard({ data, view, i }) {
 
   const winner = (w) => (win === w || pending || bingo ? "" : " --lose");
 
-  const lose = !pending && profit < 0;
+  // console.log(profit);
+
+  const lose = !pending && profit.toFixed(2) < 0;
 
   const pendingC = pending ? " --pending" : "";
   const drawC = draw && !pending ? " --draw" : "";
@@ -134,14 +155,13 @@ function TipCard({ data, view, i }) {
     navigate("/create");
   };
 
-
   const handleOpenWin = async () => {
     setOpenWin(!openWin);
   };
 
   const titleMenu = () => {
     if (openDelete) return "Confirmar exclusão";
-    if (openWin && odd2) return description;
+    if (openWin && odd2) return newDescription;
     if (openWin) return "Qual o resultado?";
     return "O que deseja fazer?";
   };
@@ -178,14 +198,89 @@ function TipCard({ data, view, i }) {
     downloadCard(i, description);
   };
 
+  const sport = description.match(/^::[A-Z]{3}::/)
+    ? description.match(/^::[A-Z]{3}::/)[0]
+    : false;
+
+  const newDescription = sport
+    ? description.replace(/^::[A-Z]{3}::/, "").trimStart()
+    : description.trimStart();
+
+  const todayDate = formatDate(date).split("Hoje às ")[1];
+
+  const DATE = todayDate ? todayDate : formatDate(date);
+
+  const url = new URL(
+    window.location.origin + window.location.pathname + "#/create"
+  );
+
+  const cleanData = {
+    date: data.date.value,
+    description: data.description.value,
+    option1: data.option1.value,
+    option2: data.option2.value,
+    option3: data.option3.value,
+    odd1: data.odd1.value,
+    odd2: data.odd2.value,
+    odd3: data.odd3.value,
+    price1: data.price1.value,
+    price2: data.price2.value,
+    price3: data.price3.value,
+    win: data.win.value,
+    freebet: data.freebet.value,
+  };
+
+  url.searchParams.set("data", JSON.stringify(cleanData));
+
+  const urlText = url.toString();
+
+  const shareCard = () => {
+    // Generate an url with the card data para a rota /create
+
+    navigator.clipboard
+      .writeText(urlText)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => {
+          setCopied(false);
+        }, 3000);
+      })
+      .catch((err) => {
+        // console.error("Erro ao copiar o link: ", err);
+        alert("Erro ao copiar o link. Tente novamente.");
+      });
+  };
+
+  const classCopied = copied ? " --copied" : "";
+
+
+  const totalPrice = () => {
+    let t = price1 + price2 + price3;
+
+    if (!freebet) {
+      return formatValue(t);
+    } else {
+      if (isFreebet("1")) {
+        t -= price1;
+      }
+      if (isFreebet("2")) {
+        t -= price2;
+      }
+      if (isFreebet("3")) {
+        t -= price3;
+      }
+      return formatValue(t);
+    }
+  };
+
   return (
     <div
       className={`tip-card --${i} content${pendingC}${drawC}${bingoC}${loseC} c-${theme}`}
       // style={{width}}
     >
-      <span className="tip-card__date">
-        <Icon icon="lets-icons:date-today-duotone" />
-        <span className="tip-card__date__text">{formatDate(date)}</span>
+      <span className={`tip-card__date`}>
+        <div></div>
+        <span className={`tip-card__date__text c-${theme}-1`}>{DATE}</span>
         {pathname !== "/create" && (
           <button
             className={`tip-card__date__options c-${theme}`}
@@ -195,7 +290,7 @@ function TipCard({ data, view, i }) {
           </button>
         )}
       </span>
-      <span className="tip-card__description">{description}</span>
+      <span className="tip-card__description">{newDescription}</span>
       <section
         className="tip-card__tip"
         style={{ gridTemplateAreas: "'area1''area2''area3'" }}
@@ -243,10 +338,23 @@ function TipCard({ data, view, i }) {
             <div className={`card__tip__odd__infos__info c-${theme}-1`}>
               <span>{odd1.toFixed(2)}</span>
               <div className="separator"></div>
-              {formatValue(price1)}
+              <span
+                className={`tip-card__tip__odd__infos__price ${
+                  isFreebet("1") ? " --is-free" : ""
+                }`}
+              >
+                {formatValue(price1)}
+                {isFreebet("1") && (
+                  <Icon
+                    className="tip-card__tip__odd__infos__price__icon"
+                    icon="tabler:gift-filled"
+                  />
+                )}
+              </span>
             </div>
           </div>
           {/* <div className={`tip-card__tip__odd__line bg-${theme}-invert`}></div> */}
+          <span className="card__tip__odd__count">1</span>
         </div>
         {bet2 && (
           <div className={`tip-card__tip__odd${winner(2)}`}>
@@ -292,12 +400,25 @@ function TipCard({ data, view, i }) {
               <div className={`card__tip__odd__infos__info c-${theme}-1`}>
                 <span>{odd2.toFixed(2)}</span>
                 <div className="separator"></div>
-                {formatValue(price2)}
+                <span
+                  className={`tip-card__tip__odd__infos__price ${
+                    isFreebet("2") ? " --is-free" : ""
+                  }`}
+                >
+                  {formatValue(price2)}
+                  {isFreebet("2") && (
+                    <Icon
+                      className="tip-card__tip__odd__infos__price__icon"
+                      icon="tabler:gift-filled"
+                    />
+                  )}
+                </span>
               </div>
             </div>
             {/* <div
               className={`tip-card__tip__odd__line bg-${theme}-invert`}
             ></div> */}
+            <span className="card__tip__odd__count">2</span>
           </div>
         )}
         {bet3 && (
@@ -344,12 +465,25 @@ function TipCard({ data, view, i }) {
               <div className={`card__tip__odd__infos__info c-${theme}-1`}>
                 <span>{odd3.toFixed(2)}</span>
                 <div className="separator"></div>
-                {formatValue(price3)}
+                <span
+                  className={`tip-card__tip__odd__infos__price ${
+                    isFreebet("3") ? " --is-free" : ""
+                  }`}
+                >
+                  {formatValue(price3)}
+                  {isFreebet("3") && (
+                    <Icon
+                      className="tip-card__tip__odd__infos__price__icon"
+                      icon="tabler:gift-filled"
+                    />
+                  )}
+                </span>
               </div>
             </div>
             {/* <div
               className={`tip-card__tip__odd__line bg-${theme}-invert`}
             ></div> */}
+            <span className="card__tip__odd__count">3</span>
           </div>
         )}
       </section>
@@ -360,7 +494,7 @@ function TipCard({ data, view, i }) {
             <span
               className={`tip-card__tip__profit__details__item__value c-${theme}-1`}
             >
-              {formatValue(price1 + price2 + price3)}
+              {totalPrice()}
             </span>
           </li>
           {arbitrage && (
@@ -498,6 +632,36 @@ function TipCard({ data, view, i }) {
                   />
                 </button>
               )}
+              {!openDelete && !openWin && (
+                <div className="card__options__option__share">
+                  <button
+                    className={`tip-card__options__option${classCopied} bg-${theme} c-${theme} --link`}
+                    onClick={shareCard}
+                  >
+                    {copied ? (
+                      <>
+                        Link copiado!{" "}
+                        <Icon icon="si:check-fill" width="18" height="18" />
+                      </>
+                    ) : (
+                      <>
+                        Compartilhar{" "}
+                        <Icon icon="ri:link" width="18" height="18" />
+                      </>
+                    )}
+                  </button>
+                  <Link
+                    to={`https://api.whatsapp.com/send?text=${encodeURIComponent(
+                      `👻 Confira essa aposta:\n\n${urlText}`
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`tip-card__options__option${classCopied} bg-${theme} c-${theme} --social`}
+                  >
+                    <Icon icon="ic:baseline-whatsapp" width="18" height="18" />
+                  </Link>
+                </div>
+              )}
               {!openWin && openDelete && (
                 <button
                   className="tip-card__options__option --delete"
@@ -509,7 +673,10 @@ function TipCard({ data, view, i }) {
               )}
               <div className="card__options__option__delete-edit">
                 {!openWin && !openDelete && (
-                  <button className={`tip-card__options__option --win bg-${theme} c-${theme}`} onClick={handleEdit}>
+                  <button
+                    className={`tip-card__options__option --win bg-${theme} c-${theme}`}
+                    onClick={handleEdit}
+                  >
                     Editar
                     <Icon
                       icon="majesticons:edit-pen-4-line"
@@ -543,6 +710,13 @@ function TipCard({ data, view, i }) {
             </>
           )}
         </div>
+      )}
+      {sports[sport] && (
+        <Icon
+          icon={sports[sport].icon}
+          className="tip-card__sport"
+          color={sports[sport].color}
+        />
       )}
     </div>
   );

@@ -1,7 +1,7 @@
 .tip-card {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
   align-items: flex-start;
   justify-content: space-between;
   /* aspect-ratio: 1 / 1.5; */
@@ -24,6 +24,7 @@
   overflow: hidden;
   width: 100%; */
   /* height: 30px; */
+  margin: 10px 0;
 }
 
 .tip-card__tip {
@@ -32,20 +33,25 @@
   /* grid-template-rows: 1fr 1fr 1fr; */
   flex-direction: column;
   align-items: flex-start;
-  margin: 10px 0;
+  margin: 5px 0;
   width: 100%;
   flex-grow: 1;
+  z-index: 2;
 }
 
 .tip-card__tip__odd {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
   cursor: default;
   transition: 0.5s;
   position: relative;
   font-size: 0.8em;
+  flex-direction: row-reverse;
   width: 100%;
+}
+
+.tip-card__tip__odd:nth-child(2n) {
 }
 
 .tip-card__tip__odd.--lose {
@@ -82,6 +88,18 @@
 .tip-card__tip__odd__link {
   display: flex;
   cursor: pointer;
+  opacity: 1;
+}
+
+.tip-card__tip__odd__link.--no-color {
+  filter: grayscale();
+  opacity: 0.3;
+}
+
+.tip-card__tip__odd__link.--no-color:hover {
+  opacity: 1;
+  transition: 0.5s;
+  filter: none;
 }
 
 .tip-card__tip__odd__logo {
@@ -107,6 +125,22 @@
   /* padding: 0 10px; */
 }
 
+.tip-card__tip__odd__infos__price {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tip-card__tip__odd__infos__price.--is-free {
+  color: #17cc90;
+}
+
+.tip-card__tip__odd__infos__price__icon {
+  /* color: var(--accent); */
+  font-size: 1em;
+  margin-block-end: 1px;
+}
+
 .separator {
   width: 3px;
   height: 3px;
@@ -120,6 +154,7 @@
   width: 100%;
   border-top: 1px solid #99999965;
   padding-top: 10px;
+  z-index: 2;
 }
 
 .tip-card__tip__profit__details {
@@ -127,11 +162,13 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
-  margin: 10px 0;
+  padding: 5px;
+  font-size: 0.8em;
 }
 
 .tip-card__date {
-  display: flex;
+  display: grid;
+  grid-template-columns: 30px 1fr 30px;
   align-items: center;
   gap: 10px;
   width: 100%;
@@ -140,6 +177,7 @@
 .tip-card__date__text {
   font-size: 12px;
   flex-grow: 1;
+  text-align: center;
 }
 
 .tip-card__date__options {
@@ -161,8 +199,9 @@
   justify-content: center;
   align-items: center;
   gap: 5px;
-  border-radius: 0.25em;
+  border-radius: 25px;
   transition: 0.5s;
+  z-index: 2;
 }
 
 .tip-card.--pending .tip-card__tip__result {
@@ -182,8 +221,8 @@
 }
 
 .tip-card.--bingo .tip-card__tip__result {
-  /* background: #2d64fd; */
-  background-image: linear-gradient(to right, #17cc90 0%, #385af0ad 100%);
+  background-color: var(--accent);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='80' viewBox='0 0 1080 900'%3E%3Cg fill-opacity='.1'%3E%3Cpolygon fill='%23444' points='90 150 0 300 180 300'/%3E%3Cpolygon points='90 150 180 0 0 0'/%3E%3Cpolygon fill='%23AAA' points='270 150 360 0 180 0'/%3E%3Cpolygon fill='%23DDD' points='450 150 360 300 540 300'/%3E%3Cpolygon fill='%23999' points='450 150 540 0 360 0'/%3E%3Cpolygon points='630 150 540 300 720 300'/%3E%3Cpolygon fill='%23DDD' points='630 150 720 0 540 0'/%3E%3Cpolygon fill='%23444' points='810 150 720 300 900 300'/%3E%3Cpolygon fill='%23FFF' points='810 150 900 0 720 0'/%3E%3Cpolygon fill='%23DDD' points='990 150 900 300 1080 300'/%3E%3Cpolygon fill='%23444' points='990 150 1080 0 900 0'/%3E%3Cpolygon fill='%23DDD' points='90 450 0 600 180 600'/%3E%3Cpolygon points='90 450 180 300 0 300'/%3E%3Cpolygon fill='%23666' points='270 450 180 600 360 600'/%3E%3Cpolygon fill='%23AAA' points='270 450 360 300 180 300'/%3E%3Cpolygon fill='%23DDD' points='450 450 360 600 540 600'/%3E%3Cpolygon fill='%23999' points='450 450 540 300 360 300'/%3E%3Cpolygon fill='%23999' points='630 450 540 600 720 600'/%3E%3Cpolygon fill='%23FFF' points='630 450 720 300 540 300'/%3E%3Cpolygon points='810 450 720 600 900 600'/%3E%3Cpolygon fill='%23DDD' points='810 450 900 300 720 300'/%3E%3Cpolygon fill='%23AAA' points='990 450 900 600 1080 600'/%3E%3Cpolygon fill='%23444' points='990 450 1080 300 900 300'/%3E%3Cpolygon fill='%23222' points='90 750 0 900 180 900'/%3E%3Cpolygon points='270 750 180 900 360 900'/%3E%3Cpolygon fill='%23DDD' points='270 750 360 600 180 600'/%3E%3Cpolygon points='450 750 540 600 360 600'/%3E%3Cpolygon points='630 750 540 900 720 900'/%3E%3Cpolygon fill='%23444' points='630 750 720 600 540 600'/%3E%3Cpolygon fill='%23AAA' points='810 750 720 900 900 900'/%3E%3Cpolygon fill='%23666' points='810 750 900 600 720 600'/%3E%3Cpolygon fill='%23999' points='990 750 900 900 1080 900'/%3E%3Cpolygon fill='%23999' points='180 0 90 150 270 150'/%3E%3Cpolygon fill='%23444' points='360 0 270 150 450 150'/%3E%3Cpolygon fill='%23FFF' points='540 0 450 150 630 150'/%3E%3Cpolygon points='900 0 810 150 990 150'/%3E%3Cpolygon fill='%23222' points='0 300 -90 450 90 450'/%3E%3Cpolygon fill='%23FFF' points='0 300 90 150 -90 150'/%3E%3Cpolygon fill='%23FFF' points='180 300 90 450 270 450'/%3E%3Cpolygon fill='%23666' points='180 300 270 150 90 150'/%3E%3Cpolygon fill='%23222' points='360 300 270 450 450 450'/%3E%3Cpolygon fill='%23FFF' points='360 300 450 150 270 150'/%3E%3Cpolygon fill='%23444' points='540 300 450 450 630 450'/%3E%3Cpolygon fill='%23222' points='540 300 630 150 450 150'/%3E%3Cpolygon fill='%23AAA' points='720 300 630 450 810 450'/%3E%3Cpolygon fill='%23666' points='720 300 810 150 630 150'/%3E%3Cpolygon fill='%23FFF' points='900 300 810 450 990 450'/%3E%3Cpolygon fill='%23999' points='900 300 990 150 810 150'/%3E%3Cpolygon points='0 600 -90 750 90 750'/%3E%3Cpolygon fill='%23666' points='0 600 90 450 -90 450'/%3E%3Cpolygon fill='%23AAA' points='180 600 90 750 270 750'/%3E%3Cpolygon fill='%23444' points='180 600 270 450 90 450'/%3E%3Cpolygon fill='%23444' points='360 600 270 750 450 750'/%3E%3Cpolygon fill='%23999' points='360 600 450 450 270 450'/%3E%3Cpolygon fill='%23666' points='540 600 630 450 450 450'/%3E%3Cpolygon fill='%23222' points='720 600 630 750 810 750'/%3E%3Cpolygon fill='%23FFF' points='900 600 810 750 990 750'/%3E%3Cpolygon fill='%23222' points='900 600 990 450 810 450'/%3E%3Cpolygon fill='%23DDD' points='0 900 90 750 -90 750'/%3E%3Cpolygon fill='%23444' points='180 900 270 750 90 750'/%3E%3Cpolygon fill='%23FFF' points='360 900 450 750 270 750'/%3E%3Cpolygon fill='%23AAA' points='540 900 630 750 450 750'/%3E%3Cpolygon fill='%23FFF' points='720 900 810 750 630 750'/%3E%3Cpolygon fill='%23222' points='900 900 990 750 810 750'/%3E%3Cpolygon fill='%23222' points='1080 300 990 450 1170 450'/%3E%3Cpolygon fill='%23FFF' points='1080 300 1170 150 990 150'/%3E%3Cpolygon points='1080 600 990 750 1170 750'/%3E%3Cpolygon fill='%23666' points='1080 600 1170 450 990 450'/%3E%3Cpolygon fill='%23DDD' points='1080 900 1170 750 990 750'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 .tip-card__options {
@@ -198,6 +237,7 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
+  z-index: 3;
 }
 
 .tip-card__options__title {
@@ -220,6 +260,10 @@
   transition: 0.5s;
 }
 
+.tip-card__options__option.--copied {
+  color: #17cc90;
+}
+
 .tip-card__options__option.--delete {
   background-color: #fd2d2d;
   color: #fff;
@@ -233,6 +277,17 @@
   font-size: 15px;
   display: flex;
   margin-block-start: 20px;
+}
+
+.card__options__option__share {
+  display: grid;
+  width: 100%;
+  gap: 10px;
+  grid-template-columns: 1fr 0.3fr;
+}
+
+.tip-card__options__option.--social {
+  justify-content: center;
 }
 
 .card__options__option__delete-edit {
@@ -272,7 +327,7 @@
 
 .tip-card__options__option-2__item.--selected.--bingo {
   /* background: #2d64fd; */
-  background-image: linear-gradient(to right, #17cc90 0%, #385af0ad 100%);
+  background-image: linear-gradient(to right, #2d64fd 0%, #385af0ad 100%);
   /* color: #fff; */
 }
 
@@ -307,6 +362,10 @@
   transition: 0.5s;
 }
 
+.card__tip__odd__count {
+  opacity: 0.3;
+}
+
 .tip-card__tip__profit__details__item__value.--arbitrage {
   color: #17cc90;
 }
@@ -315,10 +374,25 @@
   color: #fc9e23;
 }
 
+.tip-card.--bingo .tip-card__tip__profit__details__item__value.--arbitrage {
+  color: var(--accent);
+}
+
 .tip-card.--draw .tip-card__tip__profit__details__item__value.--arbitrage {
   color: #a8a8a8;
 }
 
 .tip-card.--lose .tip-card__tip__profit__details__item__value.--arbitrage {
   color: #fd2d2d;
+}
+
+.tip-card__sport {
+  position: absolute;
+  bottom: -70px;
+  right: -70px;
+  z-index: 1;
+  height: 250px;
+  width: 250px;
+  opacity: 0.1;
+  pointer-events: none;
 }

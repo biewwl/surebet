@@ -6,6 +6,7 @@ import { DataProvider } from "./context/DataContext";
 import { HashRouter } from "react-router-dom";
 import { ThemeProvider } from "./context/ThemeContext";
 import { EditProvider } from "./context/EditContext";
+import { ModeProvider } from "./context/ModeContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,7 +14,9 @@ root.render(
     <DataProvider>
       <ThemeProvider>
         <EditProvider>
-          <App />
+          <ModeProvider>
+            <App />
+          </ModeProvider>
         </EditProvider>
       </ThemeProvider>
     </DataProvider>
