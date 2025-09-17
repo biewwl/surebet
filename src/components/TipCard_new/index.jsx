@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import "./styles/TipCard.css";
 import "../TipCard/styles/TipCard.css";
+import sumProfit from "../../utils/sumProfit";
 
 function TipCard({ result, handleOpenView }) {
   const constants = result.slice(0, 4);
@@ -26,15 +27,15 @@ function TipCard({ result, handleOpenView }) {
     return String(freebet.value).split("").includes(idx);
   };
 
-  const totalPrice = () => {
+  const totalPrice = (includeFree) => {
     // pega só os preços de índice % 3 === 2
     const prices = dynamics.filter((_, idx) => idx % 3 === 2);
 
     // 2. soma preços ignorando freebets
     const total = prices.reduce((acc, item, groupIdx) => {
       const price = item.value; // já é número
-      const shouldSkip = freebet && isFreebet(String(price));
-      return acc + (shouldSkip ? 0 : price);
+      const shouldSkip = freebet && isFreebet(String(groupIdx + 1));
+      return acc + (shouldSkip && !includeFree ? 0 : price);
     }, 0);
 
     // 3. formata e retorna
@@ -49,24 +50,6 @@ function TipCard({ result, handleOpenView }) {
     ? match.value.replace(/^::[A-Z]{3}::/, "").trimStart()
     : match.value.trimStart();
 
-  const odds = chunkArray(dynamics, 3);
-
-  const sumProfit = () => {
-    // if (pending) return 0;
-    const filterWinners = odds.filter((_, idx) =>
-      winners.includes(String(idx + 1))
-    );
-
-    const result = filterWinners.reduce((acc, item) => {
-      const odd = item[1]?.value; // já é número
-      const price = item[2]?.value; // já é número
-      const shouldSkip = freebet && isFreebet(String(price));
-      return acc + (shouldSkip ? 0 : odd * price);
-    }, 0);
-
-    return result - totalPrice();
-  };
-
   const classWinner = (index) => {
     if (!winner.value) return "";
     return String(winner.value).includes(String(index))
@@ -76,16 +59,16 @@ function TipCard({ result, handleOpenView }) {
 
   const profitClass = () => {
     if (pending) return " --pending";
-    if (sumProfit() > 0) return " --profit";
-    if (sumProfit() < 0) return " --loss";
+    if (sumProfit(result) > 0) return " --profit";
+    if (sumProfit(result) < 0) return " --loss";
     return "--break-even";
   };
 
   const arbitrage = () => {
     // Deve pegar o valor total ganho e o valor total gasto e descobrir quando em porcentagem o excedente representa do gasto
     if (pending) return false;
-    const profit = sumProfit();
-    const total = totalPrice();
+    const profit = sumProfit(result);
+    const total = totalPrice(true);
     const arb = (profit / total) * 100;
     return arb.toFixed(2);
   };
@@ -134,7 +117,7 @@ function TipCard({ result, handleOpenView }) {
           <span
             className={`tip-card__tip__profit__details__item__value c-${theme}-1`}
           >
-            {!pending && formatValue(sumProfit() + totalPrice())}
+            {!pending && formatValue(sumProfit(result) + totalPrice())}
             {pending && "R$ 0,00"}
           </span>
         </li>
@@ -143,7 +126,7 @@ function TipCard({ result, handleOpenView }) {
           <span
             className={`tip-card__tip__profit__details__item__value c-${theme}-1 ${profitClass()}`}
           >
-            {!pending && formatValue(sumProfit())}
+            {!pending && formatValue(sumProfit(result))}
             {pending && "R$ 0,00"}
           </span>
         </li>

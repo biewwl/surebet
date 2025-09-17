@@ -30,7 +30,7 @@ function TipCardResume({ result }) {
 
   const isFreebet = (idx) => String(freebet.value).includes(idx);
 
-  const totalPrice = () => {
+  const totalPrice = (includeFree) => {
     // pega só os preços de índice % 3 === 2
     const prices = dynamics.filter((_, idx) => idx % 3 === 2);
 
@@ -39,7 +39,7 @@ function TipCardResume({ result }) {
       const price = item.value; // já é número
       const shouldSkip = freebet && isFreebet(String(i + 1));
 
-      return acc + (shouldSkip ? 0 : price);
+      return acc + (shouldSkip && !includeFree ? 0 : price);
     }, 0);
 
     // 3. formata e retorna
@@ -67,6 +67,7 @@ function TipCardResume({ result }) {
   const profit = sumProfit(result);
   const draw = profit === 0;
 
+
   const profitClass = () => {
     if (pending) return " --pending";
     if (profit > 0) return " --profit";
@@ -81,8 +82,10 @@ function TipCardResume({ result }) {
     // Deve pegar o valor total ganho e o valor total gasto e descobrir quando em porcentagem o excedente representa do gasto
     if (pending) return false;
     const profit = sumProfit(result);
-    const total = totalPrice();
+    const total = totalPrice(true);
+    
     const arb = (profit / total) * 100;
+    
     return arb.toFixed(2);
   };
 
@@ -161,7 +164,7 @@ function TipCardResume({ result }) {
 
               const winnerClass = winnerOrNull ? " --no-color" : "";
 
-              console.log(1, winner);
+              // console.log(1, winner);
               
 
               return (

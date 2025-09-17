@@ -2,7 +2,7 @@
 
 // const { url } = config;
 
-const test_api = "https://script.google.com/macros/s/AKfycbw_pphx2pY38Q70xttlqQUeTaOBk09GufqjDw70qK35i9jWPtNCm-6NzTv_NlBEUM4R/exec";
+// const test_api = "https://script.google.com/macros/s/AKfycbw_pphx2pY38Q70xttlqQUeTaOBk09GufqjDw70qK35i9jWPtNCm-6NzTv_NlBEUM4R/exec";
 
 
 // Converte um índice 1-based em rótulo de coluna do Google Sheets (A, B, …, Z, AA, AB…)
@@ -31,7 +31,7 @@ export const postResult = async (script, data, sheet) => {
   const range = `G2:${endLetter}10`
 
   try {
-    const response = await fetch(test_api, {
+    const response = await fetch(script, {
       method: "POST",
       body: JSON.stringify({
         method: "POST",
@@ -71,7 +71,7 @@ export const postWin = async (script, win, line, sheet) => {
 
 export const postNormals = async (script, value, sheet) => {
   try {
-    const response = await fetch(test_api, {
+    const response = await fetch(script, {
       method: "POST",
       body: JSON.stringify({
         method: "POST",
@@ -91,7 +91,7 @@ export const postNormals = async (script, value, sheet) => {
 
 export const postOutflows = async (script, value, sheet) => {
   try {
-    const response = await fetch(test_api, {
+    const response = await fetch(script, {
       method: "POST",
       body: JSON.stringify({
         method: "POST",

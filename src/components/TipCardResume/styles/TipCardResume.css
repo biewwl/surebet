@@ -51,7 +51,7 @@
   background: linear-gradient(74deg, #fd2d2d 0%, #fd2d2dad 100%);
 }
 
-.tip-card__tip__profit__details__item__value.--draw {
+.tip-card__tip__profit__details__item__value.--loss {
   color: #fd2d2d !important;
 }
 
