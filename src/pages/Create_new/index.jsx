@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import createRequest from "../../utils/createRequest";
 import { postResult } from "../../api/post";
 import { DataContext } from "../../context/DataContext";
+import { sports } from "../../utils/sportIcons";
 
 registerLocale("pt", pt);
 
@@ -42,6 +43,7 @@ function Create() {
   // Seleção de casa
   const [selectHouseFrom, setSelectHouseFrom] = useState(null);
   const [selectListHouseFrom, setSelectListHouseFrom] = useState([]);
+  const [selectedSport, setSelectedSport] = useState("");
   const betHouses = Object.keys(allLogos);
 
   // Habilita o botão Criar somente se:
@@ -216,11 +218,24 @@ function Create() {
 
   const finalizeSubmit = async () => {
     setLoading(true);
-    await postResult(script, createRequest({ ...formData, odds }), sheet);
+    const matchWithSport = `${selectedSport} ${formData.match}`;
+    await postResult(script, createRequest({ ...formData, match: matchWithSport, odds }), sheet);
     setLoading(false);
     updateData();
     navigate("/");
   };
+
+    const sportsData = Object.entries(sports);
+
+    const isSelectedSport = (s) => {
+    if (s === selectedSport) return " --selected";
+    return "";
+  };
+
+  const handleSelectSport = (s) => {
+    setSelectedSport(s);
+  };
+  
 
   return (
     <main className="create">
@@ -231,6 +246,30 @@ function Create() {
       ) : (
         <div className={`create__section c-${theme}`}>
           <SectionTitle icon="line-md:plus-circle-twotone" title="Criar" />
+
+          <div className="create__view__sport">
+              {sportsData.map((k) => {
+                return (
+                  <button
+                    className={`create__view__sport__option bg-${theme}-2 c-${theme}${isSelectedSport(
+                      k[0]
+                    )}`}
+                    onClick={() => handleSelectSport(k[0])}
+                  >
+                    <Icon icon={k[1].icon} />
+                    {k[1].name}
+                  </button>
+                );
+              })}
+              <button
+                className={`create__view__sport__option bg-${theme}-2 c-${theme}${isSelectedSport(
+                  ""
+                )}`}
+                onClick={() => handleSelectSport("")}
+              >
+                Sem Decoração
+              </button>
+            </div>
 
           <form className="create__view__inputs" onSubmit={handleSubmit}>
             {/* Data e Partida */}

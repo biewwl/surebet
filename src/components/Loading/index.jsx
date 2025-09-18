@@ -32,7 +32,7 @@ function Loading({ counter }) {
     <div className="loading">
       <Icon
         className="loading__icon"
-        icon="game-icons:pentagram-rose"
+        icon="mdi:thunder"
         width="512"
         height="512"
       />

@@ -26,6 +26,14 @@ function TipCardResume({ result }) {
   const pending = !winner.value;
   // const lose = winner.value === "lose";
 
+  const winners = String(winner.value).split("");
+
+
+  const winnersBetHousesNames = pending
+    ? []
+    : winners.map((w) => dynamics[(Number(w) - 1) * 3]?.value.split(" | ")[0]); // array com os nomes das casas dos vencedores
+    
+
   const { theme } = useContext(ThemeContext);
 
   const isFreebet = (idx) => String(freebet.value).includes(idx);
@@ -62,7 +70,7 @@ function TipCardResume({ result }) {
         .map((group) => group[0]?.value.split(" | ")[0]) // pega o primeiro item, faz split e pega índice 0
         .filter(Boolean) // remove undefined ou strings vazias
     )
-  );
+  );  
 
   const profit = sumProfit(result);
   const draw = profit === 0;
@@ -160,7 +168,7 @@ function TipCardResume({ result }) {
               const bImg = bLogo.logo;
               const bSite = bLogo.site;
 
-              const winnerOrNull = (!String(winner.value).includes(String(groupIndex + 1))) && !pending;
+              const winnerOrNull = !(winnersBetHousesNames.some((w) => w === house)) && !pending;
 
               const winnerClass = winnerOrNull ? " --no-color" : "";
 
