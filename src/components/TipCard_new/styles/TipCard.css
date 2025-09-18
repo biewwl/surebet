@@ -54,6 +54,7 @@
   justify-content: space-between;
   overflow: hidden;
   transition: 0.5s;
+  border: 2px solid transparent;
 }
 
 .tip-card__odds__odd.--winner {
@@ -61,8 +62,44 @@
   border: 2px solid #17cc90;
 }
 
+.tip-card__odds__odd.--selected {
+  background: #1750cc0c;
+  border: 2px dashed var(--accent);
+}
+
 .tip-card__odds__odd.--loser:hover {
   opacity: 1;
+}
+
+.tip-card__tip__profit__actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tip-card__tip__profit__actions__btn {
+  padding: 8px 10px;
+  border: none;
+  color: #fff;
+  border-radius: 0.25em;
+  font-size: 0.8em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+
+.tip-card__tip__profit__actions__btn.--define-win {
+  background-color: var(--accent);
+}
+
+.tip-card__tip__profit__actions__btn.--delete {
+  background-color: #fd2d2d;
+}
+
+.tip-card__tip__profit__actions__btn.--reset {
+  color: #fd2d2d;
 }
 
 .tip-card__odds__odd.--loser {

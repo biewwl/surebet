@@ -18,7 +18,7 @@ function numberToColumn(n) {
 
 export const postResult = async (script, data, sheet) => {
   // 1) Índice da coluna 'G' (A=1, B=2, …, G=7)
-  const startIndex = 7
+  const startIndex = 1;
 
   // 2) Índice da coluna final baseado no tamanho de data
   //    se data.length = 1 => endIndex = 7 (G)
@@ -28,7 +28,7 @@ export const postResult = async (script, data, sheet) => {
   const endLetter = numberToColumn(endIndex)
 
   // 3) Monta a range no formato "G2:<colFinal>10"
-  const range = `G2:${endLetter}10`
+  const range = `A11:${endLetter}11`
 
   try {
     const response = await fetch(script, {
@@ -55,7 +55,7 @@ export const postWin = async (script, win, line, sheet) => {
       method: "POST",
       body: JSON.stringify({
         method: "POST",
-        range: `L${line}:L${line}`,
+        range: `C${line}:C${line}`,
         values: [[win]],
         sheetName: sheet,
       }),

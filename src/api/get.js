@@ -6,7 +6,7 @@
 
 export const getResults = async (script, sheet) => {
   try {
-    const range = "G2:AAA500";
+    const range = "A11:AAA500";
 
     // console.log("Fetching results");
 

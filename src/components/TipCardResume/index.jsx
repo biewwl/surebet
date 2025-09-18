@@ -160,12 +160,9 @@ function TipCardResume({ result }) {
               const bImg = bLogo.logo;
               const bSite = bLogo.site;
 
-              const winnerOrNull = (groupIndex + 1 !== Number(winner.value)) && !pending;
+              const winnerOrNull = (!String(winner.value).includes(String(groupIndex + 1))) && !pending;
 
               const winnerClass = winnerOrNull ? " --no-color" : "";
-
-              // console.log(1, winner);
-              
 
               return (
                 <Link
