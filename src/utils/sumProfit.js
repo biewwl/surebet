@@ -1,8 +1,8 @@
 import chunkArray from "./chunkArray";
 
 const sumProfit = (r) => {
-  const constants = r.slice(0, 4);
-  const dynamics = r.slice(4);
+  const constants = r.slice(0, 5);
+  const dynamics = r.slice(5);
 
   const isFreebet = (idx) => String(freebet.value).includes(idx);
 

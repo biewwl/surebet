@@ -16,10 +16,10 @@ export const getResults = async (script, sheet) => {
 
     const mappedResults = responseJSON.map((row) => {
 
-      const constants = row.slice(0, 4);
-      const dynamics = row.slice(4);
+      const constants = row.slice(0, 5);
+      const dynamics = row.slice(5);
 
-      return [...constants, ...dynamics.filter((cell, index) => (cell.value))];
+      return [...constants, ...dynamics.filter((cell) => (cell.value))];
     }
     );
     // console.log(mappedResults);
@@ -58,6 +58,20 @@ export const getBalance = async (script, sheet) => {
     const responseMetaJSON = await responseMeta.json();
 
     return [...responseJSON, ...responseMetaJSON];
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getWithdraws = async (script, sheet) => {
+  try {
+    const range = "A6:AAA6";
+
+    const response = await fetch(`${script}?range=${range}&sheetName=${sheet}`);
+
+    const responseJSON = await response.json();
+
+    return responseJSON[0];
   } catch (error) {
     console.log(error);
   }

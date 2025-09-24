@@ -25,8 +25,8 @@ function ProfitByBet() {
       const freebetCountByHouses = {};
 
       results.forEach((r) => {
-        const [, , winner, freebet] = r.slice(0, 4);
-        const dynamics = r.slice(4);
+        const [, , winner, freebet] = r.slice(0, 5);
+        const dynamics = r.slice(5);
 
         const winnerIdxs = winner.value ? String(winner.value).split("") : [];
         const freebetIdxs = freebet.value

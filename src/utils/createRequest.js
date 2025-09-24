@@ -5,7 +5,7 @@ function createRequest(obj) {
   result.push(obj.date, obj.match);
 
   // 3-4: dois espaços vazios
-  result.push('', '');
+  result.push('', '', '');
 
   // 5-7: para cada item de odds
   obj.odds.forEach(({ houses, multiples, odd, price }) => {

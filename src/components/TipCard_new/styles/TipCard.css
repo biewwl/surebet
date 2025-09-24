@@ -179,8 +179,14 @@
   align-items: center;
 }
 
+.tip-card__odds__items__odd__values__freebet {
+  padding-top: 3px;
+}
+
 .tip-card__odds__items__odd__values__0 {
   opacity: 0.6;
+  display: flex;
+  align-items: center;
 }
 
 .tip-card__odds__items__odd__values__0::before {

@@ -80,10 +80,10 @@ export const DataProvider = ({ children }) => {
   results
     .filter((r) => r[2].value === "")
     .forEach((r) => {
-      const o = r[5].value;
-      const v = r[6].value;
+      const o = r[6].value;
+      const v = r[7].value;
 
-      const isFree = String(r[3].value).split("").includes(String(1));
+      const isFree = String(r[3].value).split("").includes("1");
 
       let result = 0;
 

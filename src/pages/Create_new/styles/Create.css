@@ -401,6 +401,10 @@
   padding: 20px !important;
 }
 
+.create__modal__title {
+  font-weight: 100;
+}
+
 .create__modal::-webkit-scrollbar {
   display: none;
 }
@@ -416,7 +420,6 @@
   border: none;
   border-radius: 0.25em;
   cursor: pointer;
-  color: #fff;
 }
 
 .create__modal__actions__submit {

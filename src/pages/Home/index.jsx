@@ -13,6 +13,7 @@ import Loading from "../../components/Loading";
 import SheetController from "../../components/SheetController";
 // import domtoimage from "dom-to-image-more";
 import { ModeContext } from "../../context/ModeContext";
+import Withdraws from "../../components/Withdraws";
 
 function Home() {
   const { loading } = useContext(DataContext);
@@ -28,6 +29,12 @@ function Home() {
           <Balance />
         </div>
       )}
+      {/* {!loading && mode !== "zen" && (
+        <div className="home__section">
+          <SectionTitle icon="line-md:confirm-circle-twotone" title="Saldos em Casas de Apostas" />
+          <Withdraws />
+        </div>
+      )} */}
       {/* <div className="home__section">
         <SectionTitle icon="fluent:math-symbols-20-filled" title="Calculate" />
         <Calculate />

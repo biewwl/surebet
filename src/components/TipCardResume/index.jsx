@@ -12,8 +12,9 @@ import { sports } from "../../utils/sportIcons";
 import sumProfit from "../../utils/sumProfit";
 
 function TipCardResume({ result }) {
-  const constants = result.slice(0, 4);
-  const dynamics = result.slice(4);
+  const constants = result.slice(0, 4); // elementos 0 a 3
+  const cashed = result[4]; // elemento 4
+  const dynamics = result.slice(5); // elementos 5 em diante
 
   const [openView, setOpenView] = useState(false);
 
@@ -28,11 +29,9 @@ function TipCardResume({ result }) {
 
   const winners = String(winner.value).split("");
 
-
   const winnersBetHousesNames = pending
     ? []
     : winners.map((w) => dynamics[(Number(w) - 1) * 3]?.value.split(" | ")[0]); // array com os nomes das casas dos vencedores
-    
 
   const { theme } = useContext(ThemeContext);
 
@@ -70,14 +69,14 @@ function TipCardResume({ result }) {
         .map((group) => group[0]?.value.split(" | ")[0]) // pega o primeiro item, faz split e pega índice 0
         .filter(Boolean) // remove undefined ou strings vazias
     )
-  );  
+  );
 
   const profit = sumProfit(result);
   const draw = profit === 0;
 
-
   const profitClass = () => {
     if (pending) return " --pending";
+    if(winners.length > 1) return " --bingo";
     if (profit > 0) return " --profit";
     if (profit < 0) return " --loss";
     return "--draw";
@@ -91,9 +90,9 @@ function TipCardResume({ result }) {
     if (pending) return false;
     const profit = sumProfit(result);
     const total = totalPrice(true);
-    
+
     const arb = (profit / total) * 100;
-    
+
     return arb.toFixed(2);
   };
 
@@ -168,7 +167,8 @@ function TipCardResume({ result }) {
               const bImg = bLogo.logo;
               const bSite = bLogo.site;
 
-              const winnerOrNull = !(winnersBetHousesNames.some((w) => w === house)) && !pending;
+              const winnerOrNull =
+                !winnersBetHousesNames.some((w) => w === house) && !pending;
 
               const winnerClass = winnerOrNull ? " --no-color" : "";
 

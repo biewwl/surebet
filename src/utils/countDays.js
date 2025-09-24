@@ -3,17 +3,10 @@ import moment from "moment";
 export const countDays = (results) => {
   if (results.length <= 0) return [0, ""];
 
-  console.log(results);
-  
-
   // Converter strings de data ISO 8601 para objetos Moment
   const lastDay = moment(results[0][0].value);
-  console.log(lastDay);
-  
-  
-  const firstDay = moment(results[results.length - 1][0].value);
-  console.log(firstDay);
 
+  const firstDay = moment(results[results.length - 1][0].value);
 
   // Calcular a diferença em dias, incluindo o primeiro e último dia
   const days = lastDay.diff(firstDay, "days") + 1;

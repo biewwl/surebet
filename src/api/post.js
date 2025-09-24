@@ -25,7 +25,7 @@ export const postResult = async (script, data, sheet) => {
   //    se data.length = 2 => endIndex = 8 (H)
   //    e assim por diante, passando de Z para AA, AB…
   const endIndex = startIndex + data.length - 1
-  const endLetter = numberToColumn(endIndex)
+  const endLetter = numberToColumn(endIndex);
 
   // 3) Monta a range no formato "G2:<colFinal>10"
   const range = `A11:${endLetter}11`

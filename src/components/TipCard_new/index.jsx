@@ -16,7 +16,7 @@ import { deleteResult } from "../../api/delete";
 
 function TipCard({ result, handleOpenView }) {
   const constants = result.slice(0, 4);
-  const dynamics = result.slice(4);
+  const dynamics = result.slice(5);
 
   const [, line] = result[0].cel.match(/([a-zA-Z]+)([0-9]+)/).slice(1, 3);
   console.log(result, line);
@@ -314,7 +314,7 @@ function TipCard({ result, handleOpenView }) {
                     <div className="tip-card__odds__items__odd__values">
                       {valueItems.map((d, i) => {
                         const isOdd = i % 2 === 0;
-                        const value = !isOdd ? formatValue(d.value) : d.value;
+                        const value = !isOdd ? formatValue(d.value) : Number(d.value).toFixed(2);
                         const classFreebet =
                           !isOdd && isFreebet(String(groupIndex + 1))
                             ? " --freebet"

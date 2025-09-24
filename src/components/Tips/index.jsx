@@ -7,7 +7,7 @@ import TipCardResume from "../TipCardResume";
 function Tips() {
   const { results } = useContext(DataContext);
 
-  // console.log("Results:", results);
+  console.log("Results:", results);
 
   // const formattedData = results.map((d) => {
   //   const [

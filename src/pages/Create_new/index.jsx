@@ -44,6 +44,7 @@ function Create() {
   const [selectHouseFrom, setSelectHouseFrom] = useState(null);
   const [selectListHouseFrom, setSelectListHouseFrom] = useState([]);
   const [selectedSport, setSelectedSport] = useState("");
+  const [betHouseFilter, setBetHouseFilter] = useState("");
   const betHouses = Object.keys(allLogos);
 
   // Habilita o botão Criar somente se:
@@ -219,15 +220,19 @@ function Create() {
   const finalizeSubmit = async () => {
     setLoading(true);
     const matchWithSport = `${selectedSport} ${formData.match}`;
-    await postResult(script, createRequest({ ...formData, match: matchWithSport, odds }), sheet);
+    await postResult(
+      script,
+      createRequest({ ...formData, match: matchWithSport, odds }),
+      sheet
+    );
     setLoading(false);
     updateData();
     navigate("/");
   };
 
-    const sportsData = Object.entries(sports);
+  const sportsData = Object.entries(sports);
 
-    const isSelectedSport = (s) => {
+  const isSelectedSport = (s) => {
     if (s === selectedSport) return " --selected";
     return "";
   };
@@ -235,7 +240,10 @@ function Create() {
   const handleSelectSport = (s) => {
     setSelectedSport(s);
   };
-  
+
+  const handleChangeBetHouseFilter = (e) => {
+    setBetHouseFilter(e.target.value);
+  };
 
   return (
     <main className="create">
@@ -248,28 +256,28 @@ function Create() {
           <SectionTitle icon="line-md:plus-circle-twotone" title="Criar" />
 
           <div className="create__view__sport">
-              {sportsData.map((k) => {
-                return (
-                  <button
-                    className={`create__view__sport__option bg-${theme}-2 c-${theme}${isSelectedSport(
-                      k[0]
-                    )}`}
-                    onClick={() => handleSelectSport(k[0])}
-                  >
-                    <Icon icon={k[1].icon} />
-                    {k[1].name}
-                  </button>
-                );
-              })}
-              <button
-                className={`create__view__sport__option bg-${theme}-2 c-${theme}${isSelectedSport(
-                  ""
-                )}`}
-                onClick={() => handleSelectSport("")}
-              >
-                Sem Decoração
-              </button>
-            </div>
+            {sportsData.map((k) => {
+              return (
+                <button
+                  className={`create__view__sport__option bg-${theme}-2 c-${theme}${isSelectedSport(
+                    k[0]
+                  )}`}
+                  onClick={() => handleSelectSport(k[0])}
+                >
+                  <Icon icon={k[1].icon} />
+                  {k[1].name}
+                </button>
+              );
+            })}
+            <button
+              className={`create__view__sport__option bg-${theme}-2 c-${theme}${isSelectedSport(
+                ""
+              )}`}
+              onClick={() => handleSelectSport("")}
+            >
+              Sem Decoração
+            </button>
+          </div>
 
           <form className="create__view__inputs" onSubmit={handleSubmit}>
             {/* Data e Partida */}
@@ -502,14 +510,24 @@ function Create() {
             <h3>❌ Campos faltando / itens vazios</h3>
             <ul className="create__modal__issue-list">
               {issues.map((msg, i) => (
-                <li key={i} className="create__modal__issue-list__item">{msg}</li>
+                <li key={i} className="create__modal__issue-list__item">
+                  {msg}
+                </li>
               ))}
             </ul>
             <div className="create__modal__actions">
-              <button type="button" className="create__modal__actions__cancel" onClick={() => setShowConfirm(false)}>
+              <button
+                type="button"
+                className="create__modal__actions__cancel"
+                onClick={() => setShowConfirm(false)}
+              >
                 Voltar e corrigir
               </button>
-              <button type="button" className="create__modal__actions__submit" onClick={handleConfirmRemoveAndSubmit}>
+              <button
+                type="button"
+                className="create__modal__actions__submit"
+                onClick={handleConfirmRemoveAndSubmit}
+              >
                 Remover itens incompletos e enviar
               </button>
             </div>
@@ -529,32 +547,51 @@ function Create() {
           }}
         >
           <div className={`create__modal bg-${theme}`}>
-            <h3 className={`c-${theme}`}>Casas de Aposta</h3>
+            <h3 className={`create__modal__title c-${theme}`}>Casas de Aposta</h3>
+            <div>
+              <label htmlFor="bet-house-filter" className="label-1">
+                <input
+                  onChange={handleChangeBetHouseFilter}
+                  type="text"
+                  name=""
+                  id="bet-house-filter"
+                  className={`bg-${theme}-2 c-${theme}`}
+                  placeholder="Buscar casas..."
+                />
+              </label>
+            </div>
             <div className="create__modal__houses">
-              {betHouses.map((house) => {
-                const { logo } = getLogo(house);
-                return (
-                  <div
-                    key={house}
-                    className={`create__modal__houses__item${classSelectedHouse(
-                      house
-                    )} bg-${theme}-2 c-${theme}`}
-                    onClick={() => handleSelectHouse(house)}
-                  >
-                    <img
-                      src={logo}
-                      alt={house}
-                      className="create__modal__houses__item__logo"
-                    />
-                    <span>{house}</span>
-                  </div>
-                );
-              })}
+              {betHouses
+                .sort()
+                .filter((b) =>
+                  b
+                    .toLocaleLowerCase()
+                    .includes(betHouseFilter.toLocaleLowerCase())
+                )
+                .map((house) => {
+                  const { logo } = getLogo(house);
+                  return (
+                    <div
+                      key={house}
+                      className={`create__modal__houses__item${classSelectedHouse(
+                        house
+                      )} bg-${theme}-2 c-${theme}`}
+                      onClick={() => handleSelectHouse(house)}
+                    >
+                      <img
+                        src={logo}
+                        alt={house}
+                        className="create__modal__houses__item__logo"
+                      />
+                      <span>{house}</span>
+                    </div>
+                  );
+                })}
             </div>
             <div className="create__modal__actions">
               <button
                 type="button"
-                className="create__modal__actions__cancel"
+                className={`create__modal__actions__cancel c-${theme}-2`}
                 onClick={() => {
                   setSelectHouseFrom(null);
                   setSelectListHouseFrom([]);
@@ -564,7 +601,7 @@ function Create() {
               </button>
               <button
                 type="button"
-                className="create__modal__actions__submit"
+                className={`create__modal__actions__submit c-${theme}-2`}
                 onClick={handleConfirmSelectHouse}
               >
                 Confirmar

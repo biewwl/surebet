@@ -45,10 +45,11 @@ import BetDaSorte from "../assets/betdasorte.png";
 import BetPix365 from "../assets/betpix365.png";
 import BolsaDeAposta from "../assets/bolsadeaposta.png";
 import MultiBet from "../assets/multibet.png";
-import BetEsporte from "../assets/betesporte.jpeg";
+import BetEsporte from "../assets/betesporte.png";
 import AlfaBet from "../assets/alfabet.png";
 import QGbet from "../assets/qgbet.png";
-import Fullbet from "../assets/fullbet.jpg";
+import Fulltbet from "../assets/fulltbet.jpg";
+import BetMgm from "../assets/betmgm.png";
 
 export const getLogo = (name) => {
   const betName = name.toLowerCase();
@@ -246,10 +247,16 @@ export const getLogo = (name) => {
         site: "https://qg.bet.br/",
       };
 
-    case "fullbet":
+    case "fulltbet":
       return {
-        logo: Fullbet,
+        logo: Fulltbet,
         site: "https://fulltbet.bet.br/b/exchange",
+      };
+
+    case "betmgm":
+      return {
+        logo: BetMgm,
+        site: "https://www.betmgm.bet.br/aposta-esportiva#featured",
       };
     // Add more cases as needed
     default:
@@ -312,5 +319,6 @@ export const allLogos = {
   BetEsporte,
   AlfaBet,
   QGbet,
-  Fullbet
+  Fulltbet,
+  BetMgm,
 };

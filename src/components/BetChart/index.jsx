@@ -1,22 +1,29 @@
 import React, { useContext } from "react";
-import { Pie, Doughnut } from "react-chartjs-2";
+import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { ThemeContext } from "../../context/ThemeContext";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-// Função para gerar gradientes de cores dinamicamente
-const generateGradientColors = (baseColor, totalColors) => {
+// Função para gerar gradientes invertidos para negativos
+const generateGradientColors = (dataValues, positiveColor, negativeColor) => {
   const colors = [];
-  let [r, g, b] = baseColor.match(/\w\w/g).map((hex) => parseInt(hex, 16)); // Converter hex para RGB
 
-  for (let i = 0; i < totalColors; i++) {
-    const factor = i / totalColors; // Gradiente baseado no índice
-    const newR = Math.min(255, Math.round(r * (1 - factor) + 255 * factor)); // Mesclar com branco
+  dataValues.forEach((value, i) => {
+    const isNegative = parseFloat(value) < 0;
+    const baseColor = isNegative ? negativeColor : positiveColor;
+    let [r, g, b] = baseColor.match(/\w\w/g).map((hex) => parseInt(hex, 16));
+
+    // Inverter o fator para negativos
+    const factor = isNegative
+      ? 1 - i / dataValues.length
+      : i / dataValues.length;
+
+    const newR = Math.min(255, Math.round(r * (1 - factor) + 255 * factor));
     const newG = Math.min(255, Math.round(g * (1 - factor) + 255 * factor));
     const newB = Math.min(255, Math.round(b * (1 - factor) + 255 * factor));
-    colors.push(`rgba(${newR}, ${newG}, ${newB}, 0.6)`); // Adicionar opacidade de 0.6
-  }
+    colors.push(`rgba(${newR}, ${newG}, ${newB}, 0.7)`);
+  });
 
   return colors;
 };
@@ -24,25 +31,17 @@ const generateGradientColors = (baseColor, totalColors) => {
 const PieChart = ({ dataArray }) => {
   const { theme } = useContext(ThemeContext);
 
-  // Processar o array de arrays para extrair labels e valores como inteiros
-  // const labels = dataArray.map((item) => item[0]); // Extrair as legendas
-  const dataValues = dataArray.map((item) => item[1].toFixed(2)); // Arredondar os valores para inteiros
+  const dataValues = dataArray.map((item) => item[1].toFixed(2));
+  const formattedLabels = dataArray.map((item) => item[0]);
 
-  // Labels formatadas com "R$"
-  const formattedLabels = dataArray.map(
-    (item) => item[0]
-  );
-
-  // Configuração do gráfico
   const data = {
-    labels: formattedLabels, // Inserir as legendas formatadas com R$
+    labels: formattedLabels,
     datasets: [
       {
-        data: dataValues, // Valores inteiros
-        backgroundColor: generateGradientColors("#495aff", dataArray.length), // Cores dinamicamente geradas
-        borderColor: theme === "light" ? "#eee" : "#000", // Bordas com opacidade 1
+        data: dataValues,
+        backgroundColor: generateGradientColors(dataValues, "#495aff", "#990000"),
+        borderColor: theme === "light" ? "#eee" : "#000",
         borderWidth: 0,
-        // borderRadius: 15,
       },
     ],
   };
@@ -53,18 +52,16 @@ const PieChart = ({ dataArray }) => {
       legend: {
         position: "top",
         labels: {
-          boxWidth: 20, // Ajusta o tamanho da caixa da legenda
-          padding: 10, // Espaçamento entre a legenda e o gráfico
+          boxWidth: 20,
+          padding: 10,
         },
       },
       tooltip: {
         callbacks: {
-          // Customizar o tooltip para exibir "R$" e valores inteiros
           label: (tooltipItem) => `R$ ${dataValues[tooltipItem.dataIndex]}`,
         },
       },
     },
-    
   };
 
   return <Pie data={data} options={options} />;
