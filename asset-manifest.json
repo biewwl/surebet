@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/surebet/static/css/main.c802011c.css",
-    "main.js": "/surebet/static/js/main.e114d260.js",
+    "main.css": "/surebet/static/css/main.42059e91.css",
+    "main.js": "/surebet/static/js/main.3aa0bf0a.js",
     "static/media/zen-dark.jpg": "/surebet/static/media/zen-dark.aed899d11a5ed793acfc.jpg",
     "static/media/betao.jpg": "/surebet/static/media/betao.f2404d2e40ae05ea5013.jpg",
     "static/media/zen-light.jpg": "/surebet/static/media/zen-light.4b582f7e15bbef8e012a.jpg",
@@ -17,7 +17,8 @@
     "static/media/betfair.png": "/surebet/static/media/betfair.8df1094ea8308de54ffd.png",
     "static/media/goldebet.png": "/surebet/static/media/goldebet.803421f63a320aabcd4e.png",
     "static/media/betdasorte.png": "/surebet/static/media/betdasorte.594adbb43d9d1baa2580.png",
-    "static/media/fullbet.jpg": "/surebet/static/media/fullbet.b6c5f9ced01b59c61d63.jpg",
+    "static/media/betmgm.png": "/surebet/static/media/betmgm.8f3f9356eba2c4a5790c.png",
+    "static/media/fulltbet.jpg": "/surebet/static/media/fulltbet.b6c5f9ced01b59c61d63.jpg",
     "static/media/vaidebet.jpeg": "/surebet/static/media/vaidebet.e38e1a7a393be852ee0f.jpeg",
     "static/media/lancedasorte.webp": "/surebet/static/media/lancedasorte.75e72ad245d60ada909c.webp",
     "static/media/blaze.png": "/surebet/static/media/blaze.fabc740f9d2ca1901146.png",
@@ -30,11 +31,11 @@
     "static/media/betano.webp": "/surebet/static/media/betano.4912fe5224d47ab83b02.webp",
     "static/media/estrelabet.webp": "/surebet/static/media/estrelabet.6d18f655c5ee5eeedaee.webp",
     "index.html": "/surebet/index.html",
-    "main.c802011c.css.map": "/surebet/static/css/main.c802011c.css.map",
-    "main.e114d260.js.map": "/surebet/static/js/main.e114d260.js.map"
+    "main.42059e91.css.map": "/surebet/static/css/main.42059e91.css.map",
+    "main.3aa0bf0a.js.map": "/surebet/static/js/main.3aa0bf0a.js.map"
   },
   "entrypoints": [
-    "static/css/main.c802011c.css",
-    "static/js/main.e114d260.js"
+    "static/css/main.42059e91.css",
+    "static/js/main.3aa0bf0a.js"
   ]
 }
