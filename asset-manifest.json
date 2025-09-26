@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/surebet/static/css/main.a47bbea7.css",
-    "main.js": "/surebet/static/js/main.c47f9109.js",
+    "main.css": "/surebet/static/css/main.5dff84d4.css",
+    "main.js": "/surebet/static/js/main.5097e1c5.js",
     "static/media/zen-dark.jpg": "/surebet/static/media/zen-dark.aed899d11a5ed793acfc.jpg",
     "static/media/betao.jpg": "/surebet/static/media/betao.f2404d2e40ae05ea5013.jpg",
     "static/media/zen-light.jpg": "/surebet/static/media/zen-light.4b582f7e15bbef8e012a.jpg",
@@ -31,11 +31,11 @@
     "static/media/betano.webp": "/surebet/static/media/betano.4912fe5224d47ab83b02.webp",
     "static/media/estrelabet.webp": "/surebet/static/media/estrelabet.6d18f655c5ee5eeedaee.webp",
     "index.html": "/surebet/index.html",
-    "main.a47bbea7.css.map": "/surebet/static/css/main.a47bbea7.css.map",
-    "main.c47f9109.js.map": "/surebet/static/js/main.c47f9109.js.map"
+    "main.5dff84d4.css.map": "/surebet/static/css/main.5dff84d4.css.map",
+    "main.5097e1c5.js.map": "/surebet/static/js/main.5097e1c5.js.map"
   },
   "entrypoints": [
-    "static/css/main.a47bbea7.css",
-    "static/js/main.c47f9109.js"
+    "static/css/main.5dff84d4.css",
+    "static/js/main.5097e1c5.js"
   ]
 }
